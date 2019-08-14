@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.platform</groupId>
+        <artifactId>platform</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>platform-shop</artifactId>
+    <packaging>jar</packaging>
+    <description>商品模块</description>
+
+    <properties>
+        <qiniu-version>[7.2.0, 7.2.99]</qiniu-version>
+        <aliyun-oss-version>2.5.0</aliyun-oss-version>
+        <qcloud-cos-version>5.2.4</qcloud-cos-version>
+        <jackson.version>2.5.0</jackson.version>
+        <poi.version>3.15</poi.version>
+        <org-json-version>20180130</org-json-version>
+    </properties>
+        <dependencies>
+        <dependency>
+            <groupId>com.platform</groupId>
+            <artifactId>platform-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        
+        <!-- httpclient -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-codec</artifactId>
+                    <groupId>commons-codec</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+</project>
