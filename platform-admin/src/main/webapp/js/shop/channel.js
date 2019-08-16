@@ -44,9 +44,9 @@ var vm = new Vue({
             vm.showList = false;
             vm.title = "新增";
             vm.channel = {};
-            vm.getParentCategory();
+            // vm.getParentCategory();
         },
-        getParentCategory: function () {
+        /*getParentCategory: function () {
             Ajax.request({
                 url: "../category/getCategorySelect",
                 async: true,
@@ -54,7 +54,7 @@ var vm = new Vue({
                     vm.categoryList = r.list;
                 }
             });
-        },
+        },*/
         update: function (event) {
             var id = getSelectedRow("#jqGrid");
             if (id == null) {
