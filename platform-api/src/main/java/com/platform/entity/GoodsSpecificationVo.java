@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * 商品对应规格表值表
+ * 物品对应规格表值表
  *
  * @author oldbird
  * @email oldbirdteam@163.com

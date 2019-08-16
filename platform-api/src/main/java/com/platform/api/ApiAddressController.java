@@ -48,7 +48,7 @@ public class ApiAddressController extends ApiBaseAction {
      * 获取收货地址的详情
      */
     @ApiOperation(value = "获取收货地址的详情", response = Map.class)
-    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "收获地址ID", required = true, dataType = "Integer")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "收货地址ID", required = true, dataType = "Integer")})
     @PostMapping("detail")
     public Object detail(Integer id, @LoginUser UserVo loginUser) {
         AddressVo entity = addressService.queryObject(id);
