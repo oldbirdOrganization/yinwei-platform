@@ -13,7 +13,6 @@ import com.platform.util.ApiPageUtils;
 import com.platform.util.wechat.WechatRefundApiResult;
 import com.platform.util.wechat.WechatUtil;
 import com.platform.utils.Query;
-import com.platform.vo.SubmitOrderVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.MapUtils;
@@ -41,18 +40,6 @@ public class ApiOrderController extends ApiBaseAction {
     private ApiOrderGoodsService orderGoodsService;
     @Autowired
     private ApiKdniaoService apiKdniaoService;
-
-
-    /**
-     */
-    @ApiOperation(value = "下单")
-    @IgnoreAuth
-    @PostMapping("submitOrder")
-    public Object submitOrder(@LoginUser UserVo loginUser,@RequestBody SubmitOrderVo submitOrderVo) {
-        //
-        return toResponsSuccess("");
-    }
-
 
     /**
      */
