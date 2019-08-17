@@ -8,11 +8,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +28,47 @@ public class ApiCatalogController extends ApiBaseAction {
     @Autowired
     private ApiCategoryService categoryService;
 
+    /**
+     * 获取分类栏目数据
+     */
+    @ApiOperation(value = "获取分类栏目数据")
+    @IgnoreAuth
+    @GetMapping(value = "indexCatalog")
+    public Object indexCatalog() {
+        Map<String, Object> resultObj = new HashMap();
+        Map params = new HashMap();
+        params.put("page", 1);
+        params.put("limit", Integer.MAX_VALUE);
+        params.put("sidx", "sort_order");
+        params.put("order", "asc");
+        params.put("parent_id", 0);
+        //查询列表数据
+        List<CategoryVo> categoryVoList = categoryService.queryList(params);
+        //默认第一个位当前分类
+        CategoryVo currentCategory = new CategoryVo();
+        if (CollectionUtils.isNotEmpty(categoryVoList)) {
+            currentCategory = categoryVoList.get(0);
+        }
+        resultObj.put("categoryList", categoryVoList);
+        resultObj.put("currentCategory", currentCategory);
+        return toResponsSuccess(resultObj);
+    }
+
+    /**
+     */
+    @ApiOperation(value = "分类目录当前分类数据接口")
+    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "id", paramType = "query", required = true)})
+    @IgnoreAuth
+    @GetMapping(value = "currentCatalog")
+    public Object currentCatalog(@RequestParam(name = "id",required = true) Integer id) {
+        Map<String, Object> resultObj = new HashMap();
+        CategoryVo currentCategory = categoryService.queryObject(id);;
+        resultObj.put("currentCategory", currentCategory);
+        return toResponsSuccess(resultObj);
+    }
+
+
+    /***************************以上为最新代码*************************************************/
     /**
      * 获取分类栏目数据
      */

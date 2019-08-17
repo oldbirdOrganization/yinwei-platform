@@ -44,19 +44,19 @@
                     <Radio label="L1">
                         <span>L1</span>
                     </Radio>
-                    <Radio label="L2">
+                    <!--<Radio label="L2">
                         <span>L2</span>
-                    </Radio>
+                    </Radio>-->
                 </Radio-group>
             </Form-item>
-            <Form-item v-if="category.level == 'L2'" label="父节点" prop="parentId" style="width: 288px;">
+            <!--<Form-item v-if="category.level == 'L2'" label="父节点" prop="parentId" style="width: 288px;">
                 <i-select v-model="category.parentId">
                     <i-option value="" key="">请选择</i-option>
                     <i-option v-for="category in categoryList" :value="category.id"
                               :key="category.id">{{category.name}}
                     </i-option>
                 </i-select>
-            </Form-item>
+            </Form-item>-->
             <Form-item label="排序" prop="sortOrder">
                 <Input-number :min="0" :step="1" v-model="category.sortOrder" placeholder="排序" style="width: 188px;"/>
             </Form-item>

@@ -18,10 +18,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -71,6 +68,27 @@ public class ApiGoodsController extends ApiBaseAction {
     @Autowired
     private ApiCartService cartService;
 
+    @ApiOperation(value = "获取分类小下面的商品列表")
+    @ApiImplicitParams({@ApiImplicitParam(name = "categoryId", value = "分类id", paramType = "path", required = true)})
+    @IgnoreAuth
+    @GetMapping(value = "goodsList")
+    public Object goodsList(@RequestParam(name = "categoryId" , required = true) Integer categoryId) {
+        Map params = new HashMap();
+        params.put("category_id", categoryId);
+        params.put("is_delete", 0);
+        params.put("is_on_sale", 1);
+        params.put("page", 1);
+        params.put("limit", Integer.MAX_VALUE);
+        params.put("sidx", "id");
+        params.put("order", "desc");
+
+        Query query = new Query(params);
+        PageHelper.startPage(query.getPage(), query.getLimit());
+        List<GoodsVo> goodsList = goodsService.queryList(query);
+        return toResponsSuccess(goodsList);
+    }
+
+    /*******************************************以上为新代码*****************************************************/
     /**
      */
     @ApiOperation(value = "商品首页")
