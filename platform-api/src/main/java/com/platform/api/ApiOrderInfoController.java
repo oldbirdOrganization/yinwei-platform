@@ -2,6 +2,7 @@ package com.platform.api;
 
 import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
+import com.platform.entity.NideshopOrderImageEntity;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.UserVo;
 import com.platform.service.OrderInfoService;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 作者: @author oldbirdteam <br>
@@ -45,7 +49,12 @@ public class ApiOrderInfoController extends ApiBaseAction {
     @IgnoreAuth
     @GetMapping("detail")
     public Object detail(@LoginUser UserVo loginUser,@RequestParam(name="orderId",required = true) Integer orderId) {
-        return toResponsSuccess(orderInfoService.findDetail(loginUser,orderId));
+        NideshopOrderInfoEntity order = orderInfoService.findDetail(loginUser,orderId);
+        List<NideshopOrderImageEntity> imageList = orderInfoService.findOrderImageList(orderId);
+        Map<String,Object> result = new HashMap<>();
+        result.put("order",order);
+        result.put("imageList",imageList);
+        return toResponsSuccess(result);
     }
 
     @ApiOperation(value = "待指派订单列表")

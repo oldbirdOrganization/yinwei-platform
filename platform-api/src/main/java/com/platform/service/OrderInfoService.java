@@ -1,26 +1,25 @@
 package com.platform.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.platform.dao.NideshopOrderImageDao;
 import com.platform.dao.NideshopOrderInfoDao;
+import com.platform.entity.NideshopOrderImageEntity;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.UserVo;
 import com.platform.vo.SubmitOrderVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.sql.Wrapper;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-@Service
+import java.util.*;
+@Slf4j
 public class OrderInfoService {
 
     @Autowired
     private NideshopOrderInfoDao nideshopOrderInfoDao;
+    @Autowired
+    private NideshopOrderImageDao nideshopOrderImageDao;
 
 
     /**
@@ -86,11 +85,74 @@ public class OrderInfoService {
         return nideshopOrderInfoDao.selectList(wrapper);
     }
 
+    /**
+     * 订单详情
+     * @param user
+     * @param orderId
+     * @return
+     */
     public NideshopOrderInfoEntity findDetail(UserVo user,Integer orderId){
         QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
         wrapper.eq("create_user_id",user.getUserId());
         wrapper.eq("id",orderId);
         return nideshopOrderInfoDao.selectOne(wrapper);
+    }
+
+    /**
+     * 一小时未指派的订单（预约订单）
+     * @return
+     */
+    private List<NideshopOrderInfoEntity> findNotPayment(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR_OF_DAY,-1);
+        QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
+        wrapper.eq("order_type",2);
+        wrapper.ne("payment_status",1);
+        wrapper.le("create_time",calendar.getTime());
+        return nideshopOrderInfoDao.selectList(wrapper);
+    }
+
+    /**
+     * 一小时未支付的订单（支付订单）
+     * @return
+     */
+    private List<NideshopOrderInfoEntity> findNotDesignate(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR_OF_DAY,-1);
+        QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
+        wrapper.eq("order_type",2);
+        wrapper.ne("order_status",1);
+        wrapper.le("create_time",calendar.getTime());
+        return nideshopOrderInfoDao.selectList(wrapper);
+    }
+
+    /**
+     * 查询订单图片
+     * @param orderId
+     * @return
+     */
+    public List<NideshopOrderImageEntity> findOrderImageList(Integer orderId){
+        QueryWrapper<NideshopOrderImageEntity> wrapper = new QueryWrapper();
+        wrapper.eq("order_id",orderId);
+        return nideshopOrderImageDao.selectList(wrapper);
+    }
+
+
+    /**
+     * 定时作废订单
+     */
+    public void doRun(){
+        System.out.println("定时作废订单=======================");
+        List<NideshopOrderInfoEntity> list1 = findNotPayment();
+        for(NideshopOrderInfoEntity m1 : list1){
+            m1.setOrderStatus(5);
+            nideshopOrderInfoDao.updateById(m1);
+        }
+        List<NideshopOrderInfoEntity> list2 = findNotDesignate();
+        for(NideshopOrderInfoEntity m2 : list2){
+            m2.setOrderStatus(5);
+            nideshopOrderInfoDao.updateById(m2);
+        }
     }
 }
 
