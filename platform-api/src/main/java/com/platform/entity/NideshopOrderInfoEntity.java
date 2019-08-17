@@ -43,6 +43,11 @@ public class NideshopOrderInfoEntity implements Serializable {
 	 * 支付状态 1未支付 2 已支付
 	 */
 	private Integer paymentStatus;
+
+	/**
+	 * 支付时间
+	 */
+	private Date paymentTime;
 	/**
 	 * 上游支付单号
 	 */

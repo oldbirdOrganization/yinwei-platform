@@ -11,6 +11,7 @@
         <result property="orderType" column="order_type"/>
         <result property="orderStatus" column="order_status"/>
         <result property="paymentStatus" column="payment_status"/>
+        <result property="paymentTime" column="payment_time"/>
         <result property="paymentNo" column="payment_no"/>
         <result property="orderPrice" column="order_price"/>
         <result property="serviceHouseName" column="service_house_name"/>
