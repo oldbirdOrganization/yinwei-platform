@@ -10,24 +10,24 @@
         <result property="orderNo" column="order_no"/>
         <result property="orderType" column="order_type"/>
         <result property="orderStatus" column="order_status"/>
-        <result property="paymentstatus" column="paymentStatus"/>
+        <result property="paymentStatus" column="payment_status"/>
         <result property="paymentNo" column="payment_no"/>
         <result property="orderPrice" column="order_price"/>
-        <result property="servicehousename" column="serviceHouseName"/>
-        <result property="servicetime" column="serviceTime"/>
-        <result property="servicerequired" column="serviceRequired"/>
-        <result property="descriptiondescription" column="descriptionDescription"/>
-        <result property="servicetype" column="serviceType"/>
-        <result property="servicespace" column="serviceSpace"/>
-        <result property="serviceacreage" column="serviceAcreage"/>
-        <result property="serviceidea" column="serviceIdea"/>
-        <result property="serviceairconditionermodel" column="serviceAirConditionerModel"/>
-        <result property="serviceairconditionertype" column="serviceAirConditionerType"/>
-        <result property="servicefurniture" column="serviceFurniture"/>
-        <result property="servicehousetype" column="serviceHouseType"/>
-        <result property="servicehousedeliverystandards" column="serviceHouseDeliveryStandards"/>
-        <result property="contactname" column="contactName"/>
-        <result property="contactmobile" column="contactMobile"/>
+        <result property="serviceHouseName" column="service_house_name"/>
+        <result property="serviceTime" column="service_time"/>
+        <result property="serviceRequired" column="service_required"/>
+        <result property="problemDescription" column="problem_description"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="serviceSpace" column="services_space"/>
+        <result property="serviceAcreage" column="service_acreage"/>
+        <result property="serviceIdea" column="service_idea"/>
+        <result property="serviceAirConditionerModel" column="service_air_conditioner_model"/>
+        <result property="serviceAirConditionerType" column="service_air_conditioner_type"/>
+        <result property="serviceFurniture" column="service_furniture"/>
+        <result property="serviceHouseType" column="service_house_type"/>
+        <result property="serviceHouseDeliveryStandards" column="service_house_delivery_standards"/>
+        <result property="contactName" column="contact_name"/>
+        <result property="contactMobile" column="contact_mobile"/>
         <result property="address" column="address"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>

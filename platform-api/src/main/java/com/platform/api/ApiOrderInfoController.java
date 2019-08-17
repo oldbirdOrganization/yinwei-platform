@@ -2,33 +2,19 @@ package com.platform.api;
 
 import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
-import com.platform.dao.NideshopOrderInfoDao;
 import com.platform.entity.NideshopOrderInfoEntity;
-import com.platform.entity.OrderGoodsVo;
-import com.platform.entity.OrderVo;
 import com.platform.entity.UserVo;
-import com.platform.service.ApiKdniaoService;
-import com.platform.service.ApiOrderGoodsService;
-import com.platform.service.ApiOrderService;
+import com.platform.service.OrderInfoService;
 import com.platform.util.ApiBaseAction;
-import com.platform.util.ApiPageUtils;
-import com.platform.util.wechat.WechatRefundApiResult;
-import com.platform.util.wechat.WechatUtil;
-import com.platform.utils.Query;
 import com.platform.vo.SubmitOrderVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 作者: @author oldbirdteam <br>
@@ -41,27 +27,58 @@ import java.util.Map;
 public class ApiOrderInfoController extends ApiBaseAction {
 
     @Autowired
-    private NideshopOrderInfoDao nideshopOrderInfoDao;
+    private OrderInfoService orderInfoService;
 
 
     /**
+     * 下单
      */
     @ApiOperation(value = "下单")
     @IgnoreAuth
     @PostMapping("submitOrder")
     public Object submitOrder(@LoginUser UserVo loginUser,@RequestBody SubmitOrderVo submitOrderVo) {
-        NideshopOrderInfoEntity model = new NideshopOrderInfoEntity();
-        BeanUtils.copyProperties(submitOrderVo,model);
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
-        model.setOrderNo(fmt.format(new Date()));
-        model.setPaymentstatus(1);
-        model.setCreateTime(new Date());
-        model.setUpdateTime(new Date());
-        //model.setCreateUserId(loginUser.getUserId());
-       // model.setUpdateUserId(loginUser.getUserId());
-        nideshopOrderInfoDao.insert(model);
-        return toResponsSuccess(model.getId());
+        Integer orderId = orderInfoService.submitOrder(loginUser,submitOrderVo);
+        return toResponsSuccess(orderId);
     }
+
+    @ApiOperation(value = "订单详情")
+    @IgnoreAuth
+    @GetMapping("detail")
+    public Object detail(@LoginUser UserVo loginUser,@RequestParam(name="orderId",required = true) Integer orderId) {
+        return toResponsSuccess(orderInfoService.findDetail(loginUser,orderId));
+    }
+
+    @ApiOperation(value = "待指派订单列表")
+    @IgnoreAuth
+    @GetMapping("designateingOrderList")
+    public Object designateingOrderList(@LoginUser UserVo loginUser) {
+        return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,1,null));
+    }
+
+    @ApiOperation(value = "待确认订单列表")
+    @IgnoreAuth
+    @GetMapping("confirmingOrderList")
+    public Object confirmingOrderList(@LoginUser UserVo loginUser) {
+        return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,2,null));
+    }
+
+    @ApiOperation(value = "待付款订单列表")
+    @IgnoreAuth
+    @GetMapping("paymentingOrderList")
+    public Object paymentingOrderList(@LoginUser UserVo loginUser) {
+        return toResponsSuccess(orderInfoService.findPaymentingOrderList(loginUser));
+    }
+
+    @ApiOperation(value = "已完成订单列表")
+    @IgnoreAuth
+    @GetMapping("finishOrderList")
+    public Object finishOrderList(@LoginUser UserVo loginUser) {
+        return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,4,null));
+    }
+
+
+
+
 
 
 }

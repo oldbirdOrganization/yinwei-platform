@@ -37,13 +37,13 @@ public class NideshopOrderInfoEntity implements Serializable {
 	 */
 	private Integer orderType;
 	/**
-	 * 订单状态
+	 * 订单状态 1 下单成功（待指派） 2待确认 3已确认 4完成服务 5作废
 	 */
 	private Integer orderStatus;
 	/**
 	 * 支付状态 1未支付 2 已支付
 	 */
-	private Integer paymentstatus;
+	private Integer paymentStatus;
 	/**
 	 * 上游支付单号
 	 */
@@ -55,63 +55,63 @@ public class NideshopOrderInfoEntity implements Serializable {
 	/**
 	 * 服务小区名称
 	 */
-	private String servicehousename;
+	private String serviceHouseName;
 	/**
 	 * 服务时间
 	 */
-	private String servicetime;
+	private String serviceTime;
 	/**
 	 * 服务要求 多个以逗号隔开
 	 */
-	private String servicerequired;
+	private String serviceRequired;
 	/**
 	 * 问题描述
 	 */
-	private String descriptiondescription;
+	private String problemDescription;
 	/**
 	 * 服务类型
 	 */
-	private String servicetype;
+	private String serviceType;
 	/**
 	 * 服务空间
 	 */
-	private String servicespace;
+	private String serviceSpace;
 	/**
 	 * 服务面积
 	 */
-	private String serviceacreage;
+	private String serviceAcreage;
 	/**
 	 * 服务方案
 	 */
-	private String serviceidea;
+	private String serviceIdea;
 	/**
 	 * 空调型号
 	 */
-	private String serviceairconditionermodel;
+	private String serviceAirConditionerModel;
 	/**
 	 * 空调类型
 	 */
-	private String serviceairconditionertype;
+	private String serviceAirConditionerType;
 	/**
 	 * 服务家具
 	 */
-	private String servicefurniture;
+	private String serviceFurniture;
 	/**
 	 * 房屋类型
 	 */
-	private String servicehousetype;
+	private String serviceHouseType;
 	/**
 	 * 交付标准
 	 */
-	private String servicehousedeliverystandards;
+	private String serviceHouseDeliveryStandards;
 	/**
 	 * 联系人
 	 */
-	private String contactname;
+	private String contactName;
 	/**
 	 * 联系人手机
 	 */
-	private String contactmobile;
+	private String contactMobile;
 	/**
 	 * 地址
 	 */
@@ -177,12 +177,20 @@ public class NideshopOrderInfoEntity implements Serializable {
 		this.orderStatus = orderStatus;
 	}
 
-	public Integer getPaymentstatus() {
-		return paymentstatus;
+	public Integer getPaymentStatus() {
+		return paymentStatus;
 	}
 
-	public void setPaymentstatus(Integer paymentstatus) {
-		this.paymentstatus = paymentstatus;
+	public void setPaymentStatus(Integer paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public String getProblemDescription() {
+		return problemDescription;
+	}
+
+	public void setProblemDescription(String problemDescription) {
+		this.problemDescription = problemDescription;
 	}
 
 	public String getPaymentNo() {
@@ -201,124 +209,116 @@ public class NideshopOrderInfoEntity implements Serializable {
 		this.orderPrice = orderPrice;
 	}
 
-	public String getServicehousename() {
-		return servicehousename;
+	public String getServiceHouseName() {
+		return serviceHouseName;
 	}
 
-	public void setServicehousename(String servicehousename) {
-		this.servicehousename = servicehousename;
+	public void setServiceHouseName(String serviceHouseName) {
+		this.serviceHouseName = serviceHouseName;
 	}
 
-	public String getServicetime() {
-		return servicetime;
+	public String getServiceTime() {
+		return serviceTime;
 	}
 
-	public void setServicetime(String servicetime) {
-		this.servicetime = servicetime;
+	public void setServiceTime(String serviceTime) {
+		this.serviceTime = serviceTime;
 	}
 
-	public String getServicerequired() {
-		return servicerequired;
+	public String getServiceRequired() {
+		return serviceRequired;
 	}
 
-	public void setServicerequired(String servicerequired) {
-		this.servicerequired = servicerequired;
+	public void setServiceRequired(String serviceRequired) {
+		this.serviceRequired = serviceRequired;
 	}
 
-	public String getDescriptiondescription() {
-		return descriptiondescription;
+	public String getServiceType() {
+		return serviceType;
 	}
 
-	public void setDescriptiondescription(String descriptiondescription) {
-		this.descriptiondescription = descriptiondescription;
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
 	}
 
-	public String getServicetype() {
-		return servicetype;
+	public String getServiceSpace() {
+		return serviceSpace;
 	}
 
-	public void setServicetype(String servicetype) {
-		this.servicetype = servicetype;
+	public void setServiceSpace(String serviceSpace) {
+		this.serviceSpace = serviceSpace;
 	}
 
-	public String getServicespace() {
-		return servicespace;
+	public String getServiceAcreage() {
+		return serviceAcreage;
 	}
 
-	public void setServicespace(String servicespace) {
-		this.servicespace = servicespace;
+	public void setServiceAcreage(String serviceAcreage) {
+		this.serviceAcreage = serviceAcreage;
 	}
 
-	public String getServiceacreage() {
-		return serviceacreage;
+	public String getServiceIdea() {
+		return serviceIdea;
 	}
 
-	public void setServiceacreage(String serviceacreage) {
-		this.serviceacreage = serviceacreage;
+	public void setServiceIdea(String serviceIdea) {
+		this.serviceIdea = serviceIdea;
 	}
 
-	public String getServiceidea() {
-		return serviceidea;
+	public String getServiceAirConditionerModel() {
+		return serviceAirConditionerModel;
 	}
 
-	public void setServiceidea(String serviceidea) {
-		this.serviceidea = serviceidea;
+	public void setServiceAirConditionerModel(String serviceAirConditionerModel) {
+		this.serviceAirConditionerModel = serviceAirConditionerModel;
 	}
 
-	public String getServiceairconditionermodel() {
-		return serviceairconditionermodel;
+	public String getServiceAirConditionerType() {
+		return serviceAirConditionerType;
 	}
 
-	public void setServiceairconditionermodel(String serviceairconditionermodel) {
-		this.serviceairconditionermodel = serviceairconditionermodel;
+	public void setServiceAirConditionerType(String serviceAirConditionerType) {
+		this.serviceAirConditionerType = serviceAirConditionerType;
 	}
 
-	public String getServiceairconditionertype() {
-		return serviceairconditionertype;
+	public String getServiceFurniture() {
+		return serviceFurniture;
 	}
 
-	public void setServiceairconditionertype(String serviceairconditionertype) {
-		this.serviceairconditionertype = serviceairconditionertype;
+	public void setServiceFurniture(String serviceFurniture) {
+		this.serviceFurniture = serviceFurniture;
 	}
 
-	public String getServicefurniture() {
-		return servicefurniture;
+	public String getServiceHouseType() {
+		return serviceHouseType;
 	}
 
-	public void setServicefurniture(String servicefurniture) {
-		this.servicefurniture = servicefurniture;
+	public void setServiceHouseType(String serviceHouseType) {
+		this.serviceHouseType = serviceHouseType;
 	}
 
-	public String getServicehousetype() {
-		return servicehousetype;
+	public String getServiceHouseDeliveryStandards() {
+		return serviceHouseDeliveryStandards;
 	}
 
-	public void setServicehousetype(String servicehousetype) {
-		this.servicehousetype = servicehousetype;
+	public void setServiceHouseDeliveryStandards(String serviceHouseDeliveryStandards) {
+		this.serviceHouseDeliveryStandards = serviceHouseDeliveryStandards;
 	}
 
-	public String getServicehousedeliverystandards() {
-		return servicehousedeliverystandards;
+	public String getContactName() {
+		return contactName;
 	}
 
-	public void setServicehousedeliverystandards(String servicehousedeliverystandards) {
-		this.servicehousedeliverystandards = servicehousedeliverystandards;
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
 	}
 
-	public String getContactname() {
-		return contactname;
+	public String getContactMobile() {
+		return contactMobile;
 	}
 
-	public void setContactname(String contactname) {
-		this.contactname = contactname;
-	}
-
-	public String getContactmobile() {
-		return contactmobile;
-	}
-
-	public void setContactmobile(String contactmobile) {
-		this.contactmobile = contactmobile;
+	public void setContactMobile(String contactMobile) {
+		this.contactMobile = contactMobile;
 	}
 
 	public String getAddress() {
