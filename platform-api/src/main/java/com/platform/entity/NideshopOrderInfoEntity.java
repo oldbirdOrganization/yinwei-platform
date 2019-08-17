@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 
@@ -37,7 +36,7 @@ public class NideshopOrderInfoEntity implements Serializable {
 	 */
 	private Integer orderType;
 	/**
-	 * 订单状态 1 下单成功（待指派） 2待确认 3已确认 4完成服务 5作废
+	 * 订单状态 1 下单成功（待指派） 2待确认 3已确认 4完成服务 5作废 6待评价
 	 */
 	private Integer orderStatus;
 	/**
