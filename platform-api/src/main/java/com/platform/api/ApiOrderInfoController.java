@@ -49,7 +49,7 @@ public class ApiOrderInfoController extends ApiBaseAction {
     @IgnoreAuth
     @GetMapping("detail")
     public Object detail(@LoginUser UserVo loginUser,@RequestParam(name="orderId",required = true) Integer orderId) {
-        NideshopOrderInfoEntity order = orderInfoService.findDetail(loginUser,orderId);
+        NideshopOrderInfoEntity order = orderInfoService.findDetail(orderId);
         List<NideshopOrderImageEntity> imageList = orderInfoService.findOrderImageList(orderId);
         Map<String,Object> result = new HashMap<>();
         result.put("order",order);

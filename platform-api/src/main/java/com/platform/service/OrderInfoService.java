@@ -91,11 +91,30 @@ public class OrderInfoService {
      * @param orderId
      * @return
      */
-    public NideshopOrderInfoEntity findDetail(UserVo user,Integer orderId){
+    public NideshopOrderInfoEntity findDetail(Integer orderId){
         QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
-        wrapper.eq("create_user_id",user.getUserId());
         wrapper.eq("id",orderId);
         return nideshopOrderInfoDao.selectOne(wrapper);
+    }
+
+    /**
+     * 根据订单号
+     * @param orderNo
+     * @return
+     */
+    public NideshopOrderInfoEntity findByOrderNo(String orderNo){
+        QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
+        wrapper.eq("order_no",orderNo);
+        return nideshopOrderInfoDao.selectOne(wrapper);
+    }
+
+    /**
+     * 修改订单
+     * @param order
+     */
+    public void update(NideshopOrderInfoEntity order){
+        order.setUpdateTime(new Date());
+        nideshopOrderInfoDao.updateById(order);
     }
 
     /**

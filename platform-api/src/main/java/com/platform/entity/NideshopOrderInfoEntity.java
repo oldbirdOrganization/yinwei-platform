@@ -193,6 +193,14 @@ public class NideshopOrderInfoEntity implements Serializable {
 		return problemDescription;
 	}
 
+	public Date getPaymentTime() {
+		return paymentTime;
+	}
+
+	public void setPaymentTime(Date paymentTime) {
+		this.paymentTime = paymentTime;
+	}
+
 	public void setProblemDescription(String problemDescription) {
 		this.problemDescription = problemDescription;
 	}
