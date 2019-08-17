@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 
@@ -15,7 +14,7 @@ import lombok.Data;
  * @date 2019-08-17 17:30:51
  */
 @TableName("nideshop_order_image")
-public class NideshopOrderImageEntity implements Serializable {
+public class OrderImageEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

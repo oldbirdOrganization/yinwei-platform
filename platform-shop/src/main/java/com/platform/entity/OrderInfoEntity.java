@@ -3,10 +3,9 @@ package com.platform.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import java.math.BigDecimal;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 
@@ -16,7 +15,7 @@ import lombok.Data;
  * @date 2019-08-17 17:30:51
  */
 @TableName("nideshop_order_info")
-public class NideshopOrderInfoEntity implements Serializable {
+public class OrderInfoEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

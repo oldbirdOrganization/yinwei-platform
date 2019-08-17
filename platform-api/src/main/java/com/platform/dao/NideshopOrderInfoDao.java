@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author oldbirdteam
+ * @email oldbirdteam@gmail.com
  * @date 2019-08-17 17:30:51
  */
 @Mapper
