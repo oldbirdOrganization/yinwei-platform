@@ -2,23 +2,23 @@ package com.platform.api;
 
 import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
+import com.platform.entity.GoodsVo;
 import com.platform.entity.NideshopOrderImageEntity;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.UserVo;
+import com.platform.service.ApiGoodsService;
 import com.platform.service.OrderInfoService;
 import com.platform.util.ApiBaseAction;
 import com.platform.vo.SubmitOrderVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 作者: @author oldbirdteam <br>
@@ -32,6 +32,8 @@ public class ApiOrderInfoController extends ApiBaseAction {
 
     @Autowired
     private OrderInfoService orderInfoService;
+    @Autowired
+    private ApiGoodsService apiGoodsService;
 
 
     /**
@@ -51,9 +53,14 @@ public class ApiOrderInfoController extends ApiBaseAction {
     public Object detail(@LoginUser UserVo loginUser,@RequestParam(name="orderId",required = true) Integer orderId) {
         NideshopOrderInfoEntity order = orderInfoService.findDetail(orderId);
         List<NideshopOrderImageEntity> imageList = orderInfoService.findOrderImageList(orderId);
+        GoodsVo goodsVo = null;
+        if (!Objects.isNull(order) && !Objects.isNull(order.getGoodsId())) {
+            goodsVo = apiGoodsService.queryObject(order.getGoodsId());
+        }
         Map<String,Object> result = new HashMap<>();
         result.put("order",order);
         result.put("imageList",imageList);
+        result.put("googds",goodsVo);
         return toResponsSuccess(result);
     }
 
