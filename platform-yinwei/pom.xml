@@ -17,26 +17,12 @@
         最终打包的项目也根据此配置进行打包。
     </description>
 
-
-
-
-
     <dependencies>
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-common</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.platform</groupId>
-            <artifactId>platform-gen</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-<!--         <dependency> -->
-<!--             <groupId>com.platform</groupId> -->
-<!--             <artifactId>platform-schedule</artifactId> -->
-<!--             <version>1.0.0</version> -->
-<!--         </dependency> -->
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-api</artifactId>

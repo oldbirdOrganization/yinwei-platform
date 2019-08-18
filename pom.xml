@@ -12,7 +12,7 @@
         <module>platform-api</module> <!-- API模块 -->
         <module>platform-yinwei</module>
         <module>platform-admin</module>
-        <module>platform-shop</module>
+<!--        <module>platform-shop</module>-->
     </modules>
 
     <properties>
