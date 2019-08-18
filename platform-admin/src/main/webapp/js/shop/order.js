@@ -1,14 +1,10 @@
 $(function () {
-    let shippingStatus = getQueryString("shippingStatus");
-    let payStatus = getQueryString("payStatus");
+    let paymentStatus = getQueryString("paymentStatus");
     let orderStatus = getQueryString("orderStatus");
     let orderType = getQueryString("orderType");
     let url = '../order/list';
-    if (shippingStatus) {
-        url += '?shippingStatus=' + shippingStatus;
-    }
-    if (payStatus) {
-        url += '?payStatus=' + payStatus;
+    if (paymentStatus) {
+        url += '?paymentStatus=' + paymentStatus;
     }
     if (orderStatus) {
         url += '?orderStatus=' + orderStatus;
@@ -21,82 +17,71 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '订单号', name: 'orderSn', index: 'order_sn', width: 100},
+            {label: '订单号', name: 'orderNo', index: 'order_nn', width: 100},
             {label: '会员', name: 'userName', index: 'user_name', width: 80},
             {
                 label: '订单类型', name: 'orderType', index: 'order_type', width: 80, formatter: function (value) {
                     if (value == '1') {
-                        return '普通订单';
+                        return '预约订单';
                     } else if (value == '2') {
-                        return '团购订单';
-                    } else if (value == '3') {
-                        return '砍价订单';
-                    } else if (value == '4') {
-                        return '立即购买';
+                        return '定金订单';
                     }
                     return '-';
                 }
             },
             {
                 label: '订单状态', name: 'orderStatus', index: 'order_status', width: 80, formatter: function (value) {
-                    if (value == '0') {
-                        return '待付款';
-                    } else if (value == '101') {
-                        return '订单已取消';
-                    } else if (value == '102') {
-                        return '订单已删除';
-                    } else if (value == '201') {
-                        return '订单已付款';
-                    } else if (value == '300') {
-                        return '订单已发货';
-                    } else if (value == '301') {
-                        return '用户确认收货';
-                    } else if (value == '401') {
-                        return '退款';
-                    } else if (value == '402') {
-                        return '完成';
-                    }
+                    if (value == '1') {
+                        return '待指派';
+                    } else if (value == '2') {
+                        return '待确认';
+                    } else if (value == '3') {
+                        return '已确认';
+                    } else if (value == '4') {
+                        return '订单完成';
+                    } else if (value == '5') {
+                        return '已作废';
+                    } else if (value == '6') {
+                        return '待评价';
+                    } 
                     return value;
                 }
             },
             {
-                label: '发货状态',
-                name: 'shippingStatus',
-                index: 'shipping_status',
+                label: '渠道类型',
+                name: 'channel_id',
+                index: 'channel_id',
                 width: 60,
                 formatter: function (value) {
-                    if (value == '0') {
-                        return '未发货';
-                    } else if (value == '1') {
-                        return '已发货';
+                    if (value == '1') {
+                        return '维修';
                     } else if (value == '2') {
-                        return '已收货';
+                        return '改造';
+                    } else if (value == '3') {
+                        return '设计';
                     } else if (value == '4') {
-                        return '退货';
+                        return '定制化加配';
                     }
                     return value;
                 }
             },
             {
-                label: '付款状态', name: 'payStatus', index: 'pay_status', width: 80,
+                label: '付款状态', name: 'paymentStatus', index: 'payment_status', width: 80,
                 formatter: function (value) {
-                    if (value == '0') {
+                    if (value == '1') {
                         return '未付款';
-                    } else if (value == '1') {
-                        return '付款中';
                     } else if (value == '2') {
-                        return '已付款';
-                    }
+                        return '已付定金';
+                    } 
                     return value;
                 }
             },
-            {label: '快递公司', name: 'shippingName', index: 'shipping_name', width: 80},
-            {label: '快递单号', name: 'shippingNo', index: 'shipping_No', width: 80},
-            {label: '实际支付金额', name: 'actualPrice', index: 'actual_price', width: 80},
-            {label: '订单总价', name: 'orderPrice', index: 'order_price', width: 60},
-            {label: '商品总价', name: 'goodsPrice', index: 'goods_price', width: 60},
+            {label: '支付单号', name: 'paymentNo', index: 'payment_no', width: 80},
+            {label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 80},
+            {label: '实际支付金额', name: 'orderPrice', index: 'order_price', width: 80},
+            {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 60},
             {
-                label: '下单时间', name: 'addTime', index: 'add_time', width: 80,
+                label: '下单时间', name: 'createTime', index: 'create_time', width: 80,
                 formatter: function (value) {
                     return transDate(value);
                 }

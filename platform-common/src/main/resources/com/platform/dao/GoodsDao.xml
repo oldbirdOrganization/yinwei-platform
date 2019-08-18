@@ -83,12 +83,10 @@
         nideshop_goods.create_user_dept_id,
         nideshop_goods.update_user_id,
         nideshop_category.name category_name,
-        nideshop_attribute_category.name attribute_category_name,
         nideshop_brand.name brand_name
         from nideshop_goods
         LEFT JOIN nideshop_category
         ON nideshop_goods.category_id = nideshop_category.id
-        LEFT JOIN nideshop_attribute_category ON nideshop_goods.attribute_category = nideshop_attribute_category.id
         LEFT JOIN nideshop_brand ON nideshop_brand.id = nideshop_goods.brand_id
         WHERE 1=1
         <!--  数据过滤  -->
