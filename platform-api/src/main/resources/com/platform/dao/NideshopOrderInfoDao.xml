@@ -7,6 +7,7 @@
     <resultMap type="com.platform.entity.NideshopOrderInfoEntity" id="nideshopOrderInfoMap">
         <result property="id" column="id"/>
         <result property="goodsId" column="goods_id"/>
+        <result property="channelId" column="channel_id"/>
         <result property="orderNo" column="order_no"/>
         <result property="orderType" column="order_type"/>
         <result property="orderStatus" column="order_status"/>

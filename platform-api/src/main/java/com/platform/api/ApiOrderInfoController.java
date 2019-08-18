@@ -39,32 +39,13 @@ public class ApiOrderInfoController extends ApiBaseAction {
 
 
     @ApiOperation(value = "下单")
-    @IgnoreAuth
     @PostMapping("submitOrder")
     public Object submitOrder(@LoginUser UserVo loginUser,@RequestBody SubmitOrderVo submitOrderVo) {
         Integer orderId = orderInfoService.submitOrder(loginUser,submitOrderVo);
         return toResponsSuccess(orderId);
     }
 
-    @ApiOperation(value = "上传图片,返回图片地址用于提交预约单")
-    @IgnoreAuth
-    @PostMapping("uploadImg")
-    public Object uploadImg(@RequestParam("file") CommonsMultipartFile file) {
-        if (file.isEmpty()) {
-            throw new RRException("上传文件不能为空");
-        }
-        Map<String, Object> result = null;
-        try {
-            String url = orderInfoService.uploadImg(file);
-            result = toResponsSuccess(url);
-        }catch (Exception e){
-            result = toResponsFail(e.getMessage());
-        }
-        return result;
-    }
-
     @ApiOperation(value = "订单详情")
-    @IgnoreAuth
     @GetMapping("detail")
     public Object detail(@LoginUser UserVo loginUser,@RequestParam(name="orderId",required = true) Integer orderId) {
         NideshopOrderInfoEntity order = orderInfoService.findDetail(orderId);
@@ -81,28 +62,24 @@ public class ApiOrderInfoController extends ApiBaseAction {
     }
 
     @ApiOperation(value = "待指派订单列表")
-    @IgnoreAuth
     @GetMapping("designateingOrderList")
     public Object designateingOrderList(@LoginUser UserVo loginUser) {
         return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,1,null));
     }
 
     @ApiOperation(value = "待确认订单列表")
-    @IgnoreAuth
     @GetMapping("confirmingOrderList")
     public Object confirmingOrderList(@LoginUser UserVo loginUser) {
         return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,2,null));
     }
 
     @ApiOperation(value = "待付款订单列表")
-    @IgnoreAuth
     @GetMapping("paymentingOrderList")
     public Object paymentingOrderList(@LoginUser UserVo loginUser) {
         return toResponsSuccess(orderInfoService.findPaymentingOrderList(loginUser));
     }
 
     @ApiOperation(value = "已完成订单列表")
-    @IgnoreAuth
     @GetMapping("finishOrderList")
     public Object finishOrderList(@LoginUser UserVo loginUser) {
         return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,4,null));

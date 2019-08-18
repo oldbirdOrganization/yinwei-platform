@@ -62,14 +62,6 @@ public class OrderInfoService {
     }
 
     /**
-     * 上传图片
-     * @param file
-     * @return
-     */
-    public String uploadImg(MultipartFile file) throws Exception{
-        return OSSFactory.build().upload(file);
-    }
-    /**
      * 订单列表
      * 待指派订单：查询orderStatus=1
      * 待确认订单：查询orderStatus=2

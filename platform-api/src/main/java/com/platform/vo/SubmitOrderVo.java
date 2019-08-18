@@ -14,6 +14,11 @@ public class SubmitOrderVo implements java.io.Serializable{
     private Integer goodsId;
 
     /**
+     * 渠道id
+     */
+    private Integer channelId;
+
+    /**
      * 订单类型 1预约订单 2 支付订单
      */
     private Integer orderType;

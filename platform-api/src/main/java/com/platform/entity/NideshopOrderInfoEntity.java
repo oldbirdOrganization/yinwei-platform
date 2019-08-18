@@ -27,6 +27,11 @@ public class NideshopOrderInfoEntity implements Serializable {
 	 * 商品id
 	 */
 	private Integer goodsId;
+
+	/**
+	 * 渠道id
+	 */
+	private Integer channelId;
 	/**
 	 * 
 	 */
