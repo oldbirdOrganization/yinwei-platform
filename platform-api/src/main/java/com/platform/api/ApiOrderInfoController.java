@@ -6,14 +6,17 @@ import com.platform.entity.GoodsVo;
 import com.platform.entity.NideshopOrderImageEntity;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.UserVo;
+import com.platform.oss.OSSFactory;
 import com.platform.service.ApiGoodsService;
 import com.platform.service.OrderInfoService;
 import com.platform.util.ApiBaseAction;
+import com.platform.utils.RRException;
 import com.platform.vo.SubmitOrderVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,15 +39,29 @@ public class ApiOrderInfoController extends ApiBaseAction {
     private ApiGoodsService apiGoodsService;
 
 
-    /**
-     * 下单
-     */
     @ApiOperation(value = "下单")
     @IgnoreAuth
     @PostMapping("submitOrder")
     public Object submitOrder(@LoginUser UserVo loginUser,@RequestBody SubmitOrderVo submitOrderVo) {
         Integer orderId = orderInfoService.submitOrder(loginUser,submitOrderVo);
         return toResponsSuccess(orderId);
+    }
+
+    @ApiOperation(value = "上传图片,返回图片地址用于提交预约单")
+    @IgnoreAuth
+    @PostMapping("uploadImg")
+    public Object uploadImg(@RequestParam("file") CommonsMultipartFile file) {
+        if (file.isEmpty()) {
+            throw new RRException("上传文件不能为空");
+        }
+        Map<String, Object> result = null;
+        try {
+            String url = orderInfoService.uploadImg(file);
+            result = toResponsSuccess(url);
+        }catch (Exception e){
+            result = toResponsFail(e.getMessage());
+        }
+        return result;
     }
 
     @ApiOperation(value = "订单详情")

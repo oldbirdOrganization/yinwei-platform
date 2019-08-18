@@ -6,10 +6,14 @@ import com.platform.dao.NideshopOrderInfoDao;
 import com.platform.entity.NideshopOrderImageEntity;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.UserVo;
+import com.platform.oss.OSSFactory;
+import com.platform.vo.ImgVo;
 import com.platform.vo.SubmitOrderVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -41,9 +45,30 @@ public class OrderInfoService {
         model.setCreateUserId(user.getUserId());
         model.setUpdateUserId(user.getUserId());
         nideshopOrderInfoDao.insert(model);
+
+        //保存订单图片
+        if(CollectionUtils.isNotEmpty(submitOrderVo.getImgVoList())){
+            for(ImgVo imgVo : submitOrderVo.getImgVoList()) {
+                NideshopOrderImageEntity imageEntity = new NideshopOrderImageEntity();
+                imageEntity.setOrderId(model.getId());
+                imageEntity.setUrl(imgVo.getUrl());
+                imageEntity.setCreateTime(new Date());
+                imageEntity.setCreateUserId(user.getUserId());
+                imageEntity.setUpdateTime(new Date());
+                nideshopOrderImageDao.insert(imageEntity);
+            }
+        }
         return model.getId();
     }
 
+    /**
+     * 上传图片
+     * @param file
+     * @return
+     */
+    public String uploadImg(MultipartFile file) throws Exception{
+        return OSSFactory.build().upload(file);
+    }
     /**
      * 订单列表
      * 待指派订单：查询orderStatus=1

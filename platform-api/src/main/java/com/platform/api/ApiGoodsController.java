@@ -88,6 +88,15 @@ public class ApiGoodsController extends ApiBaseAction {
         return toResponsSuccess(goodsList);
     }
 
+    @ApiOperation(value = "商品详情")
+    @ApiImplicitParams({@ApiImplicitParam(name = "goodsId", value = "商品id", paramType = "path", required = true)})
+    @IgnoreAuth
+    @GetMapping(value = "goodsDetail")
+    public Object goodsDetail(@RequestParam(name = "goodsId" , required = true) Integer goodsId) {
+       GoodsVo  goodsVo = goodsService.queryObject(goodsId);
+        return toResponsSuccess(goodsVo);
+    }
+
     /*******************************************以上为新代码*****************************************************/
     /**
      */

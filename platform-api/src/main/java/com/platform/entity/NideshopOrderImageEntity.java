@@ -42,11 +42,11 @@ public class NideshopOrderImageEntity implements Serializable {
 	/**
 	 * 创建人id
 	 */
-	private Integer createUserId;
+	private Long createUserId;
 	/**
 	 * 修改人id
 	 */
-	private Integer updateUserId;
+	private Long updateUserId;
 	/**
 	 * 是否删除 0未删除 1删除
 	 */
@@ -92,19 +92,19 @@ public class NideshopOrderImageEntity implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public Integer getCreateUserId() {
+	public Long getCreateUserId() {
 		return createUserId;
 	}
 
-	public void setCreateUserId(Integer createUserId) {
+	public void setCreateUserId(Long createUserId) {
 		this.createUserId = createUserId;
 	}
 
-	public Integer getUpdateUserId() {
+	public Long getUpdateUserId() {
 		return updateUserId;
 	}
 
-	public void setUpdateUserId(Integer updateUserId) {
+	public void setUpdateUserId(Long updateUserId) {
 		this.updateUserId = updateUserId;
 	}
 
