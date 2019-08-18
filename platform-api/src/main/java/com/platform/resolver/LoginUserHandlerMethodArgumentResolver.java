@@ -43,7 +43,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
        // UserVo user = userService.queryObject((Long) object);
         //mock data
         UserVo user = new UserVo();
-        user.setUserId(38383838L);
+        user.setUserId(8L);
         user.setWeixin_openid("wx217ff77446b2a579");
 
         return user;

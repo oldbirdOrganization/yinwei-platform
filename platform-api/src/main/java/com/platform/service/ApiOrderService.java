@@ -155,13 +155,9 @@ public class ApiOrderService {
         orderInfo.setOrder_sn(CommonUtil.generateOrderNumber());
         orderInfo.setUser_id(loginUser.getUserId());
         //收货地址和运费
-        orderInfo.setConsignee(addressVo.getUserName());
-        orderInfo.setMobile(addressVo.getTelNumber());
-        orderInfo.setCountry(addressVo.getNationalCode());
-        orderInfo.setProvince(addressVo.getProvinceName());
-        orderInfo.setCity(addressVo.getCityName());
-        orderInfo.setDistrict(addressVo.getCountyName());
-        orderInfo.setAddress(addressVo.getDetailInfo());
+        orderInfo.setConsignee(addressVo.getContactName());
+        orderInfo.setMobile(addressVo.getContactMobile());
+        orderInfo.setAddress(addressVo.getAddress());
         //
         orderInfo.setFreight_price(freightPrice);
         //留言
