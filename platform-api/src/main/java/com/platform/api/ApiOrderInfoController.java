@@ -6,7 +6,6 @@ import com.platform.entity.GoodsVo;
 import com.platform.entity.NideshopOrderImageEntity;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.UserVo;
-import com.platform.oss.OSSFactory;
 import com.platform.service.ApiGoodsService;
 import com.platform.service.OrderInfoService;
 import com.platform.util.ApiBaseAction;
