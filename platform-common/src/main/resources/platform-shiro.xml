@@ -51,6 +51,13 @@
 	        	/login.html=anon
 	        	/sys/login=anon
 	        	/captcha.jpg=anon
+				/swagger-ui.html=anon
+				/swagger-ui.html#!/**=anon
+				/swagger-resources/**=anon
+				/swagger-resources/**=anon
+				/webjars/springfox-swagger-ui/**=anon
+				/configuration/**=anon
+				/v2/api-docs=anon
 	        	/**=authc
 	        </value>
 	    </property>
