@@ -275,4 +275,12 @@ public class SubmitOrderVo implements java.io.Serializable{
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public Integer getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(Integer channelId) {
+        this.channelId = channelId;
+    }
 }
