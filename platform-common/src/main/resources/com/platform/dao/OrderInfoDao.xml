@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.platform.dao.OrderInfoDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.platform.entity.OrderInfoEntity" id="orderInfoMap">
+        <result property="id" column="id"/>
+        <result property="goodsId" column="goods_id"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="orderType" column="order_type"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="paymentStatus" column="payment_status"/>
+        <result property="paymentTime" column="payment_time"/>
+        <result property="paymentNo" column="payment_no"/>
+        <result property="orderPrice" column="order_price"/>
+        <result property="servicehousename" column="serviceHouseName"/>
+        <result property="servicetime" column="serviceTime"/>
+        <result property="servicerequired" column="serviceRequired"/>
+        <result property="descriptiondescription" column="descriptionDescription"/>
+        <result property="servicetype" column="serviceType"/>
+        <result property="servicespace" column="serviceSpace"/>
+        <result property="serviceacreage" column="serviceAcreage"/>
+        <result property="serviceidea" column="serviceIdea"/>
+        <result property="serviceairconditionermodel" column="serviceAirConditionerModel"/>
+        <result property="serviceairconditionertype" column="serviceAirConditionerType"/>
+        <result property="servicefurniture" column="serviceFurniture"/>
+        <result property="servicehousetype" column="serviceHouseType"/>
+        <result property="servicehousedeliverystandards" column="serviceHouseDeliveryStandards"/>
+        <result property="contactname" column="contactName"/>
+        <result property="contactmobile" column="contactMobile"/>
+        <result property="address" column="address"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createUserId" column="create_user_id"/>
+        <result property="updateUserId" column="update_user_id"/>
+        <result property="defunct" column="defunct"/>
+        <result property="channelId" column="channel_id"/>
+        <result property="couponId" column="coupon_id"/>
+        <result property="coupon_price" column="coupon_price"/>
+    </resultMap>
+
+    <select id="queryObject" resultType="com.platform.entity.OrderInfoEntity">
+		select o.*,u.username as userName,
+		nc.name as channelName
+        from nideshop_order_info o
+        left join nideshop_user u on o.create_user_id = u.id
+        left join nideshop_channel nc on nc.id=o.channel_id
+        where o.id = #{value}
+	</select>
+
+    <select id="queryList" resultType="com.platform.entity.OrderInfoEntity">
+        select o.*,u.username as userName,
+        nc.name as channelName
+        from nideshop_order_info o
+        left join nideshop_user u on o.create_user_id = u.id
+        left join nideshop_channel nc on nc.id=o.channel_id
+        WHERE 1=1
+        <if test="orderNo != null and orderNo.trim() != ''">
+            AND o.order_no LIKE concat('%',#{orderNo},'%')
+        </if>
+        <if test="paymentstatus != null and paymentstatus.trim() != ''">
+            AND o.payment_status = #{paymentstatus}
+        </if>
+        <if test="orderStatus != null and orderStatus.trim() != ''">
+            AND o.order_status = #{orderStatus}
+        </if>
+        <if test="orderType != null and orderType.trim() != ''">
+            AND o.order_type = #{orderType}
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from nideshop_order_info WHERE 1=1
+        <if test="orderNo != null and orderNo.trim() != ''">
+            AND o.order_no LIKE concat('%',#{orderNo},'%')
+        </if>
+        <if test="paymentStatus != null and paymentStatus.trim() != ''">
+            AND o.payment_status = #{paymentStatus}
+        </if>
+        <if test="orderStatus != null and orderStatus.trim() != ''">
+            AND o.order_status = #{orderStatus}
+        </if>
+        <if test="orderType != null and orderType.trim() != ''">
+            AND o.order_type = #{orderType}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.platform.entity.OrderInfoEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into nideshop_order_info
+		(
+			`order_no`, 
+			`goods_id`, 
+			`order_status`, 
+			`order_type`, 
+			`payment_status`, 
+			`order_price`, 
+			`contact_name`, 
+			`contact_mobile`, 
+			`address`, 
+			`create_user_id`,
+			`create_time`, 
+			`defunct`
+		)
+		values
+		(
+			#{orderNo}, 
+			#{goodsId}, 
+			#{orderStatus}, 
+			#{orderType},
+			#{paymentStatus}, 
+			#{orderPrice}, 
+			#{contactName}, 
+			#{contactMobile}, 
+			#{address}, 
+			#{createUserId},
+			sysdate,
+			#{defunct}
+			
+		)
+	</insert>
+
+    <update id="update" parameterType="com.platform.entity.OrderInfoEntity">
+        update nideshop_order_info
+        <set>
+            <if test="orderNo != null">`order_no` = #{orderNo},</if>
+            <if test="goodsId != null">`goods_id` = #{goodsId},</if>
+            <if test="orderStatus != null">`order_status` = #{orderStatus},</if>
+            <if test="paymentStatus != null">`payment_status` = #{paymentStatus},</if>
+            <if test="orderPrice != null">`order_price` = #{orderPrice},</if>
+            <if test="contactName != null">`contact_name` = #{contactName},</if>
+            <if test="contactMobile != null">`contact_mobile` = #{contactMobile},</if>
+            <if test="address != null">`address` = #{address},</if>
+            <if test="createUserId != null">`create_user_id` = #{createUserId},</if>
+            <if test="updateUserId != null">`update_user_id` = #{updateUserId},</if>
+            <if test="update_time != null">`update_time` = sysdate</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+		delete from nideshop_order_info where id = #{value}
+	</delete>
+
+    <delete id="deleteBatch">
+        delete from nideshop_order_info where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

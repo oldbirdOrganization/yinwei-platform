@@ -1,7 +1,7 @@
 package com.platform.controller;
 
-import com.platform.entity.OrderEntity;
-import com.platform.service.OrderService;
+import com.platform.entity.OrderInfoEntity;
+import com.platform.service.OrderInfoService;
 import com.platform.utils.PageUtils;
 import com.platform.utils.Query;
 import com.platform.utils.R;
@@ -20,9 +20,9 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("order")
-public class OrderController {
+public class OrderInofController {
     @Autowired
-    private OrderService orderService;
+    private OrderInfoService orderInfoService;
 
     /**
      * 列表
@@ -33,8 +33,8 @@ public class OrderController {
         // 查询列表数据
         Query query = new Query(params);
 
-        List<OrderEntity> orderList = orderService.queryList(query);
-        int total = orderService.queryTotal(query);
+        List<OrderInfoEntity> orderList = orderInfoService.queryList(query);
+        int total = orderInfoService.queryTotal(query);
 
         PageUtils pageUtil = new PageUtils(orderList, total, query.getLimit(), query.getPage());
 
@@ -48,7 +48,7 @@ public class OrderController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("order:info")
     public R info(@PathVariable("id") Integer id) {
-        OrderEntity order = orderService.queryObject(id);
+        OrderInfoEntity order = orderInfoService.queryObject(id);
 
         return R.ok().put("order", order);
     }
@@ -58,8 +58,8 @@ public class OrderController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("order:save")
-    public R save(@RequestBody OrderEntity order) {
-        orderService.save(order);
+    public R save(@RequestBody OrderInfoEntity order) {
+        orderInfoService.save(order);
 
         return R.ok();
     }
@@ -69,8 +69,8 @@ public class OrderController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("order:update")
-    public R update(@RequestBody OrderEntity order) {
-        orderService.update(order);
+    public R update(@RequestBody OrderInfoEntity order) {
+        orderInfoService.update(order);
 
         return R.ok();
     }
@@ -81,7 +81,7 @@ public class OrderController {
     @RequestMapping("/delete")
     @RequiresPermissions("order:delete")
     public R delete(@RequestBody Integer[] ids) {
-        orderService.deleteBatch(ids);
+        orderInfoService.deleteBatch(ids);
 
         return R.ok();
     }
@@ -92,7 +92,7 @@ public class OrderController {
     @RequestMapping("/queryAll")
     public R queryAll(@RequestParam Map<String, Object> params) {
 
-        List<OrderEntity> list = orderService.queryList(params);
+        List<OrderInfoEntity> list = orderInfoService.queryList(params);
 
         return R.ok().put("list", list);
     }
@@ -102,7 +102,7 @@ public class OrderController {
      */
     @RequestMapping("/queryTotal")
     public R queryTotal(@RequestParam Map<String, Object> params) {
-        int sum = orderService.queryTotal(params);
+        int sum = orderInfoService.queryTotal(params);
 
         return R.ok().put("sum", sum);
     }
@@ -116,22 +116,9 @@ public class OrderController {
     @RequestMapping("/confirm")
     @RequiresPermissions("order:confirm")
     public R confirm(@RequestBody Integer id) {
-        orderService.confirm(id);
+        orderInfoService.confirm(id);
 
         return R.ok();
     }
 
-    /**
-     * 发货
-     *
-     * @param order
-     * @return
-     */
-    @RequestMapping("/sendGoods")
-    @RequiresPermissions("order:sendGoods")
-    public R sendGoods(@RequestBody OrderEntity order) {
-        orderService.sendGoods(order);
-
-        return R.ok();
-    }
 }

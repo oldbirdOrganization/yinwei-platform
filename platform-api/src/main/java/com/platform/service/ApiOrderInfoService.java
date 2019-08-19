@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.text.SimpleDateFormat;
 import java.util.*;
 @Slf4j
-public class OrderInfoService {
+public class ApiOrderInfoService {
 
     @Autowired
     private NideshopOrderInfoDao nideshopOrderInfoDao;

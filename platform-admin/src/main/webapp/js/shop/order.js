@@ -17,10 +17,12 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '订单号', name: 'orderNo', index: 'order_nn', width: 100},
+            {label: '订单号', name: 'orderNo', index: 'order_no', width: 100},
             {label: '会员', name: 'userName', index: 'user_name', width: 80},
+            {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 60},
             {
-                label: '订单类型', name: 'orderType', index: 'order_type', width: 80, formatter: function (value) {
+                label: '订单类型', name: 'orderType', index: 'order_type', width: 80,
+                formatter: function (value) {
                     if (value == '1') {
                         return '预约订单';
                     } else if (value == '2') {
@@ -30,7 +32,8 @@ $(function () {
                 }
             },
             {
-                label: '订单状态', name: 'orderStatus', index: 'order_status', width: 80, formatter: function (value) {
+                label: '订单状态', name: 'orderStatus', index: 'order_status', width: 80,
+                formatter: function (value) {
                     if (value == '1') {
                         return '待指派';
                     } else if (value == '2') {
@@ -43,24 +46,6 @@ $(function () {
                         return '已作废';
                     } else if (value == '6') {
                         return '待评价';
-                    } 
-                    return value;
-                }
-            },
-            {
-                label: '渠道类型',
-                name: 'channel_id',
-                index: 'channel_id',
-                width: 60,
-                formatter: function (value) {
-                    if (value == '1') {
-                        return '维修';
-                    } else if (value == '2') {
-                        return '改造';
-                    } else if (value == '3') {
-                        return '设计';
-                    } else if (value == '4') {
-                        return '定制化加配';
                     }
                     return value;
                 }
@@ -78,7 +63,12 @@ $(function () {
             },
             {label: '支付单号', name: 'paymentNo', index: 'payment_no', width: 80},
             {label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 80},
-            {label: '实际支付金额', name: 'orderPrice', index: 'order_price', width: 80},
+            {
+                label: '实际支付金额', name: 'orderPrice', index: 'order_price', width: 80,
+                formatter: function (value) {
+                    return transDate(value);
+                }
+            },
             {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 60},
             {
                 label: '下单时间', name: 'createTime', index: 'create_time', width: 80,
@@ -88,8 +78,7 @@ $(function () {
             },
             {
                 label: '操作', width: 160, align: 'center', sortable: false, formatter: function (value, col, row) {
-                    return '<button class="btn btn-outline btn-info" onclick="vm.lookDetail(' + row.id + ')"><i class="fa fa-info-circle"></i>&nbsp;详情</button>' +
-                        '<button class="btn btn-outline btn-primary" style="margin-top: 10px;" onclick="vm.printDetail(' + row.id + ')"><i class="fa fa-print"></i>&nbsp;打印</button>';
+                    return '<button class="btn btn-outline btn-info" onclick="vm.lookDetail(' + row.id + ')"><i class="fa fa-info-circle"></i>&nbsp;详情</button>';
                 }
             }
         ]

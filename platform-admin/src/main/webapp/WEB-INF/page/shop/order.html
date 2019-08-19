@@ -27,6 +27,18 @@
                         <i-option value="2">定金订单</i-option>
                     </i-select>
                 </i-col>
+                <i-col span="4">
+                    <i-select v-model="q.channelId">
+                        <i-option value="1">维修</i-option>
+                        <i-option value="2">改造</i-option>
+                        <i-option value="3">设计</i-option>
+                        <i-option value="4">定制化加配</i-option>
+                        <i-option value="5">装修</i-option>
+                        <i-option value="6">空调维保</i-option>
+                        <i-option value="7">家具保养</i-option>
+                        <i-option value="8">专业验房</i-option>
+                    </i-select>
+                </i-col>
                 <i-button @click="query">查询</i-button>
             </div>
             <!-- <div class="buttons-group">
@@ -54,10 +66,14 @@
                 <i-input v-model="order.userName" readonly/>
             </Form-item>
             <Form-item label="订单类型" prop="orderType">
-                <i-select v-model="order.orderType" disabled>
-                    <i-option value="1">预约订单</i-option>
-                    <i-option value="2">定金订单</i-option>
-                </i-select>
+                <Radio-group v-model="order.orderType">
+                    <Radio label="1" disabled>
+                        <span>预约订单</span>
+                    </Radio>
+                    <Radio label="2" disabled>
+                        <span>定金订单</span>
+                    </Radio>
+                </Radio-group>
             </Form-item>
             <Form-item label="订单状态" prop="orderStatus" readonly>
                 <Radio-group v-model="order.orderStatus">
@@ -91,6 +107,9 @@
                         <span>已付定金</span>
                     </Radio>
                 </Radio-group>
+            </Form-item>
+            <Form-item label="渠道名称" prop="channelName">
+                <i-input v-model="order.channelName" readonly/>
             </Form-item>
             <Form-item label="联系人" prop="contactName">
                 <i-input v-model="order.contactName" readonly/>

@@ -1,21 +1,18 @@
 package com.platform.api;
 
-import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.GoodsVo;
 import com.platform.entity.NideshopOrderImageEntity;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.UserVo;
 import com.platform.service.ApiGoodsService;
-import com.platform.service.OrderInfoService;
+import com.platform.service.ApiOrderInfoService;
 import com.platform.util.ApiBaseAction;
-import com.platform.utils.RRException;
 import com.platform.vo.SubmitOrderVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +30,7 @@ import java.util.Objects;
 public class ApiOrderInfoController extends ApiBaseAction {
 
     @Autowired
-    private OrderInfoService orderInfoService;
+    private ApiOrderInfoService orderInfoService;
     @Autowired
     private ApiGoodsService apiGoodsService;
 

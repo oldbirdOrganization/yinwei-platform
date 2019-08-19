@@ -146,6 +146,17 @@ public class NideshopOrderInfoEntity implements Serializable {
 	 */
 	private Integer defunct;
 
+	/**
+	 * 优惠券Id
+	 */
+	private Integer couponId;
+
+	/**
+	 * 优惠金额
+	 */
+	private BigDecimal couponPrice ;
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -384,5 +395,29 @@ public class NideshopOrderInfoEntity implements Serializable {
 
 	public void setDefunct(Integer defunct) {
 		this.defunct = defunct;
+	}
+
+	public Integer getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(Integer channelId) {
+		this.channelId = channelId;
+	}
+
+	public Integer getCouponId() {
+		return couponId;
+	}
+
+	public void setCouponId(Integer couponId) {
+		this.couponId = couponId;
+	}
+
+	public BigDecimal getCouponPrice() {
+		return couponPrice;
+	}
+
+	public void setCouponPrice(BigDecimal couponPrice) {
+		this.couponPrice = couponPrice;
 	}
 }

@@ -2,15 +2,11 @@ package com.platform.api;
 
 import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
-import com.platform.cache.J2CacheUtils;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.OrderGoodsVo;
-import com.platform.entity.OrderVo;
 import com.platform.entity.UserVo;
 import com.platform.service.ApiOrderGoodsService;
-import com.platform.service.ApiOrderService;
-import com.platform.service.OrderInfoService;
-import com.platform.service.OrderService;
+import com.platform.service.ApiOrderInfoService;
 import com.platform.util.ApiBaseAction;
 import com.platform.util.wechat.WechatRefundApiResult;
 import com.platform.util.wechat.WechatUtil;
@@ -43,7 +39,7 @@ import java.util.*;
 public class ApiOrderPayController extends ApiBaseAction {
     private Logger logger = Logger.getLogger(getClass());
     @Autowired
-    private OrderInfoService orderInfoService;
+    private ApiOrderInfoService orderInfoService;
     @Autowired
     private ApiOrderGoodsService orderGoodsService;
 

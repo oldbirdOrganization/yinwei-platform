@@ -1,6 +1,6 @@
 package com.platform.service;
 
-import com.platform.entity.OrderEntity;
+import com.platform.entity.OrderInfoEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -10,17 +10,17 @@ import java.util.Map;
  * @email oldbirdteam@163.com
  * @date 2019-08-13 10:41:09
  */
-public interface OrderService {
+public interface OrderInfoService {
 
-    OrderEntity queryObject(Integer id);
+    OrderInfoEntity queryObject(Integer id);
 
-    List<OrderEntity> queryList(Map<String, Object> map);
+    List<OrderInfoEntity> queryList(Map<String, Object> map);
 
     int queryTotal(Map<String, Object> map);
 
-    int save(OrderEntity order);
+    int save(OrderInfoEntity order);
 
-    int update(OrderEntity order);
+    int update(OrderInfoEntity order);
 
     int delete(Integer id);
 
@@ -34,5 +34,4 @@ public interface OrderService {
      */
     int confirm(Integer id);
 
-    int sendGoods(OrderEntity order);
 }
