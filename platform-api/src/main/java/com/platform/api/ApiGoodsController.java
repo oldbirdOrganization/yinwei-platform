@@ -69,7 +69,6 @@ public class ApiGoodsController extends ApiBaseAction {
     private ApiCartService cartService;
 
     @ApiOperation(value = "获取分类下面的商品列表")
-    @ApiImplicitParams({@ApiImplicitParam(name = "categoryId", value = "分类id", paramType = "path", required = true)})
     @IgnoreAuth
     @GetMapping(value = "goodsList")
     public Object goodsList(@RequestParam(name = "categoryId" , required = true) Integer categoryId) {
@@ -89,7 +88,6 @@ public class ApiGoodsController extends ApiBaseAction {
     }
 
     @ApiOperation(value = "商品详情")
-    @ApiImplicitParams({@ApiImplicitParam(name = "goodsId", value = "商品id", paramType = "path", required = true)})
     @IgnoreAuth
     @GetMapping(value = "goodsDetail")
     public Object goodsDetail(@RequestParam(name = "goodsId" , required = true) Integer goodsId) {
