@@ -2,11 +2,20 @@ package com.platform.service.impl;
 
 import com.platform.dao.OrderInfoDao;
 import com.platform.entity.OrderInfoEntity;
+import com.platform.entity.SysUserEntity;
 import com.platform.service.OrderInfoService;
+import com.platform.utils.Constant;
 import com.platform.utils.RRException;
+import jdk.nashorn.internal.objects.Global;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,15 +69,24 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         Integer payStatus = orderEntity.getPaymentStatus();//付款状态
 
         if (2 == payStatus) {
-            throw new RRException("此订单未已付款，不能作废！");
+            throw new RRException("此订单已付款，不能作废！");
         }
         if (3 == orderStatus) {
             throw new RRException("此订单处于施工中，不能作废！");
         }
-        if (4 == orderStatus) {
+        if (4 == orderStatus || 6 == orderStatus) {
             throw new RRException("此订单已完成服务，不能作废！");
         }
+        if (5 == payStatus) {
+            throw new RRException("此订单已作废，勿重复操作！");
+        }
+
         orderEntity.setOrderStatus(5);
+        orderEntity.setUpdateTime(new Date());
+        SysUserEntity sysUser = (SysUserEntity) SecurityUtils.getSubject().getSession().getAttribute(Constant.CURRENT_USER);
+        if (sysUser != null) {
+            orderEntity.setUpdateUserId(sysUser.getUserId());
+        }
         return orderInfoDao.update(orderEntity);
     }
 

@@ -62,9 +62,10 @@ $(function () {
                 }
             },
             {label: '支付单号', name: 'paymentNo', index: 'payment_no', width: 80},
-            {label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 80},
+
+            {label: '实际支付金额', name: 'orderPrice', index: 'order_price', width: 80},
             {
-                label: '实际支付金额', name: 'orderPrice', index: 'order_price', width: 80,
+                label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 80,
                 formatter: function (value) {
                     return transDate(value);
                 }
@@ -103,8 +104,7 @@ let vm = new Vue({
         query: function () {
             vm.reload();
         },
-        dispatchOrder
-            : function (event) {
+        dispatchOrder: function (event) {
             let id = getSelectedRow("#jqGrid");
             if (id == null) {
                 return;
@@ -124,22 +124,20 @@ let vm = new Vue({
             if (id == null) {
                 return;
             }
-            cancelOrder('订单作废', function () {
-                Ajax.request({
-                    type: "POST",
-                    url: "../order/cancelOrder",
-                    contentType: "application/json",
-                    params: JSON.stringify(id),
-                    successCallback: function (r) {
-                        if (r.code == 0) {
-                            alert('操作成功', function (index) {
-                                vm.reload();
-                            });
-                        } else {
-                            alert(r.msg);
-                        }
+            Ajax.request({
+                type: "POST",
+                url: "../order/cancelOrder",
+                contentType: "application/json",
+                params: JSON.stringify(id),
+                successCallback: function (r) {
+                    if (r.code == 0) {
+                        alert('操作成功', function (index) {
+                            vm.reload();
+                        });
+                    } else {
+                        alert(r.msg);
                     }
-                });
+                }
             });
         },
         saveOrUpdate: function (event) {

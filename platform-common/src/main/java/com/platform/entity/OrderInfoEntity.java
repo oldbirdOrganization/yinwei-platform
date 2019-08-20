@@ -63,63 +63,63 @@ public class OrderInfoEntity implements Serializable {
 	/**
 	 * 服务小区名称
 	 */
-	private String servicehousename;
+	private String serviceHouseName;
 	/**
 	 * 服务时间
 	 */
-	private String servicetime;
+	private String serviceTime;
 	/**
 	 * 服务要求 多个以逗号隔开
 	 */
-	private String servicerequired;
+	private String serviceRequired;
 	/**
 	 * 问题描述
 	 */
-	private String descriptiondescription;
+	private String descriptionDescription;
 	/**
 	 * 服务类型
 	 */
-	private String servicetype;
+	private String serviceType;
 	/**
 	 * 服务空间
 	 */
-	private String servicespace;
+	private String serviceSpace;
 	/**
 	 * 服务面积
 	 */
-	private String serviceacreage;
+	private String serviceAcreage;
 	/**
 	 * 服务方案
 	 */
-	private String serviceidea;
+	private String serviceIdea;
 	/**
 	 * 空调型号
 	 */
-	private String serviceairconditionermodel;
+	private String serviceAirConditionerModel;
 	/**
 	 * 空调类型
 	 */
-	private String serviceairconditionertype;
+	private String serviceAirConditionerType;
 	/**
 	 * 服务家具
 	 */
-	private String servicefurniture;
+	private String serviceFurniture;
 	/**
 	 * 房屋类型
 	 */
-	private String servicehousetype;
+	private String serviceHouseType;
 	/**
 	 * 交付标准
 	 */
-	private String servicehousedeliverystandards;
+	private String serviceHouseDeliveryStandards;
 	/**
 	 * 联系人
 	 */
-	private String contactname;
+	private String contactName;
 	/**
 	 * 联系人手机
 	 */
-	private String contactmobile;
+	private String contactMobile;
 	/**
 	 * 地址
 	 */
@@ -158,14 +158,6 @@ public class OrderInfoEntity implements Serializable {
 
 	//渠道类型名称
 	private String channelName;
-
-	public String getChannelName() {
-		return channelName;
-	}
-
-	public void setChannelName(String channelName) {
-		this.channelName = channelName;
-	}
 
 	public Integer getId() {
 		return id;
@@ -207,12 +199,28 @@ public class OrderInfoEntity implements Serializable {
 		this.orderStatus = orderStatus;
 	}
 
+	public Integer getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(Integer paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
 	public String getPaymentNo() {
 		return paymentNo;
 	}
 
 	public void setPaymentNo(String paymentNo) {
 		this.paymentNo = paymentNo;
+	}
+
+	public Date getPaymentTime() {
+		return paymentTime;
+	}
+
+	public void setPaymentTime(Date paymentTime) {
+		this.paymentTime = paymentTime;
 	}
 
 	public BigDecimal getOrderPrice() {
@@ -223,124 +231,140 @@ public class OrderInfoEntity implements Serializable {
 		this.orderPrice = orderPrice;
 	}
 
-	public String getServicehousename() {
-		return servicehousename;
+	public Integer getCouponId() {
+		return couponId;
 	}
 
-	public void setServicehousename(String servicehousename) {
-		this.servicehousename = servicehousename;
+	public void setCouponId(Integer couponId) {
+		this.couponId = couponId;
 	}
 
-	public String getServicetime() {
-		return servicetime;
+	public BigDecimal getCouponPrice() {
+		return couponPrice;
 	}
 
-	public void setServicetime(String servicetime) {
-		this.servicetime = servicetime;
+	public void setCouponPrice(BigDecimal couponPrice) {
+		this.couponPrice = couponPrice;
 	}
 
-	public String getServicerequired() {
-		return servicerequired;
+	public String getServiceHouseName() {
+		return serviceHouseName;
 	}
 
-	public void setServicerequired(String servicerequired) {
-		this.servicerequired = servicerequired;
+	public void setServiceHouseName(String serviceHouseName) {
+		this.serviceHouseName = serviceHouseName;
 	}
 
-	public String getDescriptiondescription() {
-		return descriptiondescription;
+	public String getServiceTime() {
+		return serviceTime;
 	}
 
-	public void setDescriptiondescription(String descriptiondescription) {
-		this.descriptiondescription = descriptiondescription;
+	public void setServiceTime(String serviceTime) {
+		this.serviceTime = serviceTime;
 	}
 
-	public String getServicetype() {
-		return servicetype;
+	public String getServiceRequired() {
+		return serviceRequired;
 	}
 
-	public void setServicetype(String servicetype) {
-		this.servicetype = servicetype;
+	public void setServiceRequired(String serviceRequired) {
+		this.serviceRequired = serviceRequired;
 	}
 
-	public String getServicespace() {
-		return servicespace;
+	public String getDescriptionDescription() {
+		return descriptionDescription;
 	}
 
-	public void setServicespace(String servicespace) {
-		this.servicespace = servicespace;
+	public void setDescriptionDescription(String descriptionDescription) {
+		this.descriptionDescription = descriptionDescription;
 	}
 
-	public String getServiceacreage() {
-		return serviceacreage;
+	public String getServiceType() {
+		return serviceType;
 	}
 
-	public void setServiceacreage(String serviceacreage) {
-		this.serviceacreage = serviceacreage;
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
 	}
 
-	public String getServiceidea() {
-		return serviceidea;
+	public String getServiceSpace() {
+		return serviceSpace;
 	}
 
-	public void setServiceidea(String serviceidea) {
-		this.serviceidea = serviceidea;
+	public void setServiceSpace(String serviceSpace) {
+		this.serviceSpace = serviceSpace;
 	}
 
-	public String getServiceairconditionermodel() {
-		return serviceairconditionermodel;
+	public String getServiceAcreage() {
+		return serviceAcreage;
 	}
 
-	public void setServiceairconditionermodel(String serviceairconditionermodel) {
-		this.serviceairconditionermodel = serviceairconditionermodel;
+	public void setServiceAcreage(String serviceAcreage) {
+		this.serviceAcreage = serviceAcreage;
 	}
 
-	public String getServiceairconditionertype() {
-		return serviceairconditionertype;
+	public String getServiceIdea() {
+		return serviceIdea;
 	}
 
-	public void setServiceairconditionertype(String serviceairconditionertype) {
-		this.serviceairconditionertype = serviceairconditionertype;
+	public void setServiceIdea(String serviceIdea) {
+		this.serviceIdea = serviceIdea;
 	}
 
-	public String getServicefurniture() {
-		return servicefurniture;
+	public String getServiceAirConditionerModel() {
+		return serviceAirConditionerModel;
 	}
 
-	public void setServicefurniture(String servicefurniture) {
-		this.servicefurniture = servicefurniture;
+	public void setServiceAirConditionerModel(String serviceAirConditionerModel) {
+		this.serviceAirConditionerModel = serviceAirConditionerModel;
 	}
 
-	public String getServicehousetype() {
-		return servicehousetype;
+	public String getServiceAirConditionerType() {
+		return serviceAirConditionerType;
 	}
 
-	public void setServicehousetype(String servicehousetype) {
-		this.servicehousetype = servicehousetype;
+	public void setServiceAirConditionerType(String serviceAirConditionerType) {
+		this.serviceAirConditionerType = serviceAirConditionerType;
 	}
 
-	public String getServicehousedeliverystandards() {
-		return servicehousedeliverystandards;
+	public String getServiceFurniture() {
+		return serviceFurniture;
 	}
 
-	public void setServicehousedeliverystandards(String servicehousedeliverystandards) {
-		this.servicehousedeliverystandards = servicehousedeliverystandards;
+	public void setServiceFurniture(String serviceFurniture) {
+		this.serviceFurniture = serviceFurniture;
 	}
 
-	public String getContactname() {
-		return contactname;
+	public String getServiceHouseType() {
+		return serviceHouseType;
 	}
 
-	public void setContactname(String contactname) {
-		this.contactname = contactname;
+	public void setServiceHouseType(String serviceHouseType) {
+		this.serviceHouseType = serviceHouseType;
 	}
 
-	public String getContactmobile() {
-		return contactmobile;
+	public String getServiceHouseDeliveryStandards() {
+		return serviceHouseDeliveryStandards;
 	}
 
-	public void setContactmobile(String contactmobile) {
-		this.contactmobile = contactmobile;
+	public void setServiceHouseDeliveryStandards(String serviceHouseDeliveryStandards) {
+		this.serviceHouseDeliveryStandards = serviceHouseDeliveryStandards;
+	}
+
+	public String getContactName() {
+		return contactName;
+	}
+
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+
+	public String getContactMobile() {
+		return contactMobile;
+	}
+
+	public void setContactMobile(String contactMobile) {
+		this.contactMobile = contactMobile;
 	}
 
 	public String getAddress() {
@@ -375,44 +399,20 @@ public class OrderInfoEntity implements Serializable {
 		this.createUserId = createUserId;
 	}
 
-	public Long getUpdateUserId() {
-		return updateUserId;
-	}
-
-	public void setUpdateUserId(Long updateUserId) {
-		this.updateUserId = updateUserId;
-	}
-
-	public Integer getDefunct() {
-		return defunct;
-	}
-
-	public void setDefunct(Integer defunct) {
-		this.defunct = defunct;
-	}
-
-	public Integer getCouponId() {
-		return couponId;
-	}
-
-	public void setCouponId(Integer couponId) {
-		this.couponId = couponId;
-	}
-
-	public BigDecimal getCouponPrice() {
-		return couponPrice;
-	}
-
-	public void setCouponPrice(BigDecimal couponPrice) {
-		this.couponPrice = couponPrice;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public Long getUpdateUserId() {
+		return updateUserId;
+	}
+
+	public void setUpdateUserId(Long updateUserId) {
+		this.updateUserId = updateUserId;
 	}
 
 	public String getUpdateName() {
@@ -423,12 +423,12 @@ public class OrderInfoEntity implements Serializable {
 		this.updateName = updateName;
 	}
 
-	public Date getPaymentTime() {
-		return paymentTime;
+	public Integer getDefunct() {
+		return defunct;
 	}
 
-	public void setPaymentTime(Date paymentTime) {
-		this.paymentTime = paymentTime;
+	public void setDefunct(Integer defunct) {
+		this.defunct = defunct;
 	}
 
 	public Integer getChannelId() {
@@ -439,11 +439,11 @@ public class OrderInfoEntity implements Serializable {
 		this.channelId = channelId;
 	}
 
-	public Integer getPaymentStatus() {
-		return paymentStatus;
+	public String getChannelName() {
+		return channelName;
 	}
 
-	public void setPaymentStatus(Integer paymentStatus) {
-		this.paymentStatus = paymentStatus;
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
 	}
 }

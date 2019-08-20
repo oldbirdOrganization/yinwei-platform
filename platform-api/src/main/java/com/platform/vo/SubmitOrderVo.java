@@ -49,7 +49,7 @@ public class SubmitOrderVo implements java.io.Serializable{
     /**
      * 问题描述
      */
-    private String descriptionDescription;
+    private String problemDescription;
 
     /**
      * 服务类型
@@ -164,12 +164,12 @@ public class SubmitOrderVo implements java.io.Serializable{
         this.serviceRequired = serviceRequired;
     }
 
-    public String getDescriptionDescription() {
-        return descriptionDescription;
+    public String getProblemDescription() {
+        return problemDescription;
     }
 
-    public void setDescriptionDescription(String descriptionDescription) {
-        this.descriptionDescription = descriptionDescription;
+    public void setProblemDescription(String problemDescription) {
+        this.problemDescription = problemDescription;
     }
 
     public String getServiceType() {
