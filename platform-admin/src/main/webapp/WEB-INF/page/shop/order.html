@@ -41,14 +41,14 @@
                 </i-col>
                 <i-button @click="query">查询</i-button>
             </div>
-            <!-- <div class="buttons-group">
-                #if($shiro.hasPermission("order:sendGoods"))
-                <i-button type="warning" @click="sendGoods">发货</i-button>
+            <div class="buttons-group">
+                #if($shiro.hasPermission("order:cancelOrder"))
+                <i-button type="warning" @click="cancelOrder">订单作废</i-button>
                 #end
-                #if($shiro.hasPermission("order:confirm"))
-                <i-button type="error" @click="confirm">确认收货</i-button>
+                #if($shiro.hasPermission("order:dispatchOrder"))
+                <i-button type="error" @click="dispatchOrder">订单指派</i-button>
                 #end
-            </div> -->
+            </div>
         </Row>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
@@ -81,10 +81,10 @@
                         <span>待指派</span>
                     </Radio>
                     <Radio label="2" disabled>
-                        <span>待确认</span>
+                        <span>待服务</span>
                     </Radio>
                     <Radio label="3" disabled>
-                        <span>已确认</span>
+                        <span>服务中</span>
                     </Radio>
                     <Radio label="4" disabled>
                         <span>订单完成</span>

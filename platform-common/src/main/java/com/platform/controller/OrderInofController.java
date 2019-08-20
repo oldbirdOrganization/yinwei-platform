@@ -108,16 +108,15 @@ public class OrderInofController {
     }
 
     /**
-     * 确定收货
+     * 订单作废
      *
      * @param id
      * @return
      */
-    @RequestMapping("/confirm")
-    @RequiresPermissions("order:confirm")
+    @RequestMapping("/cancelOrder")
+    @RequiresPermissions("order:cancelOrder")
     public R confirm(@RequestBody Integer id) {
-        orderInfoService.confirm(id);
-
+        orderInfoService.cancelOrder(id);
         return R.ok();
     }
 

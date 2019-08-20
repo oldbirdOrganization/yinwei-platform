@@ -37,9 +37,9 @@ $(function () {
                     if (value == '1') {
                         return '待指派';
                     } else if (value == '2') {
-                        return '待确认';
+                        return '待服务';
                     } else if (value == '3') {
-                        return '已确认';
+                        return '服务中';
                     } else if (value == '4') {
                         return '订单完成';
                     } else if (value == '5') {
@@ -103,13 +103,14 @@ let vm = new Vue({
         query: function () {
             vm.reload();
         },
-        sendGoods: function (event) {
+        dispatchOrder
+            : function (event) {
             let id = getSelectedRow("#jqGrid");
             if (id == null) {
                 return;
             }
             vm.showList = false;
-            vm.title = "发货";
+            vm.title = "订单指派";
             Ajax.request({
                 url: "../order/info/" + id,
                 async: true,
@@ -118,15 +119,15 @@ let vm = new Vue({
                 }
             });
         },
-        confirm: function (event) {
+        cancelOrder: function (event) {
             let id = getSelectedRow("#jqGrid");
             if (id == null) {
                 return;
             }
-            confirm('确定收货？', function () {
+            cancelOrder('订单作废', function () {
                 Ajax.request({
                     type: "POST",
-                    url: "../order/confirm",
+                    url: "../order/cancelOrder",
                     contentType: "application/json",
                     params: JSON.stringify(id),
                     successCallback: function (r) {
@@ -144,7 +145,7 @@ let vm = new Vue({
         saveOrUpdate: function (event) {
             Ajax.request({
                 type: "POST",
-                url: "../order/sendGoods",
+                url: "../order/dispatchOrder",
                 contentType: "application/json",
                 params: JSON.stringify(vm.order),
                 successCallback: function (r) {

@@ -3,6 +3,7 @@ package com.platform.service.impl;
 import com.platform.dao.OrderInfoDao;
 import com.platform.entity.OrderInfoEntity;
 import com.platform.service.OrderInfoService;
+import com.platform.utils.RRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,24 +54,40 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     @Override
-    public int confirm(Integer id) {
-        /*OrderInfoEntity orderEntity = queryObject(id);
-        Integer shippingStatus = orderEntity.getShippingStatus();//发货状态
-        Integer payStatus = orderEntity.getPayStatus();//付款状态
-        if (2 != payStatus) {
-            throw new RRException("此订单未付款，不能确认收货！");
+    public int cancelOrder(Integer id) {
+        OrderInfoEntity orderEntity = queryObject(id);
+        Integer orderStatus = orderEntity.getOrderStatus();//订单状态
+        Integer payStatus = orderEntity.getPaymentStatus();//付款状态
+
+        if (2 == payStatus) {
+            throw new RRException("此订单未已付款，不能作废！");
         }
-        if (4 == shippingStatus) {
-            throw new RRException("此订单处于退货状态，不能确认收货！");
+        if (3 == orderStatus) {
+            throw new RRException("此订单处于施工中，不能作废！");
         }
-        if (0 == shippingStatus) {
-            throw new RRException("此订单未发货，不能确认收货！");
+        if (4 == orderStatus) {
+            throw new RRException("此订单已完成服务，不能作废！");
         }
-        orderEntity.setShippingStatus(2);
-        orderEntity.setOrderStatus(301);*/
-//        return orderDao.update(orderEntity);
-        return 0;
+        orderEntity.setOrderStatus(5);
+        return orderInfoDao.update(orderEntity);
     }
 
+    @Override
+    public int dispatchOrder(OrderInfoEntity order) {
+//        Integer payStatus = order.getPayStatus();//付款状态
+//        if (2 != payStatus) {
+//            throw new RRException("此订单未付款！");
+//        }
+//
+//        ShippingEntity shippingEntity = shippingDao.queryObject(order.getShippingId());
+//        if (null != shippingEntity) {
+//            order.setShippingName(shippingEntity.getName());
+//        }
+//        order.setOrderStatus(300);//订单已发货
+//        order.setShippingStatus(1);//已发货
+//        return orderDao.update(order);
 
+
+        return 0;
+    }
 }

@@ -27,11 +27,16 @@ public interface OrderInfoService {
     int deleteBatch(Integer[] ids);
 
     /**
-     * 确定收货
+     * 订单作废
      *
      * @param id
      * @return
      */
-    int confirm(Integer id);
+    int cancelOrder(Integer id);
 
+    /**
+     * 订单指派
+     */
+
+    int dispatchOrder(OrderInfoEntity order);
 }
