@@ -142,10 +142,10 @@ public class OrderInfoEntity implements Serializable {
 	 * 修改人id
 	 */
 	private Long updateUserId;
-	
+
+	//修改人
 	private String updateName;
-	
-	
+
 	/**
 	 * 是否删除 0未删除 1删除
 	 */
@@ -158,6 +158,14 @@ public class OrderInfoEntity implements Serializable {
 
 	//渠道类型名称
 	private String channelName;
+	/**
+	 * 工人师傅
+	 */
+	private String masterWorker;
+	/**
+	 * 工人师傅编号
+	 */
+	private Long masterWorkerId;
 
 	public Integer getId() {
 		return id;
@@ -445,5 +453,21 @@ public class OrderInfoEntity implements Serializable {
 
 	public void setChannelName(String channelName) {
 		this.channelName = channelName;
+	}
+
+	public String getMasterWorker() {
+		return masterWorker;
+	}
+
+	public void setMasterWorker(String masterWorker) {
+		this.masterWorker = masterWorker;
+	}
+
+	public Long getMasterWorkerId() {
+		return masterWorkerId;
+	}
+
+	public void setMasterWorkerId(Long masterWorkerId) {
+		this.masterWorkerId = masterWorkerId;
 	}
 }

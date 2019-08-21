@@ -38,6 +38,8 @@
         <result property="channelId" column="channel_id"/>
         <result property="couponId" column="coupon_id"/>
         <result property="couponPrice" column="coupon_price"/>
+        <result property="masterWorker" column="master_worker"/>
+        <result property="masterWorkerId" column="master_worker_id"/>
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.OrderInfoEntity">
@@ -142,6 +144,8 @@
             <if test="contactMobile != null">`contact_mobile` = #{contactMobile},</if>
             <if test="address != null">`address` = #{address},</if>
             <if test="createUserId != null">`create_user_id` = #{createUserId},</if>
+            <if test="masterWorker != null">`master_worker` = #{masterWorker},</if>
+            <if test="masterWorkerId != null">`master_worker_id` = #{masterWorkerId},</if>
             <if test="updateUserId != null">`update_user_id` = #{updateUserId},</if>
             <if test="updateTime != null">`update_time` = #{updateTime}</if>
         </set>

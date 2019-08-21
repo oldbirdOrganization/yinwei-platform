@@ -115,9 +115,21 @@ public class OrderInofController {
      */
     @RequestMapping("/cancelOrder")
     @RequiresPermissions("order:cancelOrder")
-    public R confirm(@RequestBody Integer id) {
+    public R cancelOrder(@RequestBody Integer id) {
         orderInfoService.cancelOrder(id);
         return R.ok();
     }
 
+    /**
+     * 订单指派工人师傅
+     *
+     * @param order
+     * @return
+     */
+    @RequestMapping("/dispatchOrder")
+    @RequiresPermissions("order:dispatchOrder")
+    public R dispatchOrder(@RequestBody OrderInfoEntity order) {
+        orderInfoService.dispatchOrder(order);
+        return R.ok();
+    }
 }

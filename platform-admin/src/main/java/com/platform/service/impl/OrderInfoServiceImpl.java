@@ -87,20 +87,22 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     @Override
     public int dispatchOrder(OrderInfoEntity order) {
-//        Integer payStatus = order.getPayStatus();//付款状态
-//        if (2 != payStatus) {
-//            throw new RRException("此订单未付款！");
-//        }
-//
-//        ShippingEntity shippingEntity = shippingDao.queryObject(order.getShippingId());
-//        if (null != shippingEntity) {
-//            order.setShippingName(shippingEntity.getName());
-//        }
-//        order.setOrderStatus(300);//订单已发货
-//        order.setShippingStatus(1);//已发货
-//        return orderDao.update(order);
-
-
-        return 0;
+        Integer orderStatus = order.getOrderStatus();//订单状态
+        Integer payStatus = order.getPaymentStatus();//付款状态
+        if(1 != orderStatus){
+            throw new RRException("此订单状态无法指派装修师傅");
+        }
+        if(2 == order.getOrderType()){//定金订单
+            if (2 != payStatus) {
+                throw new RRException("此订单未付款，无法指派装修师傅");
+            }
+        }
+        order.setOrderStatus(2);//订单待确认
+        order.setUpdateTime(new Date());
+        SysUserEntity sysUser = (SysUserEntity) SecurityUtils.getSubject().getSession().getAttribute(Constant.CURRENT_USER);
+        if (sysUser != null) {
+            order.setUpdateUserId(sysUser.getUserId());
+        }
+        return orderInfoDao.update(order);
     }
 }

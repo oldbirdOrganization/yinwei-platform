@@ -78,8 +78,17 @@ $(function () {
                 }
             },
             {
-                label: '操作', width: 160, align: 'center', sortable: false, formatter: function (value, col, row) {
-                    return '<button class="btn btn-outline btn-info" onclick="vm.lookDetail(' + row.id + ')"><i class="fa fa-info-circle"></i>&nbsp;详情</button>';
+                label: '操作', name: 'orderStatus', index: 'order_status',width: 160, align: 'center', sortable: false,
+                formatter: function (value, col, row) {
+                    if(value=='1'){
+                        return '<button class="btn btn-outline btn-info" onclick="vm.lookDetail(' + row.id + ')">' +
+                            '<i class="fa fa-info-circle"></i>&nbsp;详情</button>'
+                            +<button class="btn btn-outline btn-primary" onclick="vm.lookDetail(' + row.id + ')">' +
+                                '<i class="fa fa-info-circle"></i>&nbsp;订单指派</button>;
+                    }else{
+                        return '<button class="btn btn-outline btn-info" onclick="vm.lookDetail(' + row.id + ')">' +
+                            '<i class="fa fa-info-circle"></i>&nbsp;详情</button>';
+                    }
                 }
             }
         ]
