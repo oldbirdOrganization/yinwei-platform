@@ -83,4 +83,10 @@ public interface SysUserService {
      * @return
      */
     Page<UserWindowDto> findPage(UserWindowDto userEntity, int pageNum);
+
+
+    /**
+     * 查询工人师傅列表信息
+     */
+    List<SysUserEntity> queryMasterWorkerList();
 }

@@ -78,17 +78,10 @@ $(function () {
                 }
             },
             {
-                label: '操作', name: 'orderStatus', index: 'order_status',width: 160, align: 'center', sortable: false,
+                label: '操作', width: 160, align: 'center', sortable: false,
                 formatter: function (value, col, row) {
-                    if(value=='1'){
-                        return '<button class="btn btn-outline btn-info" onclick="vm.lookDetail(' + row.id + ')">' +
-                            '<i class="fa fa-info-circle"></i>&nbsp;详情</button>'
-                            +<button class="btn btn-outline btn-primary" onclick="vm.lookDetail(' + row.id + ')">' +
-                                '<i class="fa fa-info-circle"></i>&nbsp;订单指派</button>;
-                    }else{
-                        return '<button class="btn btn-outline btn-info" onclick="vm.lookDetail(' + row.id + ')">' +
-                            '<i class="fa fa-info-circle"></i>&nbsp;详情</button>';
-                    }
+                    return '<button class="btn btn-outline btn-info" onclick="vm.lookDetail(' + row.id + ')">' +
+                        '<i class="fa fa-info-circle"></i>&nbsp;详情</button>';
                 }
             }
         ]
@@ -118,13 +111,14 @@ let vm = new Vue({
             if (id == null) {
                 return;
             }
+            alert(id);
             vm.showList = false;
             vm.title = "订单指派";
             Ajax.request({
-                url: "../order/info/" + id,
+                url: "../sys/user/queryMasterWorkerList",
                 async: true,
                 successCallback: function (r) {
-                    vm.order = r.order;
+                    vm.workerList = r.workerList;
                 }
             });
         },
@@ -190,7 +184,7 @@ let vm = new Vue({
                 title: '<i class="fa fa-print"></i>打印票据',
                 content: '../shop/orderPrint.html?orderId=' + rowId
             })
-        }
+        },
     },
     created: function () {
         let vue = this;

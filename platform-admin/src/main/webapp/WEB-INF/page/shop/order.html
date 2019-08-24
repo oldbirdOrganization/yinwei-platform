@@ -138,6 +138,52 @@
         </i-form>
     </Card>
 
+    <!--<Card v-show="!showList">
+        <p slot="title">{{title}}</p>
+        <i-form ref="formValidate" :model="workerList" :rules="ruleValidate" :label-width="100">
+            <Form-item label="描述" prop="simpleDesc">
+                <i-input type="textarea" v-model="brand.simpleDesc" placeholder="描述"/>
+            </Form-item>
+
+            <Form-item label="排序" prop="sortOrder">
+                <Input-number :min="0" :step="1" v-model="brand.sortOrder" placeholder="排序" style="width: 188px;"/>
+            </Form-item>
+            <Form-item label="显示" prop="isShow">
+                <Radio-group v-model="brand.isShow">
+                    <Radio label="1">
+                        <span>是</span>
+                    </Radio>
+                    <Radio label="0">
+                        <span>否</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
+            <Form-item label="展示价格" prop="floorPrice">
+                <Input-number :min="0" v-model="brand.floorPrice" placeholder="展示价格" style="width: 188px;"/>
+            </Form-item>
+            <Form-item label="新品牌" prop="isNew">
+                <Radio-group v-model="brand.isNew">
+                    <Radio label="1">
+                        <span>是</span>
+                    </Radio>
+                    <Radio label="0">
+                        <span>否</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
+            <Form-item label="新品牌排序" prop="newSortOrder">
+                <Input-number :min="0" :step="1" v-model="brand.newSortOrder" placeholder="新品牌排序"
+                              style="width: 188px;"/>
+            </Form-item>
+            <Form-item>
+                <i-button type="primary" @click="handleSubmit('formValidate')">提交</i-button>
+                <i-button type="warning" @click="reload" style="margin-left: 8px"/>
+                返回</i-button>
+                <i-button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</i-button>
+            </Form-item>
+        </i-form>
+    </Card>-->
+
 </div>
 <script src="${rc.contextPath}/js/shop/order.js?_${date.systemTime}"></script>
 </body>

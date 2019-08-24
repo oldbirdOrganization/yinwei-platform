@@ -68,9 +68,6 @@ public class SysUserController extends AbstractController {
     @SysLog("修改密码")
     @RequestMapping("/password")
     public R password(String password, String newPassword) {
-        if(ResourceUtil.getConfigByName("sys.demo").equals("1")){
-            throw new RRException("演示环境无法修改密码！");
-        }
         Assert.isBlank(newPassword, "新密码不为能空");
 
         //sha256加密
@@ -153,5 +150,15 @@ public class SysUserController extends AbstractController {
         sysUserService.deleteBatch(userIds);
 
         return R.ok();
+    }
+
+    /**
+     * 获取工人师傅信息列表
+     */
+    @RequestMapping("/queryMasterWorkerList")
+    public R queryMasterWorkerList() {
+        //获取工人师傅列表数据
+        List<SysUserEntity> workerList = sysUserService.queryMasterWorkerList();
+        return R.ok().put("workerList", workerList);
     }
 }

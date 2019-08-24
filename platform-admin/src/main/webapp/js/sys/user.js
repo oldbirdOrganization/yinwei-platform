@@ -55,6 +55,9 @@ var vm = new Vue({
             username: [
                 {required: true, message: '姓名不能为空', trigger: 'blur'}
             ],
+            password: [
+                {required: true, message: '密码不能为空', trigger: 'blur'}
+            ],
             email: [
                 {required: true, message: '邮箱不能为空', trigger: 'blur'},
                 {type: 'email', message: '邮箱格式不正确', trigger: 'blur'}
@@ -70,7 +73,7 @@ var vm = new Vue({
         },
         add: function () {
             vm.showList = false;
-            vm.title = "新增(默认密码：888888)";
+            vm.title = "新增";
             vm.roleList = {};
             vm.user = {status: 1, roleIdList: [], deptId: '', deptName: ''};
 
