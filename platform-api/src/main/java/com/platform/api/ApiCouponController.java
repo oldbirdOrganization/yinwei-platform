@@ -97,7 +97,7 @@ public class ApiCouponController extends ApiBaseAction {
     /**
      * 兑换优惠券
      */
-    @ApiOperation(value = "领券优惠券")
+    @ApiOperation(value = "兑换优惠券")
     @PostMapping("exchange")
     public Object exchange(@LoginUser UserVo loginUser) {
         JSONObject jsonParam = getJsonRequest();
@@ -130,7 +130,7 @@ public class ApiCouponController extends ApiBaseAction {
     /**
      * 　　填写手机号码，领券
      */
-    @ApiOperation(value = "领券优惠券")
+    @ApiOperation(value = "新用户领取优惠券")
     @PostMapping("newuser")
     public Object newuser(@LoginUser UserVo loginUser) {
         JSONObject jsonParam = getJsonRequest();
