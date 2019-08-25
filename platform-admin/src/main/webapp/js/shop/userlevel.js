@@ -4,7 +4,7 @@ $(function () {
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
             {label: '名字', name: 'name', index: 'name', width: 80},
-            {label: '描述', name: 'description', index: 'description', width: 80}]
+            {label: '积分', name: 'description', index: 'description', width: 80}]
     });
 });
 

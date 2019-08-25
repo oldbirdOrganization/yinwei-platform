@@ -18,6 +18,9 @@
         <result property="registerIp" column="register_ip"/>
         <result property="avatar" column="avatar"/>
         <result property="weixinOpenid" column="weixin_openid"/>
+        <result property="credits" column="credits"/>
+        <result property="idCardNo" column="id_card_no"/>
+
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.UserEntity">
@@ -35,7 +38,9 @@
 			mobile,
 			register_ip,
 			avatar,
-			weixin_openid
+			weixin_openid,
+			credits,
+			id_card_no
 		from nideshop_user
 		where id = #{id}
 	</select>
@@ -56,6 +61,8 @@
         nideshop_user.register_ip,
         nideshop_user.avatar,
         nideshop_user.weixin_openid,
+        nideshop_user.credits,
+        nideshop_user.id_card_no,
         nideshop_user_level.name levelName
         from nideshop_user LEFT JOIN nideshop_user_level ON nideshop_user.user_level_id=nideshop_user_level.id
         WHERE 1=1
@@ -97,7 +104,9 @@
 			`mobile`,
 			`register_ip`,
 			`avatar`,
-			`weixin_openid`)
+			`weixin_openid`,
+			`credits`,
+			`id_card_no`)
 		values(
 			#{username},
 			#{password},
@@ -111,7 +120,9 @@
 			#{mobile},
 			#{registerIp},
 			#{avatar},
-			#{weixinOpenid})
+			#{weixinOpenid},
+			#{credits},
+			#{idCardNo})
 	</insert>
 
     <update id="update" parameterType="com.platform.entity.UserEntity">
@@ -129,7 +140,9 @@
             <if test="mobile != null">`mobile` = #{mobile},</if>
             <if test="registerIp != null">`register_ip` = #{registerIp},</if>
             <if test="avatar != null">`avatar` = #{avatar},</if>
-            <if test="weixinOpenid != null">`weixin_openid` = #{weixinOpenid}</if>
+            <if test="weixinOpenid != null">`weixin_openid` = #{weixinOpenid},</if>
+            <if test="credits != null">`credits` = #{credits},</if>
+            <if test="idCardNo != null">`id_card_no` = #{idCardNo}</if>
         </set>
         where id = #{id}
     </update>

@@ -43,6 +43,12 @@ public class UserEntity implements Serializable {
     //微信Id
     private String weixinOpenid;
 
+    //积分
+    private Integer credits;
+    //身份证号
+    private String idCardNo;
+
+
     /**
      * 翻译用的字段
      */
@@ -251,5 +257,21 @@ public class UserEntity implements Serializable {
 
     public void setLevelName(String levelName) {
         this.levelName = levelName;
+    }
+
+    public Integer getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Integer credits) {
+        this.credits = credits;
+    }
+
+    public String getIdCardNo() {
+        return idCardNo;
+    }
+
+    public void setIdCardNo(String idCardNo) {
+        this.idCardNo = idCardNo;
     }
 }

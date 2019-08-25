@@ -87,6 +87,18 @@ $(function() {
 			index : 'weixin_openid',
 			width : 80,
 			hidden : true
+		}, {
+			label : '积分',
+			name : 'credits',
+			index : 'credits',
+			width : 80,
+			hidden : true
+		}, {
+			label : '身份证号',
+			name : 'idCardNo',
+			index : 'id_card_no',
+			width : 80,
+			hidden : true
 		} ]
 	});
 });
