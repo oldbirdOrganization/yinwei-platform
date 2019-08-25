@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.SmsConfig;
 import com.platform.entity.SmsLogVo;
+import com.platform.entity.UserCouponDto;
 import com.platform.entity.UserVo;
 import com.platform.service.ApiUserService;
 import com.platform.service.SysConfigService;
@@ -13,18 +14,22 @@ import com.platform.utils.Constant;
 import com.platform.utils.SmsUtil;
 import com.platform.utils.StringUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 作者: @author oldbirdteam <br>
  * 时间: 2019-08-11 08:32<br>
  * 描述: ApiIndexController <br>
  */
-@Api(tags = "会员验证")
+@Api(tags = "会员个人中心")
 @RestController
 @RequestMapping("/api/user")
 public class ApiUserController extends ApiBaseAction {
@@ -121,5 +126,42 @@ public class ApiUserController extends ApiBaseAction {
         userVo.setMobile(mobile);
         userService.update(userVo);
         return toResponsSuccess("手机绑定成功");
+    }
+
+    /**
+     * 获取当前会员个人信息
+     *
+     * @param openId
+     * @return
+     */
+    @ApiOperation(value = "获取当前会员个人信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openId", value = "微信openId", paramType = "query", dataType = "String",required = true)
+    })
+    @GetMapping("queryUserInfo")
+    public Object queryUserInfo(@RequestParam(name = "openId",required = true) String openId) {
+        UserVo user = userService.queryByOpenId(openId);
+        return toResponsSuccess(user);
+    }
+
+    /**
+     * 获取当前会员优惠券
+     *
+     * @param openId
+     * @return
+     */
+    @ApiOperation(value = "获取当前会员优惠券")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openId", value = "微信openId", paramType = "query", dataType = "String",required = true),
+            @ApiImplicitParam(name = "couponStatus", value = "优惠券使用状态 1-未使用2-已用3-过期", paramType = "query", dataType = "Integer",required = true)
+    })
+    @PostMapping("queryUserCoupon")
+    public Object queryUserCoupon(@RequestParam(name = "openId",required = true) String openId,
+                                  @RequestParam(name = "couponStatus",required = true) Integer couponStatus) {
+        Map param = new HashMap();
+        param.put("openId", openId);
+        param.put("couponStatus", couponStatus);
+        List<UserCouponDto> userCouponList= userService.queryUserCouponList(param);
+        return toResponsSuccess(userCouponList);
     }
 }

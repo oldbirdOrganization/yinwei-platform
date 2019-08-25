@@ -19,6 +19,8 @@
         <result property="register_ip" column="register_ip"/>
         <result property="avatar" column="avatar"/>
         <result property="weixin_openid" column="weixin_openid"/>
+        <result property="credits" column="credits"/>
+        <result property="idCardNo" column="id_card_no"/>
     </resultMap>
 
     <select id="queryObject" resultMap="userMap">
@@ -152,4 +154,30 @@
         )
     </insert>
 
+    <select id="queryUserCouponList" resultType="com.platform.entity.UserCouponDto" >
+        select
+            u.id userId,
+            uc.coupon_status couponStatus,
+            c.id couponId,
+            c.`name` couponTitle,
+            c.type_money discountAmount,
+            c.min_amount minAmount,
+            c.coupon_type couponType,
+            c.channel_type channelType,
+            c.channel_type_desc channelTypeDesc,
+            c.use_start_date useStartDate,
+            c.use_end_date useEndDate
+        from nideshop_user u
+        left join nideshop_user_coupon uc
+        on uc.user_id = u.id
+        left join nideshop_coupon c
+        on c.id=uc.coupon_id
+        where 1=1
+        <if test="couponStatus != null">
+            and uc.coupon_status =#{couponStatus}
+        </if>
+        <if test="openId != null">
+            and u.`weixin_openid` = #{openId}
+        </if>
+    </select>
 </mapper>

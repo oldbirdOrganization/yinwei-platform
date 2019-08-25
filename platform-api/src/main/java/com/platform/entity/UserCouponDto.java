@@ -1,106 +1,126 @@
 package com.platform.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
 /**
  * @author oldbird
  * @email oldbirdteam@163.com
- * @date 2019-08-15 08:03:41
+ * @date 2019-08-25 08:03:41
  */
-public class UserCouponVo implements Serializable {
+public class UserCouponDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    //主键
-    private Integer id;
     //优惠券Id
-    private Integer coupon_id;
-    //优惠券数量
-    private String coupon_number;
+    private Integer couponId;
     //会员Id
-    private Long user_id;
-    //使用时间
-    private Date used_time;
-    //领取时间
-    private Date add_time;
-    //订单Id
-    private Integer order_id;
-    //来源key
-    private String source_key;
-    //分享人
-    private Long referrer;
+    private Long userId;
+    //优惠券状态 1-未使用2-已用3-过期
+    private Integer couponStatus;
+    //优惠券主题名称
+    private String couponTitle;
+    //优惠金额
+    private BigDecimal discountAmount;
+    //消费最低金额
+    private BigDecimal minAmount;
+    //优惠券类型 1-现金券2-满减券
+    private Integer couponType;
+    //渠道类型
+    private Integer channelType;
+    //渠道类型描述
+    private String channelTypeDesc;
+    //使用开始时间
+    private Date useStartDate;
+    //使用结束时间
+    private Date useEndDate;
 
-    public Integer getId() {
-        return id;
+    public Integer getCouponId() {
+        return couponId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCouponId(Integer couponId) {
+        this.couponId = couponId;
     }
 
-    public Integer getCoupon_id() {
-        return coupon_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setCoupon_id(Integer coupon_id) {
-        this.coupon_id = coupon_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getCoupon_number() {
-        return coupon_number;
+    public Integer getCouponStatus() {
+        return couponStatus;
     }
 
-    public void setCoupon_number(String coupon_number) {
-        this.coupon_number = coupon_number;
+    public void setCouponStatus(Integer couponStatus) {
+        this.couponStatus = couponStatus;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public String getCouponTitle() {
+        return couponTitle;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setCouponTitle(String couponTitle) {
+        this.couponTitle = couponTitle;
     }
 
-    public Date getUsed_time() {
-        return used_time;
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
     }
 
-    public void setUsed_time(Date used_time) {
-        this.used_time = used_time;
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
     }
 
-    public Integer getOrder_id() {
-        return order_id;
+    public BigDecimal getMinAmount() {
+        return minAmount;
     }
 
-    public void setOrder_id(Integer order_id) {
-        this.order_id = order_id;
+    public void setMinAmount(BigDecimal minAmount) {
+        this.minAmount = minAmount;
     }
 
-
-    public Date getAdd_time() {
-        return add_time;
+    public Integer getCouponType() {
+        return couponType;
     }
 
-    public void setAdd_time(Date add_time) {
-        this.add_time = add_time;
+    public void setCouponType(Integer couponType) {
+        this.couponType = couponType;
     }
 
-    public String getSource_key() {
-        return source_key;
+    public Integer getChannelType() {
+        return channelType;
     }
 
-    public void setSource_key(String source_key) {
-        this.source_key = source_key;
+    public void setChannelType(Integer channelType) {
+        this.channelType = channelType;
     }
 
-    public Long getReferrer() {
-        return referrer;
+    public String getChannelTypeDesc() {
+        return channelTypeDesc;
     }
 
-    public void setReferrer(Long referrer) {
-        this.referrer = referrer;
+    public void setChannelTypeDesc(String channelTypeDesc) {
+        this.channelTypeDesc = channelTypeDesc;
+    }
+
+    public Date getUseStartDate() {
+        return useStartDate;
+    }
+
+    public void setUseStartDate(Date useStartDate) {
+        this.useStartDate = useStartDate;
+    }
+
+    public Date getUseEndDate() {
+        return useEndDate;
+    }
+
+    public void setUseEndDate(Date useEndDate) {
+        this.useEndDate = useEndDate;
     }
 }

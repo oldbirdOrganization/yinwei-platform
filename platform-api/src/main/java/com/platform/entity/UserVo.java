@@ -40,6 +40,10 @@ public class UserVo implements Serializable {
     private String avatar;
     //微信Id
     private String weixin_openid;
+    //积分
+    private Integer credits;
+    //身份证号
+    private String idCardNo;
 
     public Long getUserId() {
         return userId;
@@ -151,5 +155,21 @@ public class UserVo implements Serializable {
 
     public void setWeixin_openid(String weixin_openid) {
         this.weixin_openid = weixin_openid;
+    }
+
+    public Integer getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Integer credits) {
+        this.credits = credits;
+    }
+
+    public String getIdCardNo() {
+        return idCardNo;
+    }
+
+    public void setIdCardNo(String idCardNo) {
+        this.idCardNo = idCardNo;
     }
 }

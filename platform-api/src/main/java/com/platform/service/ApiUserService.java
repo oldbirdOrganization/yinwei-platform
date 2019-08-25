@@ -3,6 +3,7 @@ package com.platform.service;
 import com.platform.dao.ApiUserLevelMapper;
 import com.platform.dao.ApiUserMapper;
 import com.platform.entity.SmsLogVo;
+import com.platform.entity.UserCouponDto;
 import com.platform.entity.UserLevelVo;
 import com.platform.entity.UserVo;
 import com.platform.utils.RRException;
@@ -97,4 +98,14 @@ public class ApiUserService {
         }
         return result;
     }
+
+    /**
+     * 获取会员优惠券列表
+     * @param map
+     * @return
+     */
+    public List<UserCouponDto> queryUserCouponList(Map<String, Object> map) {
+        return userDao.queryUserCouponList(map);
+    }
+
 }

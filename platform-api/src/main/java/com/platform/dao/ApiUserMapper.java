@@ -1,8 +1,12 @@
 package com.platform.dao;
 
 import com.platform.entity.SmsLogVo;
+import com.platform.entity.UserCouponDto;
 import com.platform.entity.UserVo;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户
@@ -32,4 +36,11 @@ public interface ApiUserMapper extends BaseDao<UserVo> {
      * @return
      */
     int saveSmsCodeLog(SmsLogVo smsLogVo);
+
+    /**
+     * 获取用户优惠券
+     * @param map
+     * @return
+     */
+    List<UserCouponDto> queryUserCouponList(Map<String, Object> map);
 }
