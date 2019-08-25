@@ -17,13 +17,23 @@ $(function () {
             {label: '销售量', name: 'sellVolume', index: 'sell_volume', width: 80},
             {label: '市场价', name: 'marketPrice', index: 'market_price', width: 80},
             {
-                label: '热销', name: 'isHot', index: 'is_hot', width: 80, formatter: function (value) {
+                label: '是否新品', name: 'isNew', index: 'is_new', width: 80, formatter: function (value) {
+                    return transIsNot(value);
+                }
+            },
+            {
+                label: '是否优惠', name: 'isLimited', index: 'is_limited', width: 80, formatter: function (value) {
+                    return transIsNot(value);
+                }
+            },
+            {
+                label: '是否明星产品', name: 'isHot', index: 'is_hot', width: 80, formatter: function (value) {
                     return transIsNot(value);
                 }
             },
             {
                 label: '录入日期', name: 'addTime', index: 'add_time', width: 80, formatter: function (value) {
-                    return transDate(value, 'yyyy-MM-dd');
+                    return transDate(value, 'yyyy-MM-dd HH:mm:ss');
                 }
             }
         ]
@@ -89,7 +99,7 @@ var vm = new Vue({
         },
         brands: [],//品牌
         macros: [],//商品单位
-        attributeCategories: []//属性类别
+        // attributeCategories: []//属性类别
     },
     methods: {
         query: function () {
@@ -114,11 +124,11 @@ var vm = new Vue({
             vm.getCategory();
             vm.brands = [];
             vm.macros = [];
-            vm.attributeCategories = [];
+            // vm.attributeCategories = [];
             // vm.attribute = [];
             vm.getBrands();
             vm.getMacro();
-            vm.getAttributeCategories();
+            // vm.getAttributeCategories();
             // vm.getAttributes('');
         },
         update: function (event) {
@@ -132,7 +142,7 @@ var vm = new Vue({
             vm.getInfo(id);
             vm.getBrands();
             vm.getMacro();
-            vm.getAttributeCategories();
+            // vm.getAttributeCategories();
             vm.getGoodsGallery(id);
         },
         /**
@@ -165,15 +175,6 @@ var vm = new Vue({
                 async: true,
                 successCallback: function (r) {
                     vm.uploadList = r.list;
-                }
-            });
-        },
-        getAttributeCategories: function () {
-            Ajax.request({
-                url: "../attributecategory/queryAll",
-                async: true,
-                successCallback: function (r) {
-                    vm.attributeCategories = r.list;
                 }
             });
         },

@@ -10,7 +10,7 @@
         <Row :gutter="16">
             <div class="search-group">
                 <i-col span="4">
-                    <i-input v-model="q.title" @on-enter="query" placeholder="活动类别主题"/>
+                    <i-input v-model="q.title" @on-enter="query" placeholder="图片类别主题"/>
                 </i-col>
                 <i-button @click="query">查询</i-button>
             </div>
@@ -33,12 +33,12 @@
     <Card v-show="!showList">
         <p slot="title">{{title}}</p>
         <i-form ref="formValidate" :model="topicCategory" :rules="ruleValidate" :label-width="120">
-            <Form-item label="活动类别主题" prop="title">
-                <i-input v-model="topicCategory.title" placeholder="活动类别主题"/>
+            <Form-item label="图片类别主题" prop="title">
+                <i-input v-model="topicCategory.title" placeholder="图片类别主题"/>
             </Form-item>
             <Row>
                 <i-col span="16">
-                    <Form-item label="活动类别图片链接" prop="picUrl">
+                    <Form-item label="图片链接" prop="picUrl">
                         <i-input v-model="topicCategory.picUrl" placeholder="点击上传图片" readonly/>
                     </Form-item>
                 </i-col>

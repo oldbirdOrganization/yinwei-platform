@@ -11,6 +11,8 @@
         <result property="contactMobile" column="contact_mobile"/>
         <result property="address" column="address"/>
         <result property="isDefault" column="is_default"/>
+        <result property="sex" column="sex"/>
+        <result property="addressIndex" column="address_index"/>
     </resultMap>
 
     <select id="queryObject" resultMap="addressMap">
@@ -47,12 +49,16 @@
 			`contact_name`,
 			`contact_mobile`,
 			`address`,
+			`sex`,
+			`address_index`,
 			`is_default`)
 		values(
 			#{userId},
 			#{contactName},
 			#{contactMobile},
 			#{address},
+			#{sex},
+			#{addressIndex},
 			#{isDefault})
 	</insert>
 
@@ -62,7 +68,9 @@
             <if test="userId != null">`user_id` = #{userId}, </if>
             <if test="contactName != null">`contact_name` = #{contactName}, </if>
             <if test="contactMobile != null">`contact_mobile` = #{contactMobile}, </if>
-            <if test="address != null">`address` = #{address},</if>
+            <if test="sex != null">`sex` = #{sex}, </if>
+            <if test="address != null">`address` = #{address}, </if>
+            <if test="addressIndex != null">`address_index` = #{addressIndex},</if>
             <if test="isDefault != null">`is_default` = #{isDefault}</if>
         </set>
         where id = #{id}

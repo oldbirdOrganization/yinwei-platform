@@ -236,7 +236,7 @@
                             </Radio>
                         </Radio-group>
                     </Form-item>
-                    <Form-item label="是否新商品" prop="isNew">
+                    <Form-item label="是否新品" prop="isNew">
                         <Radio-group v-model="goods.isNew">
                             <Radio label="1">
                                 <span>是</span>
@@ -246,7 +246,17 @@
                             </Radio>
                         </Radio-group>
                     </Form-item>
-                    <Form-item label="热销" prop="isHot">
+                    <Form-item label="是否优惠" prop="isLimited">
+                        <Radio-group v-model="goods.isLimited">
+                            <Radio label="1">
+                                <span>是</span>
+                            </Radio>
+                            <Radio label="0">
+                                <span>否</span>
+                            </Radio>
+                        </Radio-group>
+                    </Form-item>
+                    <Form-item label="明星产品" prop="isHot">
                         <Radio-group v-model="goods.isHot">
                             <Radio label="1">
                                 <span>是</span>

@@ -3,9 +3,9 @@ $(function () {
         url: '../topiccategory/list',
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '活动类别主题', name: 'title', index: 'title', width: 80},
+            {label: '图片类别主题', name: 'title', index: 'title', width: 80},
             {
-                label: '活动类别图片链接', name: 'picUrl', index: 'pic_url', width: 80, formatter: function (value) {
+                label: '图片链接', name: 'picUrl', index: 'pic_url', width: 80, formatter: function (value) {
                     return transImg(value);
                 }
             }]

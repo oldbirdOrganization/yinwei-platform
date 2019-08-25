@@ -10,6 +10,8 @@
         <result property="contactMobile" column="contact_mobile"/>
         <result property="address" column="address"/>
         <result property="isDefault" column="is_default"/>
+        <result property="sex" column="sex"/>
+        <result property="addressIndex" column="address_index"/>
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.AddressEntity">
@@ -19,6 +21,8 @@
         nideshop_address.contact_name,
         nideshop_address.contact_mobile,
         nideshop_address.address,
+        nideshop_address.sex,
+        nideshop_address.address_index,
         nideshop_user.username shop_user_name
         from nideshop_address LEFT JOIN nideshop_user
         ON nideshop_address.user_id = nideshop_user.id
@@ -32,6 +36,8 @@
         nideshop_address.contact_name,
         nideshop_address.contact_mobile,
         nideshop_address.address,
+        nideshop_address.sex,
+        nideshop_address.address_index,
         nideshop_user.username shop_user_name
         from nideshop_address LEFT JOIN nideshop_user ON nideshop_address.user_id = nideshop_user.id
         WHERE 1=1
@@ -70,12 +76,17 @@
 			`user_id`,
 			`contact_name`,
 			`contact_mobile`,
-			`address`)
+			`address`,
+			`sex`,
+			`address_index`
+			)
 		values(
 			#{userId},
 			#{contactName},
 			#{contactMobile},
-			#{address})
+			#{address},
+			#{sex},
+			#{addressIndex})
 	</insert>
 
     <update id="update" parameterType="com.platform.entity.AddressEntity">
@@ -84,7 +95,9 @@
             <if test="userId != null">`user_id` = #{userId}, </if>
             <if test="contactName != null">`contact_name` = #{contactName}, </if>
             <if test="contactMobile != null">`contact_mobile` = #{contactMobile}, </if>
-            <if test="address != null">`address` = #{address}</if>
+            <if test="sex != null">`sex` = #{sex}, </if>
+            <if test="address != null">`address` = #{address}, </if>
+            <if test="addressIndex != null">`address_index` = #{addressIndex}</if>
         </set>
         where id = #{id}
     </update>

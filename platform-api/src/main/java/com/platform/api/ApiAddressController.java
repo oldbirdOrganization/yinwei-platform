@@ -1,6 +1,5 @@
 package com.platform.api;
 
-import com.alibaba.fastjson.JSONObject;
 import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.AddressVo;
@@ -8,8 +7,6 @@ import com.platform.entity.UserVo;
 import com.platform.service.ApiAddressService;
 import com.platform.util.ApiBaseAction;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,9 +48,11 @@ public class ApiAddressController extends ApiBaseAction {
     @IgnoreAuth
     public Object detail(@RequestParam Integer id, @LoginUser UserVo loginUser) {
         AddressVo entity = addressService.queryObject(id);
-        //判断越权行为
-        if (!entity.getUserId().equals(loginUser.getUserId())) {
-            return toResponsObject(403, "您无权查看", "");
+        if(null != entity){
+            //判断越权行为
+            if (!entity.getUserId().equals(loginUser.getUserId())) {
+                return toResponsObject(403, "您无权查看", "");
+            }
         }
         return toResponsSuccess(entity);
     }

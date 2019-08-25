@@ -6,10 +6,13 @@ import com.platform.entity.*;
 import com.platform.service.*;
 import com.platform.util.ApiBaseAction;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -139,61 +142,20 @@ public class ApiIndexController extends ApiBaseAction {
     }
 
 
-    /**
-     * app首页
-     */
-    @ApiOperation(value = "新商品信息")
+    @ApiOperation(value = "经典案例")
     @IgnoreAuth
-    @PostMapping(value = "newGoods")
-    public Object newGoods() {
+    @PostMapping(value = "topicCase")
+    public Object topicCase() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
-        //
-        Map<String, Object> param = new HashMap<String, Object>();
-        param.put("is_new", 1);
-        param.put("is_delete", 0);
-        param.put("fields", "id, name, list_pic_url, retail_price");
-        PageHelper.startPage(0, 4, false);
-        List<GoodsVo> newGoods = goodsService.queryList(param);
-        resultObj.put("newGoodsList", newGoods);
-        //
-
-        return toResponsSuccess(resultObj);
-    }
-
-    @ApiOperation(value = "新热门商品信息")
-    @IgnoreAuth
-    @PostMapping(value = "hotGoods")
-    public Object hotGoods() {
-        Map<String, Object> resultObj = new HashMap<String, Object>();
-        //
-        Map<String, Object> param = new HashMap<String, Object>();
-        param.put("is_hot", "1");
-        param.put("is_delete", 0);
-        PageHelper.startPage(0, 3, false);
-        List<GoodsVo> hotGoods = goodsService.queryHotGoodsList(param);
-        resultObj.put("hotGoodsList", hotGoods);
-        //
-
-        return toResponsSuccess(resultObj);
-    }
-
-    @ApiOperation(value = "topic")
-    @IgnoreAuth
-    @PostMapping(value = "topic")
-    public Object topic() {
-        Map<String, Object> resultObj = new HashMap<String, Object>();
-        //
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("offset", 0);
-        param.put("limit", 3);
+        param.put("limit", 4);
         List<TopicVo> topicList = topicService.queryList(param);
         resultObj.put("topicList", topicList);
-        //
-
         return toResponsSuccess(resultObj);
     }
 
-    @ApiOperation(value = "brand")
+    @ApiOperation(value = "品牌列表")
     @IgnoreAuth
     @PostMapping(value = "brand")
     public Object brand() {
@@ -212,7 +174,7 @@ public class ApiIndexController extends ApiBaseAction {
         return toResponsSuccess(resultObj);
     }
 
-    @ApiOperation(value = "category")
+    @ApiOperation(value = "渠道子分类")
     @IgnoreAuth
     @PostMapping(value = "category")
     public Object category() {
@@ -255,7 +217,7 @@ public class ApiIndexController extends ApiBaseAction {
         return toResponsSuccess(resultObj);
     }
 
-    @ApiOperation(value = "banner")
+    @ApiOperation(value = "首页轮播图")
     @IgnoreAuth
     @PostMapping(value = "banner")
     public Object banner() {
@@ -270,7 +232,7 @@ public class ApiIndexController extends ApiBaseAction {
         return toResponsSuccess(resultObj);
     }
 
-    @ApiOperation(value = "channel")
+    @ApiOperation(value = "渠道类型")
     @IgnoreAuth
     @PostMapping(value = "channel")
     public Object channel() {
@@ -282,8 +244,38 @@ public class ApiIndexController extends ApiBaseAction {
         param.put("order", "asc ");
         List<ChannelVo> channel = channelService.queryList(param);
         resultObj.put("channel", channel);
-        //
+        return toResponsSuccess(resultObj);
+    }
 
+
+    /**
+     * app首页
+     */
+    @ApiOperation(value = "商品楼层显示信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "floorType", value = "楼层显示类型(1-限时优惠 2-明星产品 3-新品)", paramType = "query", dataType = "Integer",required = true)
+    })
+    @IgnoreAuth
+    @PostMapping(value = "floorGoods")
+    public Object floorGoods(@RequestParam(name = "floorType",required = true)  Integer floorType) {
+        Map<String, Object> resultObj = new HashMap<String, Object>();
+        //
+        Map<String, Object> param = new HashMap<String, Object>();
+
+        if(floorType.intValue()==1){//优惠产品
+            param.put("is_limited", 1);
+        }
+        if(floorType.intValue()==2){//明星产品
+            param.put("is_hot", 1);
+        }
+        if(floorType.intValue()==3){//新品
+            param.put("is_new", 1);
+        }
+        param.put("is_delete", 0);
+        param.put("fields", "id, name, list_pic_url, retail_price");
+        PageHelper.startPage(0, 4, false);
+        List<GoodsVo> goodsList = goodsService.queryList(param);
+        resultObj.put("goodsList", goodsList);
         return toResponsSuccess(resultObj);
     }
 }

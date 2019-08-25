@@ -71,9 +71,9 @@ public class GoodsVo implements Serializable {
     private BigDecimal app_exclusive_price;
     //是否是APP专属
     private Integer is_app_exclusive;
-    //限购
+    //限时优惠
     private Integer is_limited;
-    //热销
+    //热销明星产品
     private Integer is_hot;
     //购物车中商品数量
     private Integer cart_num = 0;

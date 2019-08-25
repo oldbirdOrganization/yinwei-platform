@@ -33,6 +33,11 @@ public class AddressEntity implements Serializable {
     //默认
     private Integer isDefault = 0;
 
+    //性别 1-男 2- 女
+    private Integer sex ;
+    //地址标签 1-家 2-公司 3-学校
+    private Integer addressIndex;
+
 
     public Long getId() {
         return id;
@@ -90,5 +95,19 @@ public class AddressEntity implements Serializable {
         this.shopUserName = shopUserName;
     }
 
+    public Integer getSex() {
+        return sex;
+    }
 
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public Integer getAddressIndex() {
+        return addressIndex;
+    }
+
+    public void setAddressIndex(Integer addressIndex) {
+        this.addressIndex = addressIndex;
+    }
 }

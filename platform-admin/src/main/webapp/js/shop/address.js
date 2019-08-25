@@ -11,7 +11,27 @@ $(function () {
             {label: '会员', name: 'shopUserName', index: 'user_id', width: 90},
             {label: '收货人姓名', name: 'contactName', index: 'contact_name', width: 80},
             {label: '手机', name: 'contactMobile', index: 'contact_mobile', width: 80},
-            {label: '详细收货地址信息', name: 'address', index: 'address', width: 150}]
+            {label: '详细收货地址信息', name: 'address', index: 'address', width: 150},
+            {label: '性别', name: 'sex', index: 'sex', width: 80,
+                formatter: function (value) {
+                    if (value == 1) {
+                        return '<span class="label label-success">男</span>';
+                    }
+                    return '<span class="label label-danger">女</span>';
+                }
+            },
+            {label: '标签', name: 'addressIndex', index: 'address_index', width: 80,
+                formatter: function (value) {
+                    if (value == 1) {
+                        return '<span class="label label-success">家</span>';
+                    }
+                    if (value == 2) {
+                        return '<span class="label label-success">公司</span>';
+                    }
+                    return '<span class="label label-success">学校</span>';
+                }
+            }
+            ]
     });
 });
 

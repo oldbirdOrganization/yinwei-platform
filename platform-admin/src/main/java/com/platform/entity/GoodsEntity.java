@@ -73,9 +73,9 @@ public class GoodsEntity implements Serializable {
     private BigDecimal appExclusivePrice;
     //是否是APP专属
     private Integer isAppExclusive;
-    //限购
+    //限购优惠
     private Integer isLimited;
-    //热销
+    //热销明星产品
     private Integer isHot;
     //市场价
     private BigDecimal marketPrice;

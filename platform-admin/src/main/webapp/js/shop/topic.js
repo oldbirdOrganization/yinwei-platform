@@ -3,29 +3,20 @@ $(function () {
         url: '../topic/list',
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '活动主题', name: 'title', index: 'title', width: 80},
-            {label: '活动内容', name: 'content', index: 'content', width: 80, hidden: true},
+            {label: '案例主题', name: 'title', index: 'title', width: 80},
+            {label: '案例内容', name: 'content', index: 'content', width: 80, hidden: true},
             {
-                label: '图像', name: 'avatar', index: 'avatar', width: 80, formatter: function (value) {
+                label: '导航图像', name: 'avatar', index: 'avatar', width: 80, formatter: function (value) {
                     return transImg(value);
                 }
             },
             {
-                label: '活动条例图片', name: 'itemPicUrl', index: 'item_pic_url', width: 80, formatter: function (value) {
+                label: '案例主图片', name: 'itemPicUrl', index: 'item_pic_url', width: 80, formatter: function (value) {
                     return transImg(value);
                 }
             },
-            {label: '子标题', name: 'subtitle', index: 'subtitle', width: 80},
-            {label: '活动类别', name: 'topicCategoryId', index: 'topic_category_id', width: 80},
-            {label: '活动价格', name: 'priceInfo', index: 'price_info', width: 80},
-            {label: 'readCount', name: 'readCount', index: 'read_count', width: 80},
-            {
-                label: '场景图片', name: 'scenePicUrl', index: 'scene_pic_url', width: 80, formatter: function (value) {
-                    return transImg(value);
-                }
-            },
-            {label: '活动模板Id', name: 'topicTemplateId', index: 'topic_template_id', width: 80},
-            {label: '活动标签Id', name: 'topicTagId', index: 'topic_tag_id', width: 80}]
+            {label: '子标题', name: 'subtitle', index: 'subtitle', width: 80}
+        ]
     });
     $('#content').editable({
         inlineMode: false,
