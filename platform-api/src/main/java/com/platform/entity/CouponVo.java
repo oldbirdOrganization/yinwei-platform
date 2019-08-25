@@ -1,8 +1,6 @@
 package com.platform.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -32,16 +30,16 @@ public class CouponVo implements Serializable {
     //最大金额
     private BigDecimal max_amount;
     //发放时间
-    @JsonFormat(pattern = "yyyy.MM.dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date send_start_date;
     //发放时间
-    @JsonFormat(pattern = "yyyy.MM.dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date send_end_date;
     //使用开始时间
-    @JsonFormat(pattern = "yyyy.MM.dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date use_start_date;
     //使用结束时间
-    @JsonFormat(pattern = "yyyy年MM月dd日")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date use_end_date;
     //最小商品金额
     private BigDecimal min_goods_amount;
