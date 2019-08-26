@@ -159,6 +159,7 @@
             u.id userId,
             uc.coupon_status couponStatus,
             c.id couponId,
+            c.coupon_number couponNumber,
             c.`name` couponTitle,
             c.type_money discountAmount,
             c.min_amount minAmount,

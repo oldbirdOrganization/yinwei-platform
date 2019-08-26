@@ -22,6 +22,10 @@
         <result property="min_transmit_num" column="min_transmit_num"/>
         <result property="user_coupon_id" column="user_coupon_id"/>
         <result property="coupon_status" column="coupon_status"/>
+        <result property="coupon_type" column="coupon_type"/>
+        <result property="channel_type" column="channel_type"/>
+        <result property="channel_type_desc" column="channel_type_desc"/>
+
     </resultMap>
 
     <select id="queryObject" resultMap="couponMap">
@@ -140,6 +144,12 @@
         <if test="unUsed != null and unUsed == true">
             and b.used_time is null and (b.order_id  is null or b.order_id =0)
         </if>
+        <if test="couponType != null">
+            and a.coupon_type = #{couponType}
+        </if>
+        <if test="channelType != null">
+            and a.channel_type = #{channelType}
+        </if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -171,6 +181,12 @@
         and b.id is null
         <if test="send_type != null">
             and a.send_type = #{send_type}
+        </if>
+         <if test="couponType != null">
+            and a.coupon_type = #{couponType}
+        </if>
+        <if test="channelType != null">
+            and a.channel_type = #{channelType}
         </if>
         limit 0, 1
     </select>

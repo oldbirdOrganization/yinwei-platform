@@ -9,9 +9,14 @@ import com.platform.util.ApiBaseAction;
 import com.platform.utils.CharUtil;
 import com.platform.utils.StringUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -43,10 +48,12 @@ public class ApiCouponController extends ApiBaseAction {
      */
     @ApiOperation(value = "获取优惠券列表")
     @PostMapping("/list")
-    public Object list(@LoginUser UserVo loginUser) {
+    public Object list() {
         Map param = new HashMap();
-        param.put("user_id", loginUser.getUserId());
-        List<CouponVo> couponVos = apiCouponService.queryUserCoupons(param);
+        param.put("enabled", true);
+        param.put("sidx", "id");
+        param.put("order", "asc");
+        List<CouponVo> couponVos = apiCouponService.queryList(param);
         return toResponsSuccess(couponVos);
     }
 
@@ -217,6 +224,55 @@ public class ApiCouponController extends ApiBaseAction {
             params.put("source_key", sourceKey);
             couponVos = apiCouponService.queryUserCoupons(params);
             return toResponsSuccess(couponVos);
+        } else {
+            return toResponsFail("领取失败");
+        }
+    }
+
+
+    /**
+     * 　领取优惠券
+     */
+    @ApiOperation(value = "领取优惠券")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "couponType", value = "优惠券类型 1-现金券2-满减券", paramType = "query", dataType = "Integer",required = true),
+            @ApiImplicitParam(name = "channelType", value = "渠道类型 1-维修2-改造3-设计4-定制化加配5-装修6-空调维保7-家具保养8-专业验房", paramType = "query", dataType = "Integer",required = true)
+    })
+    @PostMapping("getCoupon")
+    public Object getCoupon(@LoginUser UserVo loginUser, @RequestParam(name = "couponType",required = true)Integer couponType,
+                            @RequestParam(name = "channelType",required = true) Integer channelType) {
+//        JSONObject jsonParams = getJsonRequest();
+        // 是否领取过了
+        Map param = new HashMap();
+        param.put("user_id", loginUser.getUserId());
+        param.put("couponType", couponType);
+        param.put("channelType", channelType);
+        List<CouponVo> couponList = apiCouponService.queryUserCoupons(param);
+        if (null != couponList && couponList.size() > 0) {
+            return toResponsObject(2, "已经领取过", couponList);
+        }
+        // 领取优惠券
+        Map couponParam = new HashMap();
+        couponParam.put("couponType", couponType);
+        couponParam.put("channelType", channelType);
+        CouponVo newCouponConfig = apiCouponService.queryMaxUserEnableCoupon(couponParam);
+        if (null != newCouponConfig) {
+            UserCouponVo userCouponVo = new UserCouponVo();
+            userCouponVo.setAdd_time(new Date());
+            userCouponVo.setCoupon_id(newCouponConfig.getId());
+            userCouponVo.setCoupon_number(CharUtil.getRandomString(12));
+            userCouponVo.setUser_id(loginUser.getUserId());
+            apiUserCouponService.save(userCouponVo);
+
+            List<UserCouponVo> userCouponVos = new ArrayList();
+            userCouponVos.add(userCouponVo);
+
+//            param = new HashMap();
+//            param.put("user_id", loginUser.getUserId());
+//            param.put("couponType", couponType);
+//            param.put("channelType", channelType);
+            couponList = apiCouponService.queryUserCoupons(param);
+            return toResponsSuccess(couponList);
         } else {
             return toResponsFail("领取失败");
         }

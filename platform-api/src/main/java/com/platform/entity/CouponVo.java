@@ -55,6 +55,13 @@ public class CouponVo implements Serializable {
     private Integer min_transmit_num;
     //优惠券状态 1 可用 2 已用 3 过期
     private Integer coupon_status = 1;
+    //优惠券类型 1-现金券2-满减券
+    private Integer  coupon_type;
+    //渠道类型
+    private Integer  channel_type;
+    //渠道类型描述
+    private String channel_type_desc;
+
 
     public Integer getUser_coupon_id() {
         return user_coupon_id;
@@ -198,5 +205,29 @@ public class CouponVo implements Serializable {
 
     public void setMin_transmit_num(Integer min_transmit_num) {
         this.min_transmit_num = min_transmit_num;
+    }
+
+    public Integer getCoupon_type() {
+        return coupon_type;
+    }
+
+    public void setCoupon_type(Integer coupon_type) {
+        this.coupon_type = coupon_type;
+    }
+
+    public Integer getChannel_type() {
+        return channel_type;
+    }
+
+    public void setChannel_type(Integer channel_type) {
+        this.channel_type = channel_type;
+    }
+
+    public String getChannel_type_desc() {
+        return channel_type_desc;
+    }
+
+    public void setChannel_type_desc(String channel_type_desc) {
+        this.channel_type_desc = channel_type_desc;
     }
 }

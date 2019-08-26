@@ -15,6 +15,8 @@ public class UserCouponDto implements Serializable {
 
     //优惠券Id
     private Integer couponId;
+
+    private String couponNumber;
     //会员Id
     private Long userId;
     //优惠券状态 1-未使用2-已用3-过期
@@ -122,5 +124,13 @@ public class UserCouponDto implements Serializable {
 
     public void setUseEndDate(Date useEndDate) {
         this.useEndDate = useEndDate;
+    }
+
+    public String getCouponNumber() {
+        return couponNumber;
+    }
+
+    public void setCouponNumber(String couponNumber) {
+        this.couponNumber = couponNumber;
     }
 }
