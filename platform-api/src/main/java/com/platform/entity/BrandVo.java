@@ -2,7 +2,6 @@ package com.platform.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 
 /**
@@ -37,6 +36,9 @@ public class BrandVo implements Serializable {
     private String new_pic_url;
     //排序
     private Integer new_sort_order;
+
+    //是否第三方品牌（0-否 1-是）
+    private Integer isOuterBrand;
 
     public Integer getId() {
         return id;
@@ -132,5 +134,13 @@ public class BrandVo implements Serializable {
 
     public void setNew_sort_order(Integer new_sort_order) {
         this.new_sort_order = new_sort_order;
+    }
+
+    public Integer getIsOuterBrand() {
+        return isOuterBrand;
+    }
+
+    public void setIsOuterBrand(Integer isOuterBrand) {
+        this.isOuterBrand = isOuterBrand;
     }
 }

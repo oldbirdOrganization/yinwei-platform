@@ -17,6 +17,7 @@
         <result property="is_new" column="is_new"/>
         <result property="new_pic_url" column="new_pic_url"/>
         <result property="new_sort_order" column="new_sort_order"/>
+        <result property="isOuterBrand" column="is_outer_brand"/>
     </resultMap>
 
     <select id="queryObject" resultMap="brandMap">
@@ -25,13 +26,12 @@
 
     <select id="queryList" resultMap="brandMap">
         select
-        <if test="fields != null and fields != ''">
-            ${fields}
-        </if>
-        <if test="fields == null or fields == ''">
             *
-        </if>
         from nideshop_brand
+        where 1=1
+        <if test="isOuterBrand != null">
+            and is_outer_brand = #{isOuterBrand}
+        </if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -62,7 +62,8 @@
 			`app_list_pic_url`, 
 			`is_new`, 
 			`new_pic_url`, 
-			`new_sort_order`
+			`new_sort_order`,
+			`is_outer_brand`
 		)
 		values
 		(
@@ -76,7 +77,8 @@
 			#{app_list_pic_url}, 
 			#{is_new}, 
 			#{new_pic_url}, 
-			#{new_sort_order}
+			#{new_sort_order},
+			#{isOuterBrand}
 		)
 	</insert>
 
@@ -94,6 +96,7 @@
             <if test="is_new != null">`is_new` = #{is_new},</if>
             <if test="new_pic_url != null">`new_pic_url` = #{new_pic_url},</if>
             <if test="new_sort_order != null">`new_sort_order` = #{new_sort_order}</if>
+            <if test="isOuterBrand != null">`is_outer_brand` = #{isOuterBrand}</if>
         </set>
         where id = #{id}
     </update>

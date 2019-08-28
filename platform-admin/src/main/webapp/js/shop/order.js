@@ -106,7 +106,7 @@ let vm = new Vue({
         query: function () {
             vm.reload();
         },
-        dispatchOrder: function (event) {
+        /*dispatchOrder: function (event) {
             let id = getSelectedRow("#jqGrid");
             if (id == null) {
                 return;
@@ -121,7 +121,20 @@ let vm = new Vue({
                     vm.workerList = r.workerList;
                 }
             });
+        },*/
+
+        dispatchOrder : function() {
+            var id = getSelectedRow("#jqGrid");
+            if (id == null) {
+                return;
+            }
+            openWindow({
+                title : '收货地址',
+                type : 2,
+                content : '../shop/address.html?userId=' + id
+            })
         },
+
         cancelOrder: function (event) {
             let id = getSelectedRow("#jqGrid");
             if (id == null) {

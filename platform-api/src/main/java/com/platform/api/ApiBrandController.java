@@ -7,6 +7,8 @@ import com.platform.util.ApiBaseAction;
 import com.platform.util.ApiPageUtils;
 import com.platform.utils.Query;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,9 +37,15 @@ public class ApiBrandController extends ApiBaseAction {
      */
     @ApiOperation(value = "分页获取品牌")
     @IgnoreAuth
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页数", paramType = "query", dataType = "Integer",required = true),
+            @ApiImplicitParam(name = "size", value = "每页数量", paramType = "query", dataType = "Integer",required = true),
+            @ApiImplicitParam(name = "isOuterBrand", value = "是否第三方品牌（0-否 1-是）", paramType = "query", dataType = "Integer",required = false)
+    })
     @PostMapping("list")
     public Object list(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                       @RequestParam(value = "size", defaultValue = "10") Integer size) {
+                       @RequestParam(value = "size", defaultValue = "10") Integer size,
+                       @RequestParam(value = "isOuterBrand",required = false) Integer isOuterBrand) {
         //查询列表数据
         Map params = new HashMap();
         params.put("fields", "id, name, floor_price, app_list_pic_url");
@@ -45,7 +53,9 @@ public class ApiBrandController extends ApiBaseAction {
         params.put("limit", size);
         params.put("sidx", "id");
         params.put("order", "asc");
-
+        if(null != isOuterBrand){
+            params.put("isOuterBrand", isOuterBrand);
+        }
         Query query = new Query(params);
         List<BrandVo> brandEntityList = brandService.queryList(query);
         int total = brandService.queryTotal(query);

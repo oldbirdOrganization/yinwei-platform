@@ -116,6 +116,21 @@ public class SubmitOrderVo implements java.io.Serializable{
      */
     private String address;
 
+
+    //是否为第三方订单 1-是 0-否
+    private Integer isOuterOrder;
+    //第三方服务商名称
+    private String outerMerchantName;
+    //第三方服务类
+    private String outerServiceCategory;
+    //第三方服务内容
+    private String outerServiceContent;
+    //第三方服务品牌
+    private String outerServiceBrand;
+    //第三方服务套餐名称
+    private String outerServiceCombo;
+
+
     public Integer getGoodsId() {
         return goodsId;
     }
@@ -282,5 +297,53 @@ public class SubmitOrderVo implements java.io.Serializable{
 
     public void setChannelId(Integer channelId) {
         this.channelId = channelId;
+    }
+
+    public Integer getIsOuterOrder() {
+        return isOuterOrder;
+    }
+
+    public void setIsOuterOrder(Integer isOuterOrder) {
+        this.isOuterOrder = isOuterOrder;
+    }
+
+    public String getOuterMerchantName() {
+        return outerMerchantName;
+    }
+
+    public void setOuterMerchantName(String outerMerchantName) {
+        this.outerMerchantName = outerMerchantName;
+    }
+
+    public String getOuterServiceCategory() {
+        return outerServiceCategory;
+    }
+
+    public void setOuterServiceCategory(String outerServiceCategory) {
+        this.outerServiceCategory = outerServiceCategory;
+    }
+
+    public String getOuterServiceContent() {
+        return outerServiceContent;
+    }
+
+    public void setOuterServiceContent(String outerServiceContent) {
+        this.outerServiceContent = outerServiceContent;
+    }
+
+    public String getOuterServiceBrand() {
+        return outerServiceBrand;
+    }
+
+    public void setOuterServiceBrand(String outerServiceBrand) {
+        this.outerServiceBrand = outerServiceBrand;
+    }
+
+    public String getOuterServiceCombo() {
+        return outerServiceCombo;
+    }
+
+    public void setOuterServiceCombo(String outerServiceCombo) {
+        this.outerServiceCombo = outerServiceCombo;
     }
 }
