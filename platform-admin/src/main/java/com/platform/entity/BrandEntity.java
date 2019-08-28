@@ -39,6 +39,8 @@ public class BrandEntity implements Serializable {
     private String newPicUrl;
     //排序
     private Integer newSortOrder;
+    //是否第三方品牌（0-否 1-是）
+    private Integer isOuterBrand;
 
     /**
      * 设置：主键
@@ -206,5 +208,13 @@ public class BrandEntity implements Serializable {
      */
     public Integer getNewSortOrder() {
         return newSortOrder;
+    }
+
+    public Integer getIsOuterBrand() {
+        return isOuterBrand;
+    }
+
+    public void setIsOuterBrand(Integer isOuterBrand) {
+        this.isOuterBrand = isOuterBrand;
     }
 }

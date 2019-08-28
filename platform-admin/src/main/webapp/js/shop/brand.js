@@ -37,6 +37,11 @@ $(function () {
             }
         }, {
             label: '新品牌排序', name: 'newSortOrder', index: 'new_sort_order', width: 80
+        },{
+            label: '是否第三方品牌', name: 'isOuterBrand', index: 'is_outer_brand', width: 80,
+            formatter: function (value) {
+                return transIsNot(value)
+            }
         }]
     });
 });

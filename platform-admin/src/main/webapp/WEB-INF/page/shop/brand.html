@@ -161,6 +161,17 @@
                 <Input-number :min="0" :step="1" v-model="brand.newSortOrder" placeholder="新品牌排序"
                               style="width: 188px;"/>
             </Form-item>
+
+            <Form-item label="是否第三方品牌" prop="isOuterBrand">
+                <Radio-group v-model="brand.isOuterBrand">
+                    <Radio label="1">
+                        <span>是</span>
+                    </Radio>
+                    <Radio label="0">
+                        <span>否</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
             <Form-item>
                 <i-button type="primary" @click="handleSubmit('formValidate')">提交</i-button>
                 <i-button type="warning" @click="reload" style="margin-left: 8px"/>
