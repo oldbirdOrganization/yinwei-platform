@@ -1,14 +1,17 @@
 package com.platform.controller;
 
 import com.platform.entity.OrderInfoEntity;
+import com.platform.entity.SysUserEntity;
 import com.platform.service.OrderInfoService;
 import com.platform.utils.PageUtils;
 import com.platform.utils.Query;
 import com.platform.utils.R;
+import com.platform.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +52,6 @@ public class OrderInofController {
     @RequiresPermissions("order:info")
     public R info(@PathVariable("id") Integer id) {
         OrderInfoEntity order = orderInfoService.queryObject(id);
-
         return R.ok().put("order", order);
     }
 
@@ -70,8 +72,11 @@ public class OrderInofController {
     @RequestMapping("/update")
     @RequiresPermissions("order:update")
     public R update(@RequestBody OrderInfoEntity order) {
+        SysUserEntity user = ShiroUtils.getUserEntity();
+        order.setUpdateUserId(user.getUserId());
+        order.setUpdateTime(new Date());
+        order.setOrderStatus(2);
         orderInfoService.update(order);
-
         return R.ok();
     }
 

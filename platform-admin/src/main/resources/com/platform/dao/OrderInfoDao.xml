@@ -40,6 +40,13 @@
         <result property="couponPrice" column="coupon_price"/>
         <result property="masterWorker" column="master_worker"/>
         <result property="masterWorkerId" column="master_worker_id"/>
+        <result property="isOuterOrder" column="is_outer_order"/>
+        <result property="outerMerchantName" column="outer_merchant_name"/>
+        <result property="outerServiceCategory" column="outer_service_category"/>
+        <result property="outerServiceContent" column="outer_service_content"/>
+        <result property="outerServiceBrand" column="outer_service_brand"/>
+        <result property="outerServiceCombo" column="outer_service_combo"/>
+
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.OrderInfoEntity">
@@ -147,7 +154,13 @@
             <if test="masterWorker != null">`master_worker` = #{masterWorker},</if>
             <if test="masterWorkerId != null">`master_worker_id` = #{masterWorkerId},</if>
             <if test="updateUserId != null">`update_user_id` = #{updateUserId},</if>
-            <if test="updateTime != null">`update_time` = #{updateTime}</if>
+            <if test="updateTime != null">`update_time` = #{updateTime},</if>
+            <if test="isOuterOrder != null">`is_outer_order` = #{isOuterOrder},</if>
+            <if test="outerMerchantName != null">`outer_merchant_name` = #{outerMerchantName},</if>
+            <if test="outerServiceCategory != null">`outer_service_category` = #{outerServiceCategory},</if>
+            <if test="outerServiceContent != null">`outer_service_content` = #{outerServiceContent},</if>
+            <if test="outerServiceBrand != null">`outer_service_brand` = #{outerServiceBrand},</if>
+            <if test="outerServiceCombo != null">`outer_service_combo` = #{outerServiceCombo}</if>
         </set>
         where id = #{id}
     </update>

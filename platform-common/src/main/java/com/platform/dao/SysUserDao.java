@@ -47,5 +47,5 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
      * 根据实体类查询
      * @return
      */
-    List<SysUserEntity> queryMasterWorkerList();
+    List<SysUserEntity> queryMasterWorkerList(Map<String, Object> map);
 }

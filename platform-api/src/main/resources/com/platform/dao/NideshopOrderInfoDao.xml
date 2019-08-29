@@ -36,6 +36,11 @@
         <result property="createUserId" column="create_user_id"/>
         <result property="updateUserId" column="update_user_id"/>
         <result property="defunct" column="defunct"/>
+        <result property="channelId" column="channel_id"/>
+        <result property="couponId" column="coupon_id"/>
+        <result property="couponPrice" column="coupon_price"/>
+        <result property="masterWorker" column="master_worker"/>
+        <result property="masterWorkerId" column="master_worker_id"/>
         <result property="isOuterOrder" column="is_outer_order"/>
         <result property="outerMerchantName" column="outer_merchant_name"/>
         <result property="outerServiceCategory" column="outer_service_category"/>

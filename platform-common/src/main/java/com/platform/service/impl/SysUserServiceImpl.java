@@ -143,7 +143,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public List<SysUserEntity> queryMasterWorkerList() {
-        return sysUserDao.queryMasterWorkerList();
+    public List<SysUserEntity> queryMasterWorkerList(Map<String, Object> map) {
+        return sysUserDao.queryMasterWorkerList(map);
     }
 }

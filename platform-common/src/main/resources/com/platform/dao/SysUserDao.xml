@@ -132,11 +132,37 @@
 
 	<!-- 查询工人师傅列表信息 -->
 	<select id="queryMasterWorkerList" resultType="com.platform.entity.SysUserEntity">
-		select * from sys_user
-			where user_id in(
+		select
+			su.*,sd.`name` deptName
+		from sys_user su
+		left join sys_dept sd
+		on sd.dept_id=su.dept_id
+		where su.user_id in(
 			select user_id from sys_user_role where role_id in (
-			select role_id from sys_role where role_name like '%工人师傅'
-			))
+				select role_id from sys_role where role_name like '%工人师傅'
+			)
+		)
+		and su.`status`=1
+		<if test="mobile != null and mobile.trim() != ''">
+			and su.`mobile` = #{mobile}
+		</if>
+		<if test="username != null and username.trim() != ''">
+			and su..`username` like concat('%',#{username},'%')
+		</if>
+		<if test="status != null">
+			and su.`status` = #{status}
+		</if>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by su.${sidx} ${order}
+			</when>
+			<otherwise>
+				order by su.user_id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
 	</select>
 
 </mapper>

@@ -6,19 +6,22 @@ import com.platform.dao.NideshopOrderInfoDao;
 import com.platform.entity.NideshopOrderImageEntity;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.UserVo;
-import com.platform.oss.OSSFactory;
 import com.platform.vo.ImgVo;
 import com.platform.vo.SubmitOrderVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 @Slf4j
 public class ApiOrderInfoService {
+
+    private static Logger logger= LoggerFactory.getLogger(ApiOrderInfoService.class);
 
     @Autowired
     private NideshopOrderInfoDao nideshopOrderInfoDao;
@@ -104,7 +107,6 @@ public class ApiOrderInfoService {
 
     /**
      * 订单详情
-     * @param user
      * @param orderId
      * @return
      */
@@ -135,7 +137,7 @@ public class ApiOrderInfoService {
     }
 
     /**
-     * 一小时未指派的订单（预约订单）
+     * 一小时未支付的订单（支付订单）
      * @return
      */
     private List<NideshopOrderInfoEntity> findNotPayment(){
@@ -149,14 +151,14 @@ public class ApiOrderInfoService {
     }
 
     /**
-     * 一小时未支付的订单（支付订单）
+     * 24小时未指派的订单（预约订单）
      * @return
      */
     private List<NideshopOrderInfoEntity> findNotDesignate(){
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR_OF_DAY,-1);
+        calendar.add(Calendar.HOUR_OF_DAY,-24);
         QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
-        wrapper.eq("order_type",2);
+        wrapper.eq("order_type",1);
         wrapper.ne("order_status",1);
         wrapper.le("create_time",calendar.getTime());
         return nideshopOrderInfoDao.selectList(wrapper);
@@ -178,7 +180,7 @@ public class ApiOrderInfoService {
      * 定时作废订单
      */
     public void doRun(){
-        System.out.println("定时作废订单=======================");
+        logger.info("@@ApiOrderInfoService.doRun  order job begin");
         List<NideshopOrderInfoEntity> list1 = findNotPayment();
         for(NideshopOrderInfoEntity m1 : list1){
             m1.setOrderStatus(5);
@@ -189,6 +191,7 @@ public class ApiOrderInfoService {
             m2.setOrderStatus(5);
             nideshopOrderInfoDao.updateById(m2);
         }
+        logger.info("@@ApiOrderInfoService.doRun  order job end");
     }
 }
 

@@ -156,9 +156,11 @@ public class SysUserController extends AbstractController {
      * 获取工人师傅信息列表
      */
     @RequestMapping("/queryMasterWorkerList")
-    public R queryMasterWorkerList() {
+    public R queryMasterWorkerList(@RequestParam Map<String, Object> params) {
+        Query query = new Query(params);
         //获取工人师傅列表数据
-        List<SysUserEntity> workerList = sysUserService.queryMasterWorkerList();
-        return R.ok().put("workerList", workerList);
+        List<SysUserEntity> workerList = sysUserService.queryMasterWorkerList(params);
+        PageUtils pageUtil = new PageUtils(workerList, workerList.size(), query.getLimit(), query.getPage());
+        return R.ok().put("page", pageUtil);
     }
 }

@@ -17,7 +17,7 @@
     <bean id="oderInfoService" class="com.platform.service.ApiOrderInfoService"/>
 
     <task:scheduled-tasks>
-        <task:scheduled ref="oderInfoService" method="doRun" cron="*/5 * * * * ?"/>
+        <task:scheduled ref="oderInfoService" method="doRun" cron="0 */5 * * * ?"/>
     </task:scheduled-tasks>
 
     <mvc:annotation-driven>

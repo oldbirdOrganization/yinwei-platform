@@ -88,5 +88,5 @@ public interface SysUserService {
     /**
      * 查询工人师傅列表信息
      */
-    List<SysUserEntity> queryMasterWorkerList();
+    List<SysUserEntity> queryMasterWorkerList(Map<String, Object> map);
 }

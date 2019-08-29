@@ -129,9 +129,9 @@ let vm = new Vue({
                 return;
             }
             openWindow({
-                title : '收货地址',
+                title : '工人师傅列表',
                 type : 2,
-                content : '../shop/address.html?userId=' + id
+                content : '../shop/masterworker.html?orderId=' + id
             })
         },
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <Row :gutter="16">
+            <div class="search-group">
+                <i-col span="4">
+                    <i-input v-model="q.username" @on-enter="query" placeholder="姓名"/>
+                </i-col>
+                <i-col span="4">
+                    <i-input v-model="q.mobile" @on-enter="query" placeholder="联系电话"/>
+                </i-col>
+                <i-col span="4">
+                    <i-select v-model="q.status">
+                        <i-option value="0">禁用</i-option>
+                        <i-option value="1">正常</i-option>
+                    </i-select>
+                </i-col>
+                <i-button @click="query">查询</i-button>
+            </div>
+            <div class="buttons-group">
+                #if($shiro.hasPermission("order:update"))
+                <i-button type="error" @click="dispatchMaster"><i class="fa fa-share-square-o"></i>&nbsp指派工人师傅</i-button>
+                #end
+            </div>
+        </Row>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+</div>
+
+<script src="${rc.contextPath}/js/shop/masterworker.js?_${date.systemTime}"></script>
+</body>
+</html>
