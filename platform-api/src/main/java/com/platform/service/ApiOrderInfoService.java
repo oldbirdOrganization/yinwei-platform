@@ -145,7 +145,7 @@ public class ApiOrderInfoService {
         calendar.add(Calendar.HOUR_OF_DAY,-1);
         QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
         wrapper.eq("order_type",2);
-        wrapper.ne("payment_status",1);
+        wrapper.ne("payment_status",2);
         wrapper.le("create_time",calendar.getTime());
         return nideshopOrderInfoDao.selectList(wrapper);
     }
@@ -159,7 +159,7 @@ public class ApiOrderInfoService {
         calendar.add(Calendar.HOUR_OF_DAY,-24);
         QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
         wrapper.eq("order_type",1);
-        wrapper.ne("order_status",1);
+        wrapper.eq("order_status",1);
         wrapper.le("create_time",calendar.getTime());
         return nideshopOrderInfoDao.selectList(wrapper);
     }
