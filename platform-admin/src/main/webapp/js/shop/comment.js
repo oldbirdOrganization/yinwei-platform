@@ -9,8 +9,15 @@ $(function () {
         url: url,
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '类型', name: 'typeId', index: 'type_id', width: 80},
-            {label: '商品', name: 'valueName', index: 'value_id', width: 80},
+            {label: '类型', name: 'typeId', index: 'type_id', width: 80, formatter: function (value) {
+                    if (value === 1) {
+                        return '<span class="label label-success">订单评价</span>';
+                    }if (value === 2) {
+                        return '<span class="label label-success">工人服务态度评价 </span>';
+                    }
+                    return '<span class="label label-danger">其他</span>';
+                }},
+            {label: '关联类型值', name: 'valueId', index: 'value_id', width: 80},
             {label: '评价', name: 'content', index: 'content', width: 80},
             {
                 label: '评论时间', name: 'addTime', index: 'add_time', width: 80, formatter: function (value) {

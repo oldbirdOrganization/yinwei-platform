@@ -19,7 +19,7 @@ public class CommentEntity implements Serializable {
     //类型
     private Integer typeId;
     //商品Id
-    private Integer valueId;
+    private String valueId;
     //储存为base64编码
     private String content;
     //记录时间
@@ -84,14 +84,14 @@ public class CommentEntity implements Serializable {
     /**
      * 设置：
      */
-    public void setValueId(Integer valueId) {
+    public void setValueId(String valueId) {
         this.valueId = valueId;
     }
 
     /**
      * 获取：
      */
-    public Integer getValueId() {
+    public String getValueId() {
         return valueId;
     }
 
