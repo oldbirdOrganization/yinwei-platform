@@ -109,7 +109,7 @@ public class ApiCommentController extends ApiBaseAction {
      */
     @ApiOperation(value = "评论数量")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "typeId", value = "类型（1-订单评价 2-服务态度评价 3-其他）", paramType = "query", dataType = "Integer",required = true),
+            @ApiImplicitParam(name = "typeId", value = "类型（1-订单评价 2-工人服务态度评价 3-其他）", paramType = "query", dataType = "Integer",required = true),
             @ApiImplicitParam(name = "valueId", value = "对应类型值", paramType = "query", dataType = "String",required = false)
     })
     @PostMapping("count")
