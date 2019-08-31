@@ -10,6 +10,8 @@ import com.platform.service.ApiOrderInfoService;
 import com.platform.util.ApiBaseAction;
 import com.platform.vo.SubmitOrderVo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,18 +45,23 @@ public class ApiOrderInfoController extends ApiBaseAction {
     }
 
     @ApiOperation(value = "订单详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderNo", value = "订单编号", paramType = "query", dataType = "String",required = true)
+    })
     @GetMapping("detail")
-    public Object detail(@LoginUser UserVo loginUser,@RequestParam(name="orderId",required = true) Integer orderId) {
-        NideshopOrderInfoEntity order = orderInfoService.findDetail(orderId);
-        List<NideshopOrderImageEntity> imageList = orderInfoService.findOrderImageList(orderId);
-        GoodsVo goodsVo = null;
-        if (!Objects.isNull(order) && !Objects.isNull(order.getGoodsId())) {
-            goodsVo = apiGoodsService.queryObject(order.getGoodsId());
-        }
+    public Object detail(@RequestParam(name="orderNo",required = true) String orderNo) {
         Map<String,Object> result = new HashMap<>();
-        result.put("order",order);
-        result.put("imageList",imageList);
-        result.put("googds",goodsVo);
+        NideshopOrderInfoEntity order = orderInfoService.findDetail(orderNo);
+        if(!Objects.isNull(order)){
+            List<NideshopOrderImageEntity> imageList = orderInfoService.findOrderImageList(order.getId());
+            GoodsVo goodsVo = null;
+            if (!Objects.isNull(order.getGoodsId())) {
+                goodsVo = apiGoodsService.queryObject(order.getGoodsId());
+            }
+            result.put("order",order);
+            result.put("imageList",imageList);
+            result.put("googds",goodsVo);
+        }
         return toResponsSuccess(result);
     }
 

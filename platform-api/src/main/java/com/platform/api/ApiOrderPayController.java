@@ -12,6 +12,8 @@ import com.platform.util.wechat.WechatRefundApiResult;
 import com.platform.util.wechat.WechatUtil;
 import com.platform.utils.*;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +49,14 @@ public class ApiOrderPayController extends ApiBaseAction {
      * 获取支付的请求参数
      */
     @ApiOperation(value = "获取支付的请求参数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderNo", value = "订单编号", paramType = "query", dataType = "String",required = true)
+    })
     @IgnoreAuth
     @PostMapping("prepay")
-    public Object payPrepay(@LoginUser UserVo loginUser, Integer orderId) {
+    public Object payPrepay(@LoginUser UserVo loginUser, String orderNo) {
         //
-        NideshopOrderInfoEntity orderInfo = orderInfoService.findDetail(orderId);
+        NideshopOrderInfoEntity orderInfo = orderInfoService.findDetail(orderNo);
 
         if (null == orderInfo) {
             return toResponsObject(400, "订单已取消", "");
@@ -77,13 +82,13 @@ public class ApiOrderPayController extends ApiBaseAction {
             // 商户订单编号
             parame.put("out_trade_no", orderInfo.getOrderNo());
             Map orderGoodsParam = new HashMap();
-            orderGoodsParam.put("order_id", orderId);
+            orderGoodsParam.put("order_id", orderInfo.getId());
             // 商品描述
-            parame.put("body", "超市-支付");
+            parame.put("body", "定金-支付");
             //订单的商品
             List<OrderGoodsVo> orderGoods = orderGoodsService.queryList(orderGoodsParam);
             if (null != orderGoods) {
-                String body = "超市-";
+                String body = "定金-";
                 for (OrderGoodsVo goodsVo : orderGoods) {
                     body = body + goodsVo.getGoods_name() + "、";
                 }

@@ -107,12 +107,12 @@ public class ApiOrderInfoService {
 
     /**
      * 订单详情
-     * @param orderId
+     * @param orderNo
      * @return
      */
-    public NideshopOrderInfoEntity findDetail(Integer orderId){
+    public NideshopOrderInfoEntity findDetail(String orderNo){
         QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
-        wrapper.eq("id",orderId);
+        wrapper.eq("order_no",orderNo);
         return nideshopOrderInfoDao.selectOne(wrapper);
     }
 

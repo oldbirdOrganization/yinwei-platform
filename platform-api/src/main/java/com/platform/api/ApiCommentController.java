@@ -1,7 +1,5 @@
 package com.platform.api;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.*;
@@ -12,7 +10,10 @@ import com.platform.utils.Base64;
 import com.platform.utils.CharUtil;
 import com.platform.utils.Query;
 import com.platform.utils.StringUtils;
+import com.platform.vo.CommentContentVo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,18 +45,12 @@ public class ApiCommentController extends ApiBaseAction {
      */
     @ApiOperation(value = "发表评论")
     @PostMapping("post")
-    public Object post(@LoginUser UserVo loginUser) {
+    public Object post(@LoginUser UserVo loginUser, @RequestBody CommentContentVo commentContentVo ) {
         Map resultObj = new HashMap();
-        //
-        JSONObject jsonParam = getJsonRequest();
-        Integer typeId = jsonParam.getInteger("typeId");
-        Integer valueId = jsonParam.getInteger("valueId");
-        String content = jsonParam.getString("content");
-        JSONArray imagesList = jsonParam.getJSONArray("imagesList");
         CommentVo commentEntity = new CommentVo();
-        commentEntity.setType_id(typeId);
-        commentEntity.setValue_id(valueId);
-        commentEntity.setContent(content);
+        commentEntity.setType_id(commentContentVo.getTypeId());
+        commentEntity.setValue_id(commentContentVo.getValueId());
+        commentEntity.setContent(commentContentVo.getContent());
         commentEntity.setStatus(0);
         //
         commentEntity.setAdd_time(System.currentTimeMillis() / 1000);
@@ -63,22 +58,22 @@ public class ApiCommentController extends ApiBaseAction {
         commentEntity.setContent(Base64.encode(commentEntity.getContent()));
         Integer insertId = commentService.save(commentEntity);
         //
-        if (insertId > 0 && null != imagesList && imagesList.size() > 0) {
+        if (insertId > 0 && null != commentContentVo.getImagesList() && commentContentVo.getImagesList().size() > 0) {
             int i = 0;
-            for (Object imgLink : imagesList) {
+            for (Object imgLink : commentContentVo.getImagesList()) {
                 i++;
                 CommentPictureVo pictureVo = new CommentPictureVo();
-                pictureVo.setComment_id(insertId);
+                pictureVo.setComment_id(commentEntity.getId());
                 pictureVo.setPic_url(imgLink.toString());
                 pictureVo.setSort_order(i);
                 commentPictureService.save(pictureVo);
             }
         }
         // 是否领取优惠券
-        if (insertId > 0 && typeId == 0) {
+        if (insertId > 0 && commentContentVo.getTypeId() == 0) {
             // 当前评价的次数
             Map param = new HashMap();
-            param.put("value_id", valueId);
+            param.put("value_id", commentContentVo.getValueId());
             List<CommentVo> commentVos = commentService.queryList(param);
             boolean hasComment = false;
             for (CommentVo commentVo : commentVos) {
@@ -113,8 +108,12 @@ public class ApiCommentController extends ApiBaseAction {
     /**
      */
     @ApiOperation(value = "评论数量")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "typeId", value = "类型（1-订单评价 2-工人师傅服务态度评价3-其他）", paramType = "query", dataType = "Integer",required = true),
+            @ApiImplicitParam(name = "valueId", value = "对应类型值", paramType = "query", dataType = "String",required = false)
+    })
     @PostMapping("count")
-    public Object count(Integer typeId, Integer valueId) {
+    public Object count(Integer typeId, String valueId) {
         Map<String, Object> resultObj = new HashMap();
         //
         Map param = new HashMap();
@@ -139,7 +138,7 @@ public class ApiCommentController extends ApiBaseAction {
     @ApiOperation(value = "选择评论类型")
     @IgnoreAuth
     @PostMapping("list")
-    public Object list(Integer typeId, Integer valueId, Integer showType,
+    public Object list(Integer typeId, String valueId, Integer showType,
                        @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size,
                        String sort, String order) {
         Map<String, Object> resultObj = new HashMap();

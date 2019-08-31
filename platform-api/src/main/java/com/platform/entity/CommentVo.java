@@ -20,7 +20,7 @@ public class CommentVo implements Serializable {
     //用户评论的类型;0评论的是商品,1评论的是文章
     private Integer type_id;
     //产品Id
-    private Integer value_id;
+    private String value_id;
     //储存为base64编码
     private String content;
     //记录时间
@@ -50,11 +50,11 @@ public class CommentVo implements Serializable {
         this.type_id = type_id;
     }
 
-    public Integer getValue_id() {
+    public String getValue_id() {
         return value_id;
     }
 
-    public void setValue_id(Integer value_id) {
+    public void setValue_id(String value_id) {
         this.value_id = value_id;
     }
 
