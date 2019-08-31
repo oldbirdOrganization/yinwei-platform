@@ -17,11 +17,11 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '订单号', name: 'orderNo', index: 'order_no', width: 100},
-            {label: '会员', name: 'userName', index: 'user_name', width: 80},
+            {label: '订单号', name: 'orderNo', index: 'order_no', width: 120},
+            {label: '会员', name: 'userName', index: 'user_name', width: 70},
             {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 60},
             {
-                label: '订单类型', name: 'orderType', index: 'order_type', width: 80,
+                label: '订单类型', name: 'orderType', index: 'order_type', width: 60,
                 formatter: function (value) {
                     if (value == '1') {
                         return '预约订单';
@@ -32,7 +32,7 @@ $(function () {
                 }
             },
             {
-                label: '订单状态', name: 'orderStatus', index: 'order_status', width: 80,
+                label: '订单状态', name: 'orderStatus', index: 'order_status', width: 60,
                 formatter: function (value) {
                     if (value == '1') {
                         return '待指派';
@@ -51,7 +51,7 @@ $(function () {
                 }
             },
             {
-                label: '付款状态', name: 'paymentStatus', index: 'payment_status', width: 80,
+                label: '付款状态', name: 'paymentStatus', index: 'payment_status', width: 60,
                 formatter: function (value) {
                     if (value == '1') {
                         return '未付款';
@@ -61,24 +61,24 @@ $(function () {
                     return value;
                 }
             },
-            {label: '支付单号', name: 'paymentNo', index: 'payment_no', width: 80},
+            {label: '支付单号', name: 'paymentNo', index: 'payment_no', width: 110},
 
-            {label: '实际支付金额', name: 'orderPrice', index: 'order_price', width: 80},
+            {label: '实际支付金额（元）', name: 'orderPrice', index: 'order_price', width: 80},
             {
-                label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 80,
+                label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 110,
                 formatter: function (value) {
                     return transDate(value);
                 }
             },
             {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 60},
             {
-                label: '下单时间', name: 'createTime', index: 'create_time', width: 80,
+                label: '下单时间', name: 'createTime', index: 'create_time', width: 110,
                 formatter: function (value) {
                     return transDate(value);
                 }
             },
             {
-                label: '操作', width: 160, align: 'center', sortable: false,
+                label: '操作', width: 90, align: 'center', sortable: false,
                 formatter: function (value, col, row) {
                     return '<button class="btn btn-outline btn-info" onclick="vm.lookDetail(' + row.id + ')">' +
                         '<i class="fa fa-info-circle"></i>&nbsp;详情</button>';

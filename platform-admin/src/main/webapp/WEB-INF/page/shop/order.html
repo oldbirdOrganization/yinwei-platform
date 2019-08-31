@@ -13,7 +13,7 @@
                     <i-input v-model="q.orderNo" @on-enter="query" placeholder="订单号"/>
                 </i-col>
                 <i-col span="4">
-                    <i-select v-model="q.orderStatus">
+                    <i-select v-model="q.orderStatus" placeholder="订单状态">
                         <i-option value="1">待指派</i-option>
                         <i-option value="2">待确认</i-option>
                         <i-option value="3">已确认</i-option>
