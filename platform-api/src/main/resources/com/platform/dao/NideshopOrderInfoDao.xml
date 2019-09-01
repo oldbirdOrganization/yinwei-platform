@@ -14,6 +14,7 @@
         <result property="paymentStatus" column="payment_status"/>
         <result property="paymentTime" column="payment_time"/>
         <result property="paymentNo" column="payment_no"/>
+        <result property="paymentPrice" column="payment_price"/>
         <result property="orderPrice" column="order_price"/>
         <result property="serviceHouseName" column="service_house_name"/>
         <result property="serviceTime" column="service_time"/>

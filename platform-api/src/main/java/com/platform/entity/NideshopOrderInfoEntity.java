@@ -57,6 +57,11 @@ public class NideshopOrderInfoEntity implements Serializable {
 	 * 上游支付单号
 	 */
 	private String paymentNo;
+
+	/**
+	 * 实际支付金额
+	 */
+	private BigDecimal  paymentPrice;
 	/**
 	 * 订单金额
 	 */
@@ -155,6 +160,11 @@ public class NideshopOrderInfoEntity implements Serializable {
 	 * 优惠金额
 	 */
 	private BigDecimal couponPrice ;
+
+	/**
+	 * 工人师傅编号
+	 */
+	private Long masterWorkerId;
 
 	//是否为第三方订单 1-是 0-否
 	private Integer isOuterOrder;
@@ -480,5 +490,21 @@ public class NideshopOrderInfoEntity implements Serializable {
 
 	public void setOuterServiceCombo(String outerServiceCombo) {
 		this.outerServiceCombo = outerServiceCombo;
+	}
+
+	public BigDecimal getPaymentPrice() {
+		return paymentPrice;
+	}
+
+	public void setPaymentPrice(BigDecimal paymentPrice) {
+		this.paymentPrice = paymentPrice;
+	}
+
+	public Long getMasterWorkerId() {
+		return masterWorkerId;
+	}
+
+	public void setMasterWorkerId(Long masterWorkerId) {
+		this.masterWorkerId = masterWorkerId;
 	}
 }

@@ -1,13 +1,12 @@
 package com.platform.api;
 
 import com.platform.annotation.LoginUser;
-import com.platform.entity.GoodsVo;
-import com.platform.entity.NideshopOrderImageEntity;
-import com.platform.entity.NideshopOrderInfoEntity;
-import com.platform.entity.UserVo;
+import com.platform.entity.*;
 import com.platform.service.ApiGoodsService;
 import com.platform.service.ApiOrderInfoService;
+import com.platform.service.SysUserService;
 import com.platform.util.ApiBaseAction;
+import com.platform.vo.MasterWorkerVo;
 import com.platform.vo.SubmitOrderVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -35,6 +34,9 @@ public class ApiOrderInfoController extends ApiBaseAction {
     private ApiOrderInfoService orderInfoService;
     @Autowired
     private ApiGoodsService apiGoodsService;
+    @Autowired
+    private SysUserService sysUserService;
+
 
 
     @ApiOperation(value = "下单")
@@ -59,9 +61,18 @@ public class ApiOrderInfoController extends ApiBaseAction {
                 goodsVo = apiGoodsService.queryObject(order.getGoodsId());
             }
 
+            //查询订单指派师傅信息
+            SysUserEntity user=sysUserService.queryObject(order.getMasterWorkerId());
+            if(!Objects.isNull(user)){
+                MasterWorkerVo worker=new MasterWorkerVo();
+                worker.setUserName(user.getUsername());
+                worker.setMobile(user.getMobile());
+                worker.setEvaluateLevel(5);
+                result.put("worker",worker);
+            }
             result.put("order",order);
             result.put("imageList",imageList);
-            result.put("googds",goodsVo);
+            result.put("googds",goodsVo);            
         }
         return toResponsSuccess(result);
     }
