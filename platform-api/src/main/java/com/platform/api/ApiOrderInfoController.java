@@ -72,7 +72,7 @@ public class ApiOrderInfoController extends ApiBaseAction {
             }
             result.put("order",order);
             result.put("imageList",imageList);
-            result.put("googds",goodsVo);            
+            result.put("googds",goodsVo);
         }
         return toResponsSuccess(result);
     }
