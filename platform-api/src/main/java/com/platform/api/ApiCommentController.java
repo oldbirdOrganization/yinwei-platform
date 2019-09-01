@@ -52,7 +52,8 @@ public class ApiCommentController extends ApiBaseAction {
         commentEntity.setValue_id(commentContentVo.getValueId());
         commentEntity.setContent(commentContentVo.getContent());
         commentEntity.setStatus(0);
-        //
+        commentEntity.setQuality_evaluate_level(commentContentVo.getQualityEvaluateLevel());
+        commentEntity.setService_evaluate_level(commentContentVo.getServiceEvaluateLevel());
         commentEntity.setAdd_time(System.currentTimeMillis() / 1000);
         commentEntity.setUser_id(loginUser.getUserId());
         commentEntity.setContent(Base64.encode(commentEntity.getContent()));
@@ -109,7 +110,7 @@ public class ApiCommentController extends ApiBaseAction {
      */
     @ApiOperation(value = "评论数量")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "typeId", value = "类型（1-订单评价 2-工人服务态度评价 3-其他）", paramType = "query", dataType = "Integer",required = true),
+            @ApiImplicitParam(name = "typeId", value = "类型（1-订单评价 2-商品评价）", paramType = "query", dataType = "Integer",required = true),
             @ApiImplicitParam(name = "valueId", value = "对应类型值", paramType = "query", dataType = "String",required = false)
     })
     @PostMapping("count")
@@ -136,10 +137,16 @@ public class ApiCommentController extends ApiBaseAction {
      * @return
      */
     @ApiOperation(value = "选择评论类型")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "typeId", value = "类型（1-订单评价 2-商品评价）", paramType = "query", dataType = "Integer",required = true),
+            @ApiImplicitParam(name = "valueId", value = "对应类型值", paramType = "query", dataType = "String",required = false),
+            @ApiImplicitParam(name = "showType", value = "是否显示图片(0-全部 1-有图片)", paramType = "query", dataType = "Integer",required = false)
+    })
     @IgnoreAuth
     @PostMapping("list")
     public Object list(Integer typeId, String valueId, Integer showType,
-                       @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size,
+                       @RequestParam(value = "page", defaultValue = "1") Integer page,
+                       @RequestParam(value = "size", defaultValue = "10") Integer size,
                        String sort, String order) {
         Map<String, Object> resultObj = new HashMap();
         List<CommentVo> commentList = new ArrayList();

@@ -58,6 +58,7 @@ public class ApiOrderInfoController extends ApiBaseAction {
             if (!Objects.isNull(order.getGoodsId())) {
                 goodsVo = apiGoodsService.queryObject(order.getGoodsId());
             }
+
             result.put("order",order);
             result.put("imageList",imageList);
             result.put("googds",goodsVo);

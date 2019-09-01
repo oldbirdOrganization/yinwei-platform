@@ -2,6 +2,7 @@ package com.platform.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.platform.utils.JsonDateSerializer;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,6 +34,11 @@ public class CommentVo implements Serializable {
     //会员Id
     private UserVo user_info;
     private List<CommentPictureVo> pic_list;
+
+    @ApiModelProperty(value="质量评价星级",name="quality_evaluate_level",example="质量评价星级 1至5")
+    private int quality_evaluate_level;
+    @ApiModelProperty(value="服务评价星级",name="service_evaluate_level",example="服务评价星级 1至5")
+    private int service_evaluate_level;
 
     public Integer getId() {
         return id;
@@ -105,5 +111,21 @@ public class CommentVo implements Serializable {
 
     public void setPic_list(List<CommentPictureVo> pic_list) {
         this.pic_list = pic_list;
+    }
+
+    public int getQuality_evaluate_level() {
+        return quality_evaluate_level;
+    }
+
+    public void setQuality_evaluate_level(int quality_evaluate_level) {
+        this.quality_evaluate_level = quality_evaluate_level;
+    }
+
+    public int getService_evaluate_level() {
+        return service_evaluate_level;
+    }
+
+    public void setService_evaluate_level(int service_evaluate_level) {
+        this.service_evaluate_level = service_evaluate_level;
     }
 }

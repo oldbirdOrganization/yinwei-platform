@@ -28,7 +28,10 @@ public class CommentEntity implements Serializable {
     private Integer status;
     //会员Id
     private Integer userId;
-
+    // 质量评价星级 1至5
+    private int qualityEvaluateLevel;
+//    服务评价星级 1至5
+    private int serviceEvaluateLevel;
     /**
      * 翻译用字段
      */
@@ -149,5 +152,21 @@ public class CommentEntity implements Serializable {
      */
     public Integer getUserId() {
         return userId;
+    }
+
+    public int getQualityEvaluateLevel() {
+        return qualityEvaluateLevel;
+    }
+
+    public void setQualityEvaluateLevel(int qualityEvaluateLevel) {
+        this.qualityEvaluateLevel = qualityEvaluateLevel;
+    }
+
+    public int getServiceEvaluateLevel() {
+        return serviceEvaluateLevel;
+    }
+
+    public void setServiceEvaluateLevel(int serviceEvaluateLevel) {
+        this.serviceEvaluateLevel = serviceEvaluateLevel;
     }
 }
