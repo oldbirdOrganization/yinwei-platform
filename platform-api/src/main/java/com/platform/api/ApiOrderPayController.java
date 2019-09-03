@@ -109,6 +109,7 @@ public class ApiOrderPayController extends ApiBaseAction {
             String sign = WechatUtil.arraySign(parame, ResourceUtil.getConfigByName("wx.paySignKey"));
             // 数字签证
             parame.put("sign", sign);
+            logger.info("登陆用户openid:" + loginUser.getWeixin_openid());
 
             String xml = MapUtils.convertMap2Xml(parame);
             logger.info("xml:" + xml);
