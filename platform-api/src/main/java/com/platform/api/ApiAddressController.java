@@ -32,7 +32,6 @@ public class ApiAddressController extends ApiBaseAction {
      */
     @ApiOperation(value = "获取用户的收货地址接口", response = Map.class)
     @GetMapping("list")
-    @IgnoreAuth
     public Object list(@LoginUser UserVo loginUser) {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("user_id", loginUser.getUserId());
@@ -45,7 +44,6 @@ public class ApiAddressController extends ApiBaseAction {
      */
     @ApiOperation(value = "获取收货地址的详情", response = Map.class)
     @GetMapping("detail")
-    @IgnoreAuth
     public Object detail(@RequestParam Integer id, @LoginUser UserVo loginUser) {
         AddressVo entity = addressService.queryObject(id);
         if(null != entity){
@@ -62,7 +60,6 @@ public class ApiAddressController extends ApiBaseAction {
      */
     @ApiOperation(value = "添加或更新收货地址", response = Map.class)
     @PostMapping("save")
-    @IgnoreAuth
     public Object save(@LoginUser UserVo loginUser, @RequestBody AddressVo entity) {
         entity.setUserId(loginUser.getUserId());
         if (null == entity.getId() || entity.getId() == 0) {
@@ -79,7 +76,6 @@ public class ApiAddressController extends ApiBaseAction {
      */
     @ApiOperation(value = "删除指定的收货地址", response = Map.class)
     @PostMapping("delete")
-    @IgnoreAuth
     public Object delete(@RequestParam Integer id, @LoginUser UserVo loginUser) {
         AddressVo entity = addressService.queryObject(id);
         //判断越权行为

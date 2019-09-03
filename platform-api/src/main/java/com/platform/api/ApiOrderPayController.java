@@ -52,7 +52,6 @@ public class ApiOrderPayController extends ApiBaseAction {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderNo", value = "订单编号", paramType = "query", dataType = "String",required = true)
     })
-    @IgnoreAuth
     @PostMapping("prepay")
     public Object payPrepay(@LoginUser UserVo loginUser, String orderNo) {
         //
@@ -157,7 +156,6 @@ public class ApiOrderPayController extends ApiBaseAction {
      * @return
      */
     @ApiIgnore
-    @IgnoreAuth
     @RequestMapping(value = "/notify", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public void notify(HttpServletRequest request, HttpServletResponse response) {
         try {

@@ -142,7 +142,7 @@ public class ApiCommentController extends ApiBaseAction {
             @ApiImplicitParam(name = "valueId", value = "对应类型值", paramType = "query", dataType = "String",required = false),
             @ApiImplicitParam(name = "showType", value = "是否显示图片(0-全部 1-有图片)", paramType = "query", dataType = "Integer",required = false)
     })
-    @IgnoreAuth
+
     @PostMapping("list")
     public Object list(Integer typeId, String valueId, Integer showType,
                        @RequestParam(value = "page", defaultValue = "1") Integer page,

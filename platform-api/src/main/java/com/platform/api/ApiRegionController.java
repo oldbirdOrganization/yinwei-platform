@@ -23,7 +23,6 @@ import java.util.Map;
 public class ApiRegionController extends ApiBaseAction {
 
     @ApiOperation(value = "地区列表")
-    @IgnoreAuth
     @PostMapping("list")
     public Object list(Integer parentId) {
         List<SysRegionEntity> regionEntityList = RegionCacheUtil.getChildrenByParentId(parentId);
@@ -36,7 +35,7 @@ public class ApiRegionController extends ApiBaseAction {
         return toResponsSuccess(regionVoList);
     }
 
-    @IgnoreAuth
+
     @PostMapping("provinceList")
     public Object provinceList() {
         List<SysRegionEntity> regionEntityList = RegionCacheUtil.getAllProvice();
@@ -49,7 +48,7 @@ public class ApiRegionController extends ApiBaseAction {
         return toResponsSuccess(regionVoList);
     }
 
-    @IgnoreAuth
+
     @PostMapping("cityList")
     public Object provinceList(String proviceName) {
         List<SysRegionEntity> regionEntityList = RegionCacheUtil.getChildrenCity(proviceName);
@@ -62,7 +61,7 @@ public class ApiRegionController extends ApiBaseAction {
         return toResponsSuccess(regionVoList);
     }
 
-    @IgnoreAuth
+
     @PostMapping("distinctList")
     public Object distinctList(String proviceName, String cityName) {
         List<SysRegionEntity> regionEntityList = RegionCacheUtil.getChildrenDistrict(proviceName, cityName);
@@ -75,14 +74,14 @@ public class ApiRegionController extends ApiBaseAction {
         return toResponsSuccess(regionVoList);
     }
 
-    @IgnoreAuth
+
     @PostMapping("info")
     public Object info(Integer regionId) {
         SysRegionEntity regionEntity = RegionCacheUtil.getAreaByAreaId(regionId);
         return toResponsSuccess(new RegionVo(regionEntity));
     }
 
-    @IgnoreAuth
+
     @PostMapping("regionIdsByNames")
     public Object regionIdsByNames(String provinceName, String cityName, String districtName) {
         Map<String, Integer> resultObj = new HashMap<String, Integer>();

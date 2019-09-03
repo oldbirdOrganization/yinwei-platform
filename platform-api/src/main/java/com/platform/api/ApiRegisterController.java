@@ -29,7 +29,7 @@
 //     * 注册
 //     */
 //    @ApiOperation(value = "注册")
-//    @IgnoreAuth
+//
 //    @PostMapping("register")
 //    public R register(String mobile, String password) {
 //        Assert.isBlank(mobile, "手机号不能为空");

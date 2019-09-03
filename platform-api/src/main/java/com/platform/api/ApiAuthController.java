@@ -55,7 +55,7 @@ public class ApiAuthController extends ApiBaseAction {
     /**
      * 登录
      */
-    @IgnoreAuth
+
     @PostMapping("login")
     @ApiOperation(value = "登录接口")
     public R login(String mobile, String password) {
@@ -75,7 +75,6 @@ public class ApiAuthController extends ApiBaseAction {
      * 微信登录
      */
     @ApiOperation(value = "微信登录")
-    @IgnoreAuth
     @PostMapping("login_by_weixin")
     public Object loginByWeixin() {
         JSONObject jsonParam = this.getJsonRequest();
@@ -147,7 +146,6 @@ public class ApiAuthController extends ApiBaseAction {
      * 支付宝登录
      */
     @ApiOperation(value = "支付宝登录")
-    @IgnoreAuth
     @PostMapping("login_by_ali")
     public Object login_by_ali() {
         JSONObject jsonParam = this.getJsonRequest();

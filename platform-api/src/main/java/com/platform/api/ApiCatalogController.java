@@ -32,7 +32,7 @@ public class ApiCatalogController extends ApiBaseAction {
      * 获取分类栏目数据
      */
     @ApiOperation(value = "获取分类栏目数据")
-    @IgnoreAuth
+
     @GetMapping(value = "indexCatalog")
     public Object indexCatalog() {
         Map<String, Object> resultObj = new HashMap();
@@ -58,7 +58,7 @@ public class ApiCatalogController extends ApiBaseAction {
      */
     @ApiOperation(value = "分类详细信息")
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "id", paramType = "query", required = true)})
-    @IgnoreAuth
+
     @GetMapping(value = "currentCatalog")
     public Object currentCatalog(@RequestParam(name = "id",required = true) Integer id) {
         Map<String, Object> resultObj = new HashMap();
