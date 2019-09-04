@@ -1,11 +1,10 @@
 package com.platform.api;
 
-import com.platform.annotation.LoginUser;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.OrderGoodsVo;
-import com.platform.entity.UserVo;
 import com.platform.service.ApiOrderGoodsService;
 import com.platform.service.ApiOrderInfoService;
+import com.platform.service.ApiUserService;
 import com.platform.util.ApiBaseAction;
 import com.platform.util.wechat.WechatRefundApiResult;
 import com.platform.util.wechat.WechatUtil;
@@ -16,10 +15,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +39,8 @@ public class ApiOrderPayController extends ApiBaseAction {
     private ApiOrderInfoService orderInfoService;
     @Autowired
     private ApiOrderGoodsService orderGoodsService;
+    @Autowired
+    private ApiUserService userService;
 
     /**
      * 获取支付的请求参数
@@ -52,13 +50,15 @@ public class ApiOrderPayController extends ApiBaseAction {
             @ApiImplicitParam(name = "orderNo", value = "订单编号", paramType = "query", dataType = "String",required = true)
     })
     @PostMapping("prepay")
-    public Object payPrepay(@LoginUser UserVo loginUser, String orderNo) {
-        logger.info("登陆用户信息loginUser=:" + loginUser);
+    public Object payPrepay(@RequestParam(value = "orderNo",required = true) String orderNo) {
+        logger.info("begin 定金订单支付  orderNo=" + orderNo);
         NideshopOrderInfoEntity orderInfo = orderInfoService.findDetail(orderNo);
         if (null == orderInfo) {
             return toResponsObject(400, "订单已取消", "");
         }
-
+        if (null == orderInfo.getCreateUserId() && orderInfo.getCreateUserId().intValue()==0) {
+            return toResponsObject(400, "无效订单，请重新下单", "");
+        }
         if (orderInfo.getPaymentStatus() == 2) {
             return toResponsObject(400, "订单已支付，请不要重复操作", "");
         }
@@ -102,7 +102,13 @@ public class ApiOrderPayController extends ApiBaseAction {
             // 交易类型APP
             parame.put("trade_type", ResourceUtil.getConfigByName("wx.tradeType"));
             parame.put("spbill_create_ip", getClientIp());
-            parame.put("openid", loginUser.getWeixin_openid());
+
+            String weixinOpenId=userService.queryObject(orderInfo.getCreateUserId()).getWeixin_openid();
+            if(StringUtils.isNotEmpty(weixinOpenId)){
+                logger.info("登陆用户openId"+weixinOpenId);
+               parame.put("openid", weixinOpenId);
+            }
+
             String sign = WechatUtil.arraySign(parame, ResourceUtil.getConfigByName("wx.paySignKey"));
             // 数字签证
             parame.put("sign", sign);

@@ -62,8 +62,8 @@
 				/webjars/springfox-swagger-ui/**=anon
 				/configuration/**=anon
 				/v2/api-docs=anon
-	        	/api/**=authc
-				/**=authc
+<!--	        	/api/**=authc-->
+<!--				/**=authc-->
 	        </value>
 	    </property>
 	</bean>
