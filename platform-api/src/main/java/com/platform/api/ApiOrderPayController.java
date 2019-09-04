@@ -54,9 +54,7 @@ public class ApiOrderPayController extends ApiBaseAction {
     @PostMapping("prepay")
     public Object payPrepay(@LoginUser UserVo loginUser, String orderNo) {
         logger.info("登陆用户信息loginUser=:" + loginUser);
-        logger.info("登陆用户openid:" + loginUser.getWeixin_openid());
         NideshopOrderInfoEntity orderInfo = orderInfoService.findDetail(orderNo);
-
         if (null == orderInfo) {
             return toResponsObject(400, "订单已取消", "");
         }
