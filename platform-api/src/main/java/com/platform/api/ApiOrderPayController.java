@@ -1,6 +1,5 @@
 package com.platform.api;
 
-import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.OrderGoodsVo;
@@ -54,7 +53,8 @@ public class ApiOrderPayController extends ApiBaseAction {
     })
     @PostMapping("prepay")
     public Object payPrepay(@LoginUser UserVo loginUser, String orderNo) {
-        //
+        logger.info("登陆用户信息loginUser=:" + loginUser);
+        logger.info("登陆用户openid:" + loginUser.getWeixin_openid());
         NideshopOrderInfoEntity orderInfo = orderInfoService.findDetail(orderNo);
 
         if (null == orderInfo) {
@@ -108,7 +108,6 @@ public class ApiOrderPayController extends ApiBaseAction {
             String sign = WechatUtil.arraySign(parame, ResourceUtil.getConfigByName("wx.paySignKey"));
             // 数字签证
             parame.put("sign", sign);
-            logger.info("登陆用户openid:" + loginUser.getWeixin_openid());
 
             String xml = MapUtils.convertMap2Xml(parame);
             logger.info("xml:" + xml);

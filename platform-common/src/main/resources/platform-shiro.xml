@@ -45,8 +45,13 @@
 	    <!-- authc：该过滤器下的页面必须验证后才能访问,它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter -->  
 	    <property name="filterChainDefinitions">  
 	        <value>
+				/api/index/**=anon
+				/api/brand/**=anon
+				/api/catalog/**=anon
+				/api/goods/**=anon
+				/api/coupon/**=anon
+				/api/helpissue/**=anon
 	        	/statics/**=anon
-				/api/**=anon
 				/api/**=noSessionCreation
 	        	/login.html=anon
 	        	/sys/login=anon
@@ -54,11 +59,11 @@
 				/swagger-ui.html=anon
 				/swagger-ui.html#!/**=anon
 				/swagger-resources/**=anon
-				/swagger-resources/**=anon
 				/webjars/springfox-swagger-ui/**=anon
 				/configuration/**=anon
 				/v2/api-docs=anon
-	        	/**=authc
+	        	/api/**=authc
+				/**=authc
 	        </value>
 	    </property>
 	</bean>

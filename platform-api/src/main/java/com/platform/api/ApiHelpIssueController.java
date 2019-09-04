@@ -22,7 +22,7 @@ import java.util.Map;
  * @date 2019-11-07 11:04:20
  */
 @RestController
-@RequestMapping("api/helpissue")
+@RequestMapping("/api/helpissue")
 public class ApiHelpIssueController extends ApiBaseAction {
     @Autowired
     private ApiHelpIssueService helpIssueService;
