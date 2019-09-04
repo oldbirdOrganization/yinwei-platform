@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -35,6 +36,7 @@ public class ApiOrderInfoService {
      * @param submitOrderVo
      * @return
      */
+    @Transactional
     public Integer submitOrder(UserVo user, SubmitOrderVo submitOrderVo) {
         NideshopOrderInfoEntity model = new NideshopOrderInfoEntity();
         BeanUtils.copyProperties(submitOrderVo,model);

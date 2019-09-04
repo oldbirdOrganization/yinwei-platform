@@ -33,12 +33,17 @@ let vm = new Vue({
         add: function () {
             vm.showList = false;
             vm.title = "新增";
-            vm.helpIssue = {};
+            vm.helpIssue = {
+                typeName:'',
+                question:'',
+                answer:'',
+                sort:'0'
+            };
 
             vm.getHelpType();
         },
         update: function (event) {
-            let id = getSelectedRow();
+            let id = getSelectedRow("#jqGrid");
             if (id == null) {
                 return;
             }
@@ -62,7 +67,7 @@ let vm = new Vue({
             });
         },
         del: function (event) {
-            let ids = getSelectedRows();
+            let ids = getSelectedRows("#jqGrid");
             if (ids == null) {
                 return;
             }

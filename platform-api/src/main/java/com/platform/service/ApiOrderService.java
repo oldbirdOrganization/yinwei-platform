@@ -1,33 +1,17 @@
 package com.platform.service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.fastjson.JSONObject;
+import com.platform.cache.J2CacheUtils;
+import com.platform.dao.*;
+import com.platform.entity.*;
+import com.platform.util.CommonUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSONObject;
-import com.platform.cache.J2CacheUtils;
-import com.platform.dao.ApiAddressMapper;
-import com.platform.dao.ApiCartMapper;
-import com.platform.dao.ApiCouponMapper;
-import com.platform.dao.ApiOrderGoodsMapper;
-import com.platform.dao.ApiOrderMapper;
-import com.platform.entity.AddressVo;
-import com.platform.entity.BuyGoodsVo;
-import com.platform.entity.CartVo;
-import com.platform.entity.CouponVo;
-import com.platform.entity.OrderGoodsVo;
-import com.platform.entity.OrderVo;
-import com.platform.entity.ProductVo;
-import com.platform.entity.UserVo;
-import com.platform.util.CommonUtil;
+import java.math.BigDecimal;
+import java.util.*;
 
 
 @Service
@@ -46,44 +30,6 @@ public class ApiOrderService {
     private ApiOrderGoodsMapper apiOrderGoodsMapper;
     @Autowired
     private ApiProductService productService;
-
-    public OrderVo queryObjectByOrderSn(String orderSn) {
-        return orderDao.queryObjectByOrderSn(orderSn);
-    }
-
-    public OrderVo queryObject(Integer id) {
-        return orderDao.queryObject(id);
-    }
-
-
-    public List<OrderVo> queryList(Map<String, Object> map) {
-        return orderDao.queryList(map);
-    }
-
-
-    public int queryTotal(Map<String, Object> map) {
-        return orderDao.queryTotal(map);
-    }
-
-
-    public void save(OrderVo order) {
-        orderDao.save(order);
-    }
-
-
-    public int update(OrderVo order) {
-        return orderDao.update(order);
-    }
-
-
-    public void delete(Integer id) {
-        orderDao.delete(id);
-    }
-
-
-    public void deleteBatch(Integer[] ids) {
-        orderDao.deleteBatch(ids);
-    }
 
 
     @Transactional

@@ -32,11 +32,11 @@ public class SwaggerConfig {
     private ApiInfo apiInfo(){
         @SuppressWarnings("deprecation")
         ApiInfo info=new ApiInfo(
-                "小程序接口文档",
-                "小程序接口文档",
+                "一步e家小程序接口文档",
+                "一步e家小程序接口文档",
                 "1.0",
                 "urn:tos",
-                "platform",
+                "platform-yinwei",
                 "Apache 2.0",
                 "http://www.apache.org/licenses/LICENSE-2.0");
         return info;
