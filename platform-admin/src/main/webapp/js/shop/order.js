@@ -62,7 +62,7 @@ $(function () {
                 }
             },
             {
-                label: '是否第三方订单', name: 'isOuterOrder', index: 'is_outer_order', width: 60,
+                label: '是否第三方', name: 'isOuterOrder', index: 'is_outer_order', width: 60,
                 formatter: function (value) {
                     if (value == '0') {
                         return '否';

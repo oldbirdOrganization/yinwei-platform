@@ -40,7 +40,7 @@
                     </i-select>
                 </i-col>
                 <i-col span="4">
-                    <i-select v-model="q.isOuterOrder" placeholder="是否第三方订单">
+                    <i-select v-model="q.isOuterOrder" placeholder="是否第三方">
                         <i-option value="0">否</i-option>
                         <i-option value="1">是</i-option>
                     </i-select>
@@ -114,7 +114,7 @@
                     </Radio>
                 </Radio-group>
             </Form-item>
-            <Form-item label="是否第三方订单" prop="isOuterOrder">
+            <Form-item label="是否第三方" prop="isOuterOrder">
                 <Radio-group v-model="order.isOuterOrder">
                     <Radio label="0" disabled>
                         <span>否</span>
