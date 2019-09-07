@@ -61,6 +61,17 @@ $(function () {
                     return value;
                 }
             },
+            {
+                label: '是否第三方订单', name: 'isOuterOrder', index: 'is_outer_order', width: 60,
+                formatter: function (value) {
+                    if (value == '0') {
+                        return '否';
+                    } else if (value == '1') {
+                        return '是';
+                    }
+                    return value;
+                }
+            },
             {label: '支付单号', name: 'paymentNo', index: 'payment_no', width: 110},
 
             {label: '实际支付金额（元）', name: 'orderPrice', index: 'order_price', width: 80},

@@ -22,13 +22,13 @@
                     </i-select>
                 </i-col>
                 <i-col span="4">
-                    <i-select v-model="q.orderType">
+                    <i-select v-model="q.orderType" placeholder="订单类型">
                         <i-option value="1">预约订单</i-option>
                         <i-option value="2">定金订单</i-option>
                     </i-select>
                 </i-col>
                 <i-col span="4">
-                    <i-select v-model="q.channelId">
+                    <i-select v-model="q.channelId" placeholder="渠道类型">
                         <i-option value="1">维修</i-option>
                         <i-option value="2">改造</i-option>
                         <i-option value="3">设计</i-option>
@@ -37,6 +37,12 @@
                         <i-option value="6">空调维保</i-option>
                         <i-option value="7">家具保养</i-option>
                         <i-option value="8">专业验房</i-option>
+                    </i-select>
+                </i-col>
+                <i-col span="4">
+                    <i-select v-model="q.isOuterOrder" placeholder="是否第三方订单">
+                        <i-option value="0">否</i-option>
+                        <i-option value="1">是</i-option>
                     </i-select>
                 </i-col>
                 <i-button @click="query">查询</i-button>
@@ -108,6 +114,17 @@
                     </Radio>
                 </Radio-group>
             </Form-item>
+            <Form-item label="是否第三方订单" prop="isOuterOrder">
+                <Radio-group v-model="order.isOuterOrder">
+                    <Radio label="0" disabled>
+                        <span>否</span>
+                    </Radio>
+                    <Radio label="1" disabled>
+                        <span>是</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
+
             <Form-item label="渠道名称" prop="channelName">
                 <i-input v-model="order.channelName" readonly/>
             </Form-item>
@@ -127,10 +144,10 @@
                 <i-input v-model="order.couponPrice" readonly/>
             </Form-item>
             <Form-item label="下单时间" prop="createTime">
-                <Date-picker v-model="order.createTime" placeholder="使用时间" readonly/>
+                <Date-picker v-model="order.createTime" placeholder="下单时间" readonly/>
             </Form-item>
             <Form-item label="付款时间" prop="paymentTime">
-                <Date-picker v-model="order.paymentTime" placeholder="使用时间" readonly/>
+                <Date-picker v-model="order.paymentTime" placeholder="付款时间" readonly/>
             </Form-item>
             <Form-item>
                 <i-button type="warning" @click="reload" style="margin-left: 8px"/>返回</i-button>
