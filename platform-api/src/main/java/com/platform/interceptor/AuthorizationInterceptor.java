@@ -45,12 +45,11 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         } else {
             return true;
         }
-
         //如果有@IgnoreAuth注解，则不验证token
         if (annotation != null) {
             return true;
         }
-
+        /*
         //从header中获取token
         String token = request.getHeader(LOGIN_TOKEN_KEY);
         //如果header中不存在token，则从参数中获取token
@@ -70,7 +69,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         }
 
         //设置userId到request里，后续根据userId，获取用户信息
-        request.setAttribute(LOGIN_USER_KEY, tokenEntity.getUserId());
+        request.setAttribute(LOGIN_USER_KEY, tokenEntity.getUserId());*/
         return true;
     }
 }
