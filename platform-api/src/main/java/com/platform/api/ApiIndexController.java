@@ -156,7 +156,7 @@ public class ApiIndexController extends ApiBaseAction {
     }
 
     @ApiOperation(value = "品牌列表")
-
+    @IgnoreAuth
     @PostMapping(value = "brand")
     public Object brand() {
         Map<String, Object> resultObj = new HashMap<String, Object>();

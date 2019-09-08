@@ -39,7 +39,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with,X-Nideshop-Token,X-URL-PATH");
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 
-        /*IgnoreAuth annotation;
+        IgnoreAuth annotation;
         if (handler instanceof HandlerMethod) {
             annotation = ((HandlerMethod) handler).getMethodAnnotation(IgnoreAuth.class);
         } else {
@@ -70,8 +70,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         }
 
         //设置userId到request里，后续根据userId，获取用户信息
-        request.setAttribute(LOGIN_USER_KEY, tokenEntity.getUserId());*/
-
+        request.setAttribute(LOGIN_USER_KEY, tokenEntity.getUserId());
         return true;
     }
 }

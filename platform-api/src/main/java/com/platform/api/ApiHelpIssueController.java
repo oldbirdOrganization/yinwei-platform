@@ -37,6 +37,7 @@ public class ApiHelpIssueController extends ApiBaseAction {
      * 查看帮助类型列表
      */
     @ApiOperation(value = "查看帮助类型列表")
+    @IgnoreAuth
     @GetMapping("/typeList")
     public Object typeList() {
         List<HelpTypeVo> list = helpTypeService.queryList(new HashMap());

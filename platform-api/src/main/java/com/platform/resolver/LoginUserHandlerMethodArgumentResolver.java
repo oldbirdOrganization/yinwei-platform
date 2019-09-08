@@ -34,18 +34,17 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer container,
                                   NativeWebRequest request, WebDataBinderFactory factory) throws Exception {
         //获取用户ID
-//        Object object = request.getAttribute(AuthorizationInterceptor.LOGIN_USER_KEY, RequestAttributes.SCOPE_REQUEST);
-//        if (object == null) {
-//            return null;
-//        }
+        Object object = request.getAttribute(AuthorizationInterceptor.LOGIN_USER_KEY, RequestAttributes.SCOPE_REQUEST);
+        if (object == null) {
+            return null;
+        }
 
         //获取用户信息
-       // UserVo user = userService.queryObject((Long) object);
+       UserVo user = userService.queryObject((Long) object);
         //mock data
-        UserVo user = new UserVo();
-        user.setUserId(8L);
-        user.setWeixin_openid("wx217ff77446b2a579");
-
+//        UserVo user = new UserVo();
+//        user.setUserId(8L);
+//        user.setWeixin_openid("wx217ff77446b2a579");
         return user;
     }
 }

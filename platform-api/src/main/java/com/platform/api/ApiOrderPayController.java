@@ -1,7 +1,9 @@
 package com.platform.api;
 
+import com.platform.annotation.LoginUser;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.OrderGoodsVo;
+import com.platform.entity.UserVo;
 import com.platform.service.ApiOrderGoodsService;
 import com.platform.service.ApiOrderInfoService;
 import com.platform.service.ApiUserService;
@@ -50,7 +52,7 @@ public class ApiOrderPayController extends ApiBaseAction {
             @ApiImplicitParam(name = "orderNo", value = "订单编号", paramType = "query", dataType = "String",required = true)
     })
     @PostMapping("prepay")
-    public Object payPrepay(@RequestParam(value = "orderNo",required = true) String orderNo) {
+    public Object payPrepay(@LoginUser UserVo loginUser, @RequestParam(value = "orderNo",required = true) String orderNo) {
         logger.info("begin 定金订单支付  orderNo=" + orderNo);
         NideshopOrderInfoEntity orderInfo = orderInfoService.findDetail(orderNo);
         if (null == orderInfo) {
@@ -103,10 +105,10 @@ public class ApiOrderPayController extends ApiBaseAction {
             parame.put("trade_type", ResourceUtil.getConfigByName("wx.tradeType"));
             parame.put("spbill_create_ip", getClientIp());
 
-            String weixinOpenId=userService.queryObject(orderInfo.getCreateUserId()).getWeixin_openid();
-            if(StringUtils.isNotEmpty(weixinOpenId)){
-                logger.info("登陆用户openId"+weixinOpenId);
-               parame.put("openid", weixinOpenId);
+//            String weixinOpenId=userService.queryObject(orderInfo.getCreateUserId()).getWeixin_openid();
+            if(StringUtils.isNotEmpty(loginUser.getWeixin_openid())){
+                logger.info("登陆用户openId"+loginUser.getWeixin_openid());
+               parame.put("openid", loginUser.getWeixin_openid());
             }
 
             String sign = WechatUtil.arraySign(parame, ResourceUtil.getConfigByName("wx.paySignKey"));
@@ -134,15 +136,15 @@ public class ApiOrderPayController extends ApiBaseAction {
                     resultObj.put("appId", ResourceUtil.getConfigByName("wx.appId"));
                     resultObj.put("timeStamp", DateUtils.timeToStr(System.currentTimeMillis() / 1000, DateUtils.DATE_TIME_PATTERN));
                     resultObj.put("nonceStr", nonceStr);
-                    resultObj.put("package", "prepay_id=" + prepay_id);
+                    resultObj.put("prepayId", prepay_id);
                     resultObj.put("signType", "MD5");
                     String paySign = WechatUtil.arraySign(resultObj, ResourceUtil.getConfigByName("wx.paySignKey"));
                     resultObj.put("paySign", paySign);
                     // 业务处理
                     orderInfo.setPaymentNo(prepay_id);
                     // 付款中
-                    //orderInfo.setPay_status(1);
-                    //orderService.update(orderInfo);
+//                    orderInfo.setPaytatus(1);
+                    orderInfoService.update(orderInfo);
                     return toResponsObject(0, "微信统一订单下单成功", resultObj);
                 }
             }
