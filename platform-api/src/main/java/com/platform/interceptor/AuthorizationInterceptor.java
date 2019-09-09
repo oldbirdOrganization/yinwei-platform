@@ -26,7 +26,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     private TokenService tokenService;
 
     public static final String LOGIN_USER_KEY = "LOGIN_USER_KEY";
-    public static final String LOGIN_TOKEN_KEY = "X-Nideshop-Token";
+    public static final String LOGIN_TOKEN_KEY = "X-Yinweimall-Token";
 
 
     @Override
@@ -36,7 +36,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,X-Nideshop-Token,X-URL-PATH");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,X-Yinweimall-Token,X-URL-PATH");
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 
         IgnoreAuth annotation;
@@ -49,7 +49,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         if (annotation != null) {
             return true;
         }
-        /*
+
         //从header中获取token
         String token = request.getHeader(LOGIN_TOKEN_KEY);
         //如果header中不存在token，则从参数中获取token
@@ -69,7 +69,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         }
 
         //设置userId到request里，后续根据userId，获取用户信息
-        request.setAttribute(LOGIN_USER_KEY, tokenEntity.getUserId());*/
+        request.setAttribute(LOGIN_USER_KEY, tokenEntity.getUserId());
         return true;
     }
 }

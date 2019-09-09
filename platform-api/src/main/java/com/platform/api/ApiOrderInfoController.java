@@ -42,8 +42,8 @@ public class ApiOrderInfoController extends ApiBaseAction {
     @ApiOperation(value = "下单")
     @PostMapping("submitOrder")
     public Object submitOrder(@LoginUser UserVo loginUser,@RequestBody SubmitOrderVo submitOrderVo) {
-        Integer orderId = orderInfoService.submitOrder(loginUser,submitOrderVo);
-        return toResponsSuccess(orderId);
+        String orderNo = orderInfoService.submitOrder(loginUser,submitOrderVo);
+        return toResponsSuccess(orderNo);
     }
 
     @ApiOperation(value = "订单详情")

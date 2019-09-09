@@ -37,7 +37,7 @@ public class ApiOrderInfoService {
      * @return
      */
     @Transactional
-    public Integer submitOrder(UserVo user, SubmitOrderVo submitOrderVo) {
+    public String submitOrder(UserVo user, SubmitOrderVo submitOrderVo) {
         NideshopOrderInfoEntity model = new NideshopOrderInfoEntity();
         BeanUtils.copyProperties(submitOrderVo,model);
         SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
@@ -63,7 +63,7 @@ public class ApiOrderInfoService {
                 nideshopOrderImageDao.insert(imageEntity);
             }
         }
-        return model.getId();
+        return model.getOrderNo();
     }
 
     /**
