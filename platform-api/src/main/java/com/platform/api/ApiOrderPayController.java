@@ -136,7 +136,7 @@ public class ApiOrderPayController extends ApiBaseAction {
                     resultObj.put("appId", ResourceUtil.getConfigByName("wx.appId"));
                     resultObj.put("timeStamp", DateUtils.timeToStr(System.currentTimeMillis() / 1000, DateUtils.DATE_TIME_PATTERN));
                     resultObj.put("nonceStr", nonceStr);
-                    resultObj.put("package", prepay_id);
+                    resultObj.put("package", "prepay_id="+prepay_id);
                     resultObj.put("signType", "MD5");
                     String paySign = WechatUtil.arraySign(resultObj, ResourceUtil.getConfigByName("wx.paySignKey"));
                     resultObj.put("paySign", paySign);
