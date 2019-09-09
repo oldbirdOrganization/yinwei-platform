@@ -75,6 +75,7 @@ public class ApiAuthController extends ApiBaseAction {
      * 微信登录
      */
     @ApiOperation(value = "微信登录")
+    @IgnoreAuth
     @PostMapping("login_by_weixin")
     public Object loginByWeixin() {
         JSONObject jsonParam = this.getJsonRequest();
