@@ -38,10 +38,7 @@ Entity里不是缺少get、set方法，Eclipse、IDEA请先安装lombok插件
 |--platform-api 微信小程序商城api接口
 |--platform-common 公共模块
 |--platform-yinwei 系统WEB合并，请打包发布此项目
-|--platform-gen 代码生成
-|--platform-schedule 定时任务
-|--platform-shop 商城后台管理
-|--wx-mall 微信小程序商城
+|--yinwei-wxmall 微信小程序商城
 
 ~~~
 
@@ -51,10 +48,9 @@ Entity里不是缺少get、set方法，Eclipse、IDEA请先安装lombok插件
 * 配置环境（推荐jdk1.8、maven3.3、tomcat8、mysql5.7、redis4.0.1）
 * 创建数据库
 * 依次初始化sql脚本 
-    * /_sql/platform.sql
-    * /_sql/sys_region.sql
-* 导入项目到IDE中
-* 导入支付证书至/platform-shop/src/main/resources/cert/目录下（申请商户号、开通微信支付、下载支付证书）
+    * /_sql/platform-shopmall.sql
+    
+* 导入项目到IDE中 
 * 修改配置文件 /platform-admin/src/main/resources/dev/platform.properties
     * jdbc.url
     * jdbc.username
@@ -74,14 +70,13 @@ Entity里不是缺少get、set方法，Eclipse、IDEA请先安装lombok插件
     * redis.password
 * 启动后台项目（参照<a href="#doc">开发文档</a>）
 * 打开微信开发者工具
-* 导入 /wx-mall填写appId
-* 修改 /wx-mall/config/api.js里API_BASE_URL的值
-* 使用eclipse启动项目后默认访问路径
-    * http://localhost:8080/platform-admin
+* 导入 /yinwei-wxmall填写appId
+* 修改 /yinwei-wxmall/config/api.js里API_BASE_URL的值
+* 启动项目后默认访问路径
+    * http://localhost:8080/platform-yinwei/login.html
 	账户：admin  密码：admin
 
-## 生产环境打包
-    platform-wechat-mall>mvn package -P prod
+    
     
 
 
