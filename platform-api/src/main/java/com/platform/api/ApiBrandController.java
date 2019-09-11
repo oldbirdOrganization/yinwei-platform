@@ -40,7 +40,7 @@ public class ApiBrandController extends ApiBaseAction {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页数", paramType = "query", dataType = "Integer",required = true),
             @ApiImplicitParam(name = "size", value = "每页数量", paramType = "query", dataType = "Integer",required = true),
-            @ApiImplicitParam(name = "isOuterBrand", value = "是否第三方品牌（0-否 1-是）", paramType = "query", dataType = "Integer",required = false)
+            @ApiImplicitParam(name = "isOuterBrand", value = "品牌类型（0-自主品牌 1-暖通品牌 2-空调品牌）", paramType = "query", dataType = "Integer",required = false)
     })
     @PostMapping("list")
     public Object list(@RequestParam(value = "page", defaultValue = "1") Integer page,
