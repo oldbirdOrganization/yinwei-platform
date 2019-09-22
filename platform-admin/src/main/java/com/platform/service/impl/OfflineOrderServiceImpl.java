@@ -4,7 +4,9 @@ import com.platform.dao.OfflineOrderInfoPoMapper;
 import com.platform.entity.OfflineOrderInfoPo;
 import com.platform.entity.OfflineOrderInfoPoExample;
 import com.platform.service.OfflineOrderService;
+import com.platform.utils.Query;
 import com.platform.utils.ShiroUtils;
+import com.platform.utils.StringUtils;
 import com.platform.vo.OfflineOrderInfoVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -53,5 +55,59 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
                   }
             );
         }
+    }
+
+    @Override
+    public List<OfflineOrderInfoPo> queryList(Query query) {
+        OfflineOrderInfoPoExample example = new OfflineOrderInfoPoExample();
+        OfflineOrderInfoPoExample.Criteria criteria = example.createCriteria();
+        if (notNull(query.get("orderNo"))) {
+            criteria.andOrderNoEqualTo(query.get("orderNo").toString());
+        }
+        if (notNull(query.get("orderStatus"))) {
+            criteria.andOrderStatusEqualTo(Integer.valueOf(query.get("orderStatus").toString()));
+        }
+        if (notNull(query.get("orderType"))) {
+            criteria.andOrderNoEqualTo(query.get("orderType").toString());
+        }
+        if (notNull(query.get("channelId"))) {
+            criteria.andOrderNoEqualTo(query.get("channelId").toString());
+        }
+        if (notNull(query.get("isOuterOrder"))) {
+            criteria.andOrderNoEqualTo(query.get("isOuterOrder").toString());
+        }
+        example.setOffset(Integer.valueOf(query.get("offset").toString()));
+        example.setPageSize(Integer.valueOf(query.get("limit").toString()));
+        return offlineOrderInfoPoMapper.selectByExample(example);
+    }
+
+
+    private boolean notNull(Object o) {
+        if (o != null && !o.toString().equals("")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    @Override
+    public int queryTotal(Query query) {
+        OfflineOrderInfoPoExample example = new OfflineOrderInfoPoExample();
+        OfflineOrderInfoPoExample.Criteria criteria = example.createCriteria();
+        if (notNull(query.get("orderNo"))) {
+            criteria.andOrderNoEqualTo(query.get("orderNo").toString());
+        }
+        if (notNull(query.get("orderStatus"))) {
+            criteria.andOrderStatusEqualTo(Integer.valueOf(query.get("orderStatus").toString()));
+        }
+        if (notNull(query.get("orderType"))) {
+            criteria.andOrderNoEqualTo(query.get("orderType").toString());
+        }
+        if (notNull(query.get("channelId"))) {
+            criteria.andOrderNoEqualTo(query.get("channelId").toString());
+        }
+        if (notNull(query.get("isOuterOrder"))) {
+            criteria.andOrderNoEqualTo(query.get("isOuterOrder").toString());
+        }
+        return offlineOrderInfoPoMapper.countByExample(example);
     }
 }
