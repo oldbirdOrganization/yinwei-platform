@@ -190,5 +190,7 @@ public class OfflineOrderInfoVo implements Serializable {
 	@ExcelColumn(value = "实际支付金额", col = 37)
 	private BigDecimal paymentPrice;
 
-
+	//批次号
+	@ExcelColumn(value = "批次号", col = 38)
+	private String batchNo;
 }

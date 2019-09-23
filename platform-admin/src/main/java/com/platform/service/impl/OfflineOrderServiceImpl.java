@@ -28,10 +28,11 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
     @Transactional
     public void importOfflineOrders(List<OfflineOrderInfoVo> vos) {
         if (CollectionUtils.isNotEmpty(vos)) {
+            String batchNo = vos.get(0).getBatchNo();
             Set<String> orderNos = vos.stream().map(OfflineOrderInfoVo::getOrderNo).collect(Collectors.toSet());
             //删除原来的线下订单
             OfflineOrderInfoPoExample example = new OfflineOrderInfoPoExample();
-            example.createCriteria().andOrderNoIn(new ArrayList<>(orderNos));
+            example.createCriteria().andOrderNoIn(new ArrayList<>(orderNos)).andBatchNoEqualTo(batchNo);
             offlineOrderInfoPoMapper.deleteByExample(example);
             vos.forEach(
                   a -> {

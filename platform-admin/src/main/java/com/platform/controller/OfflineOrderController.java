@@ -31,7 +31,7 @@ public class OfflineOrderController {
      * @param file
      */
     @RequestMapping(value = "/readExcel", method = RequestMethod.POST)
-    public String readExcel(@RequestParam(value="uploadFile", required = false) MultipartFile file){
+    public R readExcel(@RequestParam(value="uploadFile", required = false) MultipartFile file){
         long t1 = System.currentTimeMillis();
         List<OfflineOrderInfoVo> list = ExcelUtils.readExcel("", OfflineOrderInfoVo.class, file);
         long t2 = System.currentTimeMillis();
@@ -41,7 +41,7 @@ public class OfflineOrderController {
         );
         //入库
         offlineOrderService.importOfflineOrders(list);
-        return "导入成功";
+        return R.ok();
     }
 
     /**

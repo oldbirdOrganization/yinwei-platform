@@ -146,24 +146,29 @@ let vm = new Vue({
             })
         },
 
-        cancelOrder: function (event) {
-            let id = getSelectedRow("#jqGrid");
-            if (id == null) {
-                return;
-            }
-            Ajax.request({
-                type: "POST",
-                url: "../order/cancelOrder",
-                contentType: "application/json",
-                params: JSON.stringify(id),
-                successCallback: function (r) {
-                    if (r.code == 0) {
-                        alert('操作成功', function (index) {
-                            vm.reload();
-                        });
-                    } else {
-                        alert(r.msg);
+        importFile: function (event) {
+            var formData = new FormData();
+
+            formData.append("uploadFile",$('#crowd_file')[0].files[0]);
+
+            $.ajax({
+                url:'../offlineOrder/readExcel',
+                dataType:'json',
+                type:'POST',
+                async: false,
+                data: formData,
+                processData : false, // 使数据不做处理
+                contentType : false, // 不要设置Content-Type请求头
+                success: function(data){
+                    console.log(data);
+                    if (data.code == '0') {
+                        alert('上传成功！');
                     }
+
+                },
+                error:function(response){
+                    console.log(response);
+                    alert('上传失败');
                 }
             });
         },
