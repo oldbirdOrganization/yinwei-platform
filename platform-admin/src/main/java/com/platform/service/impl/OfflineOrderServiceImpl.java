@@ -77,8 +77,10 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
         if (notNull(query.get("isOuterOrder"))) {
             criteria.andOrderNoEqualTo(query.get("isOuterOrder").toString());
         }
-        example.setOffset(Integer.valueOf(query.get("offset").toString()));
-        example.setPageSize(Integer.valueOf(query.get("limit").toString()));
+        if (notNull(query.get("offset"))) {
+            example.setOffset(Integer.valueOf(query.get("offset").toString()));
+            example.setPageSize(Integer.valueOf(query.get("limit").toString()));
+        }
         return offlineOrderInfoPoMapper.selectByExample(example);
     }
 

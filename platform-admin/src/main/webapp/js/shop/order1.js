@@ -172,14 +172,79 @@ let vm = new Vue({
                 }
             });
         },
-        saveOrUpdate: function (event) {
-            Ajax.request({
-                type: "POST",
-                url: "../order/dispatchOrder",
-                contentType: "application/json",
-                params: JSON.stringify(vm.order),
-                successCallback: function (r) {
-                    vm.reload();
+        exportFile: function(event) {
+            let orderStatus = getQueryString("orderStatus");
+            let paymentStatus = getQueryString("paymentStatus");
+            let orderType = getQueryString("orderType");
+            var oReq = new XMLHttpRequest();
+            url = "../offlineOrder/exportExcel?order=1&sidx=1&limit=10&page=1";
+            if (paymentStatus) {
+                url += '&paymentStatus=' + paymentStatus;
+            }
+            if (orderStatus) {
+                url += '&orderStatus=' + orderStatus;
+            }
+            if (orderType) {
+                url += '&orderType=' + orderType;
+            }
+            oReq.open("GET", url, true);
+            oReq.responseType = "blob";
+            oReq.onload = function (oEvent) {
+                var content = oReq.response;
+
+                var elink = document.createElement('a');
+                elink.download = "线下订单.xlsx";
+                elink.style.display = 'none';
+
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+
+                document.body.appendChild(elink);
+                elink.click();
+
+                document.body.removeChild(elink);
+            };
+            oReq.data = {
+                page:1,
+                limit:10,
+                sidx:1,
+                order:1,
+                orderStatus:orderStatus,
+                paymentStatus:paymentStatus,
+                orderType:orderType
+            };
+            oReq.send("orderStatus=" + orderStatus + "&paymentStatus=" + paymentStatus
+            + "&orderType=" + orderType + "&order=1&sidx=1&limit=10&page=1");
+        },
+        exportFile2: function (event) {
+            let orderStatus = getQueryString("orderStatus");
+            let paymentStatus = getQueryString("paymentStatus");
+            let orderType = getQueryString("orderType");
+            let url = '../offlineOrder/exportExcel?1=1';
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    page:1,
+                    limit:10,
+                    sidx:1,
+                    order:1,
+                    orderStatus:orderStatus,
+                    paymentStatus:paymentStatus,
+                    orderType:orderType
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data["state"] == "0") {
+                        location = host + "/" + data["path"];
+                    } else {
+                        ;
+                    }
+                },
+                error:function(response){
+                    console.log(response);
+                    alert('导出失败');
                 }
             });
         },
