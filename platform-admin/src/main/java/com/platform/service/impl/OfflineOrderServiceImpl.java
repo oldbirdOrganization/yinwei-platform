@@ -113,4 +113,9 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
         }
         return offlineOrderInfoPoMapper.countByExample(example);
     }
+
+    @Override
+    public OfflineOrderInfoPo queryDetailById(Integer id) {
+        return offlineOrderInfoPoMapper.selectByPrimaryKey(id);
+    }
 }

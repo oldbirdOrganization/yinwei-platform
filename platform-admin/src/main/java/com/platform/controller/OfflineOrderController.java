@@ -3,6 +3,7 @@ package com.platform.controller;
 import com.alibaba.fastjson.JSON;
 import com.platform.entity.OfflineOrderInfoPo;
 import com.platform.entity.OrderGoodsEntity;
+import com.platform.entity.OrderInfoEntity;
 import com.platform.service.OfflineOrderService;
 import com.platform.utils.PageUtils;
 import com.platform.utils.Query;
@@ -97,5 +98,22 @@ public class OfflineOrderController {
         long t2 = System.currentTimeMillis();
         System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
         return R.ok();
+    }
+
+    /**
+     * 详情
+     */
+    @RequestMapping("/info/{id}")
+    @RequiresPermissions("order:info")
+    public R info(@PathVariable("id") Integer id) {
+        OfflineOrderInfoPo a = offlineOrderService.queryDetailById(id);
+        OfflineOrderInfoVo vo = new OfflineOrderInfoVo();
+        BeanUtils.copyProperties(a, vo);
+        vo.setPaymentTime(a.getPaymentTime().toString());
+        vo.setCouponPrice(a.getCouponPrice());
+        vo.setDescriptionDescription(a.getProblemDescription());
+        vo.setIsOuterOrder((int)a.getIsOuterOrder());
+        vo.setCouponPrice(a.getCouponPrice());
+        return R.ok().put("order", vo);
     }
 }

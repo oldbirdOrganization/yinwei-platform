@@ -265,7 +265,7 @@ let vm = new Vue({
             vm.detail = true;
             vm.title = "详情";
             Ajax.request({
-                url: "../order/info/" + rowId,
+                url: "../offlineOrder/info/" + rowId,
                 async: true,
                 successCallback: function (r) {
                     vm.order = r.order;

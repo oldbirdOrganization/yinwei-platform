@@ -12,4 +12,6 @@ public interface OfflineOrderService {
     List<OfflineOrderInfoPo> queryList(Query query);
 
     int queryTotal(Query query);
+
+    OfflineOrderInfoPo queryDetailById(Integer id);
 }
