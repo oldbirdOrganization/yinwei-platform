@@ -120,81 +120,80 @@
 
     <insert id="save" parameterType="com.platform.entity.GoodsEntity">
         insert into nideshop_goods
-        (
-        `id`,
-        `category_id`,
-        `goods_sn`,
-        `name`,
-        `brand_id`,
-        `goods_number`,
-        `keywords`,
-        `goods_brief`,
-        `goods_desc`,
-        `is_on_sale`,
-        `add_time`,
-        `update_time`,
-        `sort_order`,
-        `is_delete`,
-        `attribute_category`,
-        `counter_price`,
-        `extra_price`,
-        `is_new`,
-        `goods_unit`,
-        `primary_pic_url`,
-        `list_pic_url`,
-        `retail_price`,
-        `sell_volume`,
-        `primary_product_id`,
-        `unit_price`,
-        `promotion_desc`,
-        `promotion_tag`,
-        `app_exclusive_price`,
-        `is_app_exclusive`,
-        `is_limited`,
-        `is_hot`,
-        `market_price`,
-        `create_user_id`,
-        `create_user_dept_id`,
-        `update_user_id`
-        )
-        values
-        (
-        #{id},
-        #{categoryId},
-        #{goodsSn},
-        #{name},
-        #{brandId},
-        #{goodsNumber},
-        #{keywords},
-        #{goodsBrief},
-        #{goodsDesc},
-        #{isOnSale},
-        #{addTime},
-        #{updateTime},
-        #{sortOrder},
-        #{isDelete},
-        #{attributeCategory},
-        #{counterPrice},
-        #{extraPrice},
-        #{isNew},
-        #{goodsUnit},
-        #{primaryPicUrl},
-        #{listPicUrl},
-        #{retailPrice},
-        #{sellVolume},
-        #{primaryProductId},
-        #{unitPrice},
-        #{promotionDesc},
-        #{promotionTag},
-        #{appExclusivePrice},
-        #{isAppExclusive},
-        #{isLimited},
-        #{isHot},
-        #{marketPrice},
-        #{createUserId},
-        #{createUserDeptId},
-        #{updateUserId}
-        )
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="categoryId != null">`category_id`,</if>
+            <if test="goodsSn != null">`goods_sn`,</if>
+            <if test="name != null">`name`,</if>
+            <if test="brandId != null">`brand_id`,</if>
+            <if test="goodsNumber != null">`goods_number`,</if>
+            <if test="keywords != null">`keywords`,</if>
+            <if test="goodsBrief != null">`goods_brief`,</if>
+            <if test="goodsDesc != null">`goods_desc`,</if>
+            <if test="isOnSale != null">`is_on_sale`,</if>
+            <if test="addTime != null">`add_time`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+            <if test="sortOrder != null">`sort_order`},</if>
+            <if test="isDelete != null">`is_delete`,</if>
+            <if test="attributeCategory != null">`attribute_category`,</if>
+            <if test="counterPrice != null">`counter_price`,</if>
+            <if test="extraPrice != null">`extra_price`,</if>
+            <if test="isNew != null">`is_new`,</if>
+            <if test="goodsUnit != null">`goods_unit`,</if>
+            <if test="primaryPicUrl != null">`primary_pic_url`,</if>
+            <if test="listPicUrl != null">`list_pic_url`,</if>
+            <if test="retailPrice != null">`retail_price`,</if>
+            <if test="sellVolume != null">`sell_volume`,</if>
+            <if test="primaryProductId != null">`primary_product_id`,</if>
+            <if test="unitPrice != null">`unit_price`,</if>
+            <if test="promotionDesc != null">`promotion_desc`,</if>
+            <if test="promotionTag != null">`promotion_tag`,</if>
+            <if test="appExclusivePrice != null">`app_exclusive_price`,</if>
+            <if test="isAppExclusive != null">`is_app_exclusive`,</if>
+            <if test="isLimited != null">`is_limited`,</if>
+            <if test="isHot != null">`is_hot`,</if>
+            <if test="marketPrice != null">`market_price`,</if>
+            <if test="createUserId != null">`create_user_id`,</if>
+            <if test="createUserId != null">`create_user_dept_id`,</if>
+            <if test="updateUserId != null">`update_user_id`,</if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="goodsSn != null">#{goodsSn},</if>
+            <if test="name != null">#{name},</if>
+            <if test="brandId != null">#{brandId},</if>
+            <if test="goodsNumber != null">#{goodsNumber},</if>
+            <if test="keywords != null">#{keywords},</if>
+            <if test="goodsBrief != null">#{goodsBrief},</if>
+            <if test="goodsDesc != null">#{goodsDesc},</if>
+            <if test="isOnSale != null">#{isOnSale},</if>
+            <if test="addTime != null">#{addTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="sortOrder != null">#{sortOrder},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+            <if test="attributeCategory != null">#{attributeCategory},</if>
+            <if test="counterPrice != null">#{counterPrice},</if>
+            <if test="extraPrice != null">#{extraPrice},</if>
+            <if test="isNew != null">#{isNew},</if>
+            <if test="goodsUnit != null">#{goodsUnit},</if>
+            <if test="primaryPicUrl != null">#{primaryPicUrl},</if>
+            <if test="listPicUrl != null">#{listPicUrl},</if>
+            <if test="retailPrice != null">#{retailPrice},</if>
+            <if test="sellVolume != null">#{sellVolume},</if>
+            <if test="primaryProductId != null"> #{primaryProductId},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="promotionDesc != null">#{promotionDesc},</if>
+            <if test="promotionTag != null">#{promotionTag},</if>
+            <if test="appExclusivePrice != null">= #{appExclusivePrice},</if>
+            <if test="isAppExclusive != null">#{isAppExclusive},</if>
+            <if test="isLimited != null">#{isLimited},</if>
+            <if test="isHot != null">#{isHot},</if>
+            <if test="marketPrice != null">#{marketPrice},</if>
+            <if test="createUserId != null"> #{createUserId},</if>
+            <if test="createUserId != null">#{createUserDeptId},</if>
+            <if test="updateUserId != null">#{updateUserId},</if>
+        </trim>
+
     </insert>
 
     <update id="update" parameterType="com.platform.entity.GoodsEntity">
