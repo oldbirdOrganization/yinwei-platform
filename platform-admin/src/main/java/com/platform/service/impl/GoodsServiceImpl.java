@@ -66,18 +66,18 @@ public class GoodsServiceImpl implements GoodsService {
         Integer id = goodsDao.queryMaxId() + 1;
         goods.setId(id);
 
-        //保存产品信息
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setGoodsId(id);
-        productEntity.setGoodsSn(goods.getGoodsSn());
-        productEntity.setGoodsNumber(goods.getGoodsNumber());
-        productEntity.setRetailPrice(goods.getRetailPrice());
-        productEntity.setMarketPrice(goods.getMarketPrice());
-        productEntity.setGoodsSpecificationIds("");
-        productDao.save(productEntity);
+//        //保存产品信息
+//        ProductEntity productEntity = new ProductEntity();
+//        productEntity.setGoodsId(id);
+//        productEntity.setGoodsSn(goods.getGoodsSn());
+//        productEntity.setGoodsNumber(goods.getGoodsNumber());
+//        productEntity.setRetailPrice(goods.getRetailPrice());
+//        productEntity.setMarketPrice(goods.getMarketPrice());
+//        productEntity.setGoodsSpecificationIds("");
+//        productDao.save(productEntity);
 
         goods.setAddTime(new Date());
-        goods.setPrimaryProductId(productEntity.getId());
+//        goods.setPrimaryProductId(productEntity.getId());
 
         //保存商品详情页面显示的属性
         List<GoodsAttributeEntity> attributeEntityList = goods.getAttributeEntityList();
@@ -88,14 +88,14 @@ public class GoodsServiceImpl implements GoodsService {
             }
         }
 
-        //商品轮播图
-        List<GoodsGalleryEntity> galleryEntityList = goods.getGoodsImgList();
-        if (null != galleryEntityList && galleryEntityList.size() > 0) {
-            for (GoodsGalleryEntity galleryEntity : galleryEntityList) {
-                galleryEntity.setGoodsId(id);
-                goodsGalleryDao.save(galleryEntity);
-            }
-        }
+//        //商品轮播图
+//        List<GoodsGalleryEntity> galleryEntityList = goods.getGoodsImgList();
+//        if (null != galleryEntityList && galleryEntityList.size() > 0) {
+//            for (GoodsGalleryEntity galleryEntity : galleryEntityList) {
+//                galleryEntity.setGoodsId(id);
+//                goodsGalleryDao.save(galleryEntity);
+//            }
+//        }
 
         goods.setIsDelete(0);
         goods.setCreateUserDeptId(user.getDeptId());
@@ -122,17 +122,17 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setUpdateTime(new Date());
         //商品轮播图
         //修改时全删全插
-        List<GoodsGalleryEntity> galleryEntityList = goods.getGoodsImgList();
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put("goodsId", goods.getId());
-        goodsGalleryDao.deleteByGoodsId(map);
-
-        if (null != galleryEntityList && galleryEntityList.size() > 0) {
-            for (GoodsGalleryEntity galleryEntity : galleryEntityList) {
-                galleryEntity.setGoodsId(goods.getId());
-                goodsGalleryDao.save(galleryEntity);
-            }
-        }
+//        List<GoodsGalleryEntity> galleryEntityList = goods.getGoodsImgList();
+//        Map<String, Integer> map = new HashMap<String, Integer>();
+//        map.put("goodsId", goods.getId());
+////        goodsGalleryDao.deleteByGoodsId(map);
+//
+//        if (null != galleryEntityList && galleryEntityList.size() > 0) {
+//            for (GoodsGalleryEntity galleryEntity : galleryEntityList) {
+//                galleryEntity.setGoodsId(goods.getId());
+//                goodsGalleryDao.save(galleryEntity);
+//            }
+//        }
         return goodsDao.update(goods);
     }
 

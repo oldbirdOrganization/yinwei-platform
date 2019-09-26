@@ -77,30 +77,34 @@
     </select>
 
     <insert id="save" parameterType="com.platform.entity.TopicEntity" useGeneratedKeys="true" keyProperty="id">
-		insert into nideshop_topic(
-			`title`,
-			`content`,
-			`avatar`,
-			`item_pic_url`,
-			`subtitle`,
-			`topic_category_id`,
-			`price_info`,
-			`read_count`,
-			`scene_pic_url`,
-			`topic_template_id`,
-			`topic_tag_id`)
-		values(
-			#{title},
-			#{content},
-			#{avatar},
-			#{itemPicUrl},
-			#{subtitle},
-			#{topicCategoryId},
-			#{priceInfo},
-			#{readCount},
-			#{scenePicUrl},
-			#{topicTemplateId},
-			#{topicTagId})
+		insert into nideshop_topic
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="title != null">`title`,</if>
+            <if test="content != null">`content`,</if>
+            <if test="avatar != null">`avatar`,</if>
+            <if test="itemPicUrl != null">`item_pic_url`,</if>
+            <if test="subtitle != null">`subtitle`,</if>
+            <if test="topicCategoryId != null">`topic_category_id`,</if>
+            <if test="priceInfo != null">`price_info` ,</if>
+            <if test="readCount != null">`read_count`,</if>
+            <if test="scenePicUrl != null">`scene_pic_url`,</if>
+            <if test="topicTemplateId != null">`topic_template_id`,</if>
+            <if test="topicTagId != null">`topic_tag_id`,</if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="avatar != null">#{avatar},</if>
+            <if test="itemPicUrl != null">#{itemPicUrl},</if>
+            <if test="subtitle != null">#{subtitle},</if>
+            <if test="topicCategoryId != null"> #{topicCategoryId},</if>
+            <if test="priceInfo != null">#{priceInfo},</if>
+            <if test="readCount != null">#{readCount},</if>
+            <if test="scenePicUrl != null">#{scenePicUrl},</if>
+            <if test="topicTemplateId != null">#{topicTemplateId},</if>
+            <if test="topicTagId != null">#{topicTagId}</if>
+        </trim>
 	</insert>
 
     <update id="update" parameterType="com.platform.entity.TopicEntity">

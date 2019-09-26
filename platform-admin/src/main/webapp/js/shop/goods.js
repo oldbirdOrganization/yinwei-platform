@@ -143,7 +143,7 @@ var vm = new Vue({
             vm.getBrands();
             vm.getMacro();
             // vm.getAttributeCategories();
-            vm.getGoodsGallery(id);
+            // vm.getGoodsGallery(id);
         },
         /**
          * 获取品牌
