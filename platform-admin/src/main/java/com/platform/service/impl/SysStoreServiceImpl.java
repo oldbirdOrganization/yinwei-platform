@@ -39,8 +39,4 @@ public class SysStoreServiceImpl implements SysStoreService {
         sysStoreMapper.deleteByPrimaryKey(StoreId);
     }
 
-    @Override
-    public List<Long> queryStoreIdList(Long StoreId) {
-        return sysStoreMapper.queryStoreIdList(StoreId);
-    }
 }

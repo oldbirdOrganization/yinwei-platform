@@ -39,21 +39,24 @@
                 <i-input v-model="store.name" placeholder="门店名称"/>
             </Form-item>
 
-            <Form-item label="上级门店" prop="storeName">
-                <i-input type="text" v-model="store.parentName" icon="eye" readonly="readonly"
-                         @on-click="storeTree" readonly="readonly" placeholder="一级门店"/>
-            </Form-item>
-
-            <Form-item label="门店地址" prop="name">
+            <Form-item label="门店地址" prop="address">
                 <i-input v-model="store.address" placeholder="门店地址"/>
             </Form-item>
 
-            <Form-item label="联系方式" prop="name">
+            <Form-item label="联系方式" prop="contact">
                 <i-input v-model="store.contact" placeholder="联系方式"/>
             </Form-item>
 
-            <Form-item label="服务距离" prop="name">
+            <Form-item label="服务距离" prop="distance">
                 <i-input v-model="store.distance" placeholder="服务距离"/>
+            </Form-item>
+
+            <Form-item label="店长" prop="manager">
+                <i-input v-model="store.manager" placeholder="店长"/>
+            </Form-item>
+
+            <Form-item label="信息员" prop="messenger">
+                <i-input v-model="store.messenger" placeholder="信息员"/>
             </Form-item>
 
             <Form-item label="排序号" prop="orderNum">

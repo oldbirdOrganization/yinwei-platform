@@ -1,13 +1,10 @@
 package com.platform.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class SysStoreEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long storeId;
-
-    private Long parentId;
 
     private String name;
 
@@ -17,19 +14,13 @@ public class SysStoreEntity implements Serializable {
 
     private String distance;
 
+    private String manager;
+
+    private String messenger;
+
     private Integer orderNum;
 
     private Byte delFlag;
-
-    //上级门店名称
-    private String parentName;
-
-    /**
-     * ztree属性
-     */
-    private Boolean open;
-
-    private List<?> list;
 
     public Long getStoreId() {
         return storeId;
@@ -37,14 +28,6 @@ public class SysStoreEntity implements Serializable {
 
     public void setStoreId(Long storeId) {
         this.storeId = storeId;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
     }
 
     public String getName() {
@@ -95,27 +78,19 @@ public class SysStoreEntity implements Serializable {
         this.delFlag = delFlag;
     }
 
-    public String getParentName() {
-        return parentName;
+    public String getManager() {
+        return manager;
     }
 
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
+    public void setManager(String manager) {
+        this.manager = manager;
     }
 
-    public Boolean getOpen() {
-        return open;
+    public String getMessenger() {
+        return messenger;
     }
 
-    public void setOpen(Boolean open) {
-        this.open = open;
-    }
-
-    public List<?> getList() {
-        return list;
-    }
-
-    public void setList(List<?> list) {
-        this.list = list;
+    public void setMessenger(String messenger) {
+        this.messenger = messenger;
     }
 }

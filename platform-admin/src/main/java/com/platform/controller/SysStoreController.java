@@ -3,7 +3,6 @@ package com.platform.controller;
 import com.platform.annotation.SysLog;
 import com.platform.entity.SysStoreEntity;
 import com.platform.service.SysStoreService;
-import com.platform.utils.Constant;
 import com.platform.utils.R;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,6 @@ public class SysStoreController extends AbstractController {
     @RequiresPermissions("sys:store:list")
     public R list() {
         Map<String, Object> map = new HashMap<>();
-        //map.put("storeFilter", sysStoreService.getSubstoreIdList(getstoreId()));
         List<SysStoreEntity> storeList = sysStoreService.queryList(map);
         return R.ok().put("list", storeList);
     }
@@ -54,16 +52,6 @@ public class SysStoreController extends AbstractController {
         Map<String, Object> map = new HashMap<>();
 
         List<SysStoreEntity> storeList = sysStoreService.queryList(map);
-
-        //添加一级门店
-        if (getUserId() == Constant.SUPER_ADMIN) {
-            SysStoreEntity root = new SysStoreEntity();
-            root.setStoreId(0L);
-            root.setName("一级门店");
-            root.setParentId(-1L);
-            root.setOpen(true);
-            storeList.add(root);
-        }
 
         return R.ok().put("storeList", storeList);
     }
@@ -134,11 +122,6 @@ public class SysStoreController extends AbstractController {
     @RequestMapping("/delete")
     @RequiresPermissions("sys:store:delete")
     public R delete(long storeId) {
-        //判断是否有子门店
-        List<Long> storeList = sysStoreService.queryStoreIdList(storeId);
-        if (storeList.size() > 0) {
-            return R.error("请先删除子门店");
-        }
 
         sysStoreService.delete(storeId);
 

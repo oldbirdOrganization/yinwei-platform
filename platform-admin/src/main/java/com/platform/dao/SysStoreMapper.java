@@ -19,6 +19,4 @@ public interface SysStoreMapper {
     int updateByPrimaryKeySelective(SysStoreEntity record);
 
     int updateByPrimaryKey(SysStoreEntity record);
-
-    List<Long> queryStoreIdList(Long StoreId);
 }
