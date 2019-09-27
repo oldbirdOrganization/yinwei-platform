@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+  <classPathEntry location="D:/pw/mysql-connector-java-5.1.12.jar"/>
+  <context id="context1" >
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://120.55.161.193:10003/platform-shopmall?characterEncoding=UTF-8"
+    	userId="root" password="root2019lyj" />
+    <javaModelGenerator targetPackage="com.platform.entity" targetProject="D:/newIdea/yinwei-platform/platform-admin/src/main/java">
+    	<property name="enableSubPackages" value="false"/>
+    	<property name="trimStrings" value="true"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.platform.dao" targetProject="D:/newIdea/yinwei-platform/platform-admin/src/main/resources">
+    	<property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator targetPackage="com.platform.dao" targetProject="D:/newIdea/yinwei-platform/platform-admin/src/main/java" type="XMLMAPPER">
+    	<property name="enableSubPackages" value="true"/>
+    </javaClientGenerator>
+    <table schema="platform-shopmall" tableName="nideshop_offline_order_info" domainObjectName="OfflineOrderInfoPo">
+      <property name="useActualColumnNames" value="false"/>
+      <generatedKey column="id" identity="true" sqlStatement="MySql"/>
+    </table>
+  </context>
+</generatorConfiguration>
