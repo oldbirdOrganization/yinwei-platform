@@ -12,6 +12,10 @@ public interface MaterialMapper {
 
     int deleteByPrimaryKey(Long storeId);
 
+    int deleteBatch(Integer[] ids);
+
+    int queryTotal(Map<String, Object> map);
+
     List<MaterialEntity> queryList(Map<String, Object> map);
 
     MaterialEntity selectByPrimaryKey(Long storeId);
