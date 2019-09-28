@@ -176,8 +176,6 @@ public class MaterialController extends AbstractController {
                 }
             }
         }
-        long t2 = System.currentTimeMillis();
-        System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
         return R.ok();
     }
 

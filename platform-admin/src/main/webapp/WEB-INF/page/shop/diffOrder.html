@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="!detail&&showList">
+        <Row :gutter="16">
+            <Col span="4">
+            <!--<DatePicker type="date" :options="startTimeOptions" @on-change="startTimeChange" placeholder="开始时间"-->
+                        <!--v-model="q.starttime" style="width: 40px"></DatePicker>-->
+            <!--</Col>-->
+            <!--<Col span="2" style="text-align: center">-</Col>-->
+            <!--<Col span="4">-->
+            <!--<DatePicker type="date" :options="endTimeOptions" @on-change="endTimeChange" placeholder="结束时间"-->
+                        <!--v-model="q.endtime"></DatePicker>-->
+
+            <div class="search-group">
+                <i-col span="4">
+                    <i-select v-model="q.storeId" placeholder="门店名称">
+                        <i-option value="1">上海</i-option>
+                        <i-option value="2">北京</i-option>
+                        <i-option value="3">武汉</i-option>
+                        <i-option value="4">深圳</i-option>
+                        <i-option value="5">重庆</i-option>
+                    </i-select>
+                </i-col>
+                <i-col span="4">
+                    <i-select v-model="q.payType" placeholder="支付方式">
+                        <i-option value="1">线上支付</i-option>
+                        <i-option value="2">线下支付</i-option>
+                    </i-select>
+                </i-col>
+                <i-col span="4">
+                    <i-select v-model="q.channelId" placeholder="渠道分类">
+                        <i-option value="1">维修</i-option>
+                        <i-option value="2">改造</i-option>
+                        <i-option value="3">设计</i-option>
+                        <i-option value="4">定制化加配</i-option>
+                        <i-option value="5">装修</i-option>
+                        <i-option value="6">空调维保</i-option>
+                        <i-option value="7">家具保养</i-option>
+                        <i-option value="8">专业验房</i-option>
+                    </i-select>
+                </i-col>
+                <i-button @click="query">查询</i-button>
+            </div>
+            <div class="buttons-group">
+                <i-button type="warning" @click="exportFile">导出</i-button>
+            </div>
+        </Row>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <Card v-show="detail">
+        <p slot="title" style="height: auto">
+            {{title}}
+        </p>
+        <i-form ref="formValidate" :model="order" :label-width="80">
+            <Form-item label="订单号" prop="orderNo">
+                <i-input v-model="order.orderNo" readonly/>
+            </Form-item>
+            <Form-item label="会员" prop="userName">
+                <i-input v-model="order.userName" readonly/>
+            </Form-item>
+            <Form-item label="订单类型" prop="orderType">
+                <Radio-group v-model="order.orderType">
+                    <Radio label="1" disabled>
+                        <span>预约订单</span>
+                    </Radio>
+                    <Radio label="2" disabled>
+                        <span>定金订单</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
+            <Form-item label="订单状态" prop="orderStatus" readonly>
+                <Radio-group v-model="order.orderStatus">
+                    <Radio label="1" disabled>
+                        <span>待指派</span>
+                    </Radio>
+                    <Radio label="2" disabled>
+                        <span>待服务</span>
+                    </Radio>
+                    <Radio label="3" disabled>
+                        <span>服务中</span>
+                    </Radio>
+                    <Radio label="4" disabled>
+                        <span>订单完成</span>
+                    </Radio>
+                    <Radio label="5" disabled>
+                        <span>已作废</span>
+                    </Radio>
+                    <Radio label="6" disabled>
+                        <span>待评价</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
+            
+            <Form-item label="付款状态" prop="paymentStatus">
+                <Radio-group v-model="order.paymentStatus">
+                    <Radio label="1" disabled>
+                        <span>待付定金</span>
+                    </Radio>
+                    <Radio label="2" disabled>
+                        <span>已付定金</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
+            <Form-item label="是否第三方" prop="isOuterOrder">
+                <Radio-group v-model="order.isOuterOrder">
+                    <Radio label="0" disabled>
+                        <span>否</span>
+                    </Radio>
+                    <Radio label="1" disabled>
+                        <span>是</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
+
+            <Form-item label="渠道名称" prop="channelName">
+                <i-input v-model="order.channelName" readonly/>
+            </Form-item>
+            <Form-item label="联系人" prop="contactName">
+                <i-input v-model="order.contactName" readonly/>
+            </Form-item>
+            <Form-item label="服务地址" prop="address">
+                <i-input v-model="order.address" readonly/>
+            </Form-item>
+            <Form-item label="联系电话" prop="contactMobile">
+                <i-input v-model="order.contactMobile" readonly/>
+            </Form-item>
+            <Form-item label="支付金额" prop="orderPrice">
+                <i-input v-model="order.orderPrice" readonly/>
+            </Form-item>
+             <Form-item label="优惠金额" prop="couponPrice">
+                <i-input v-model="order.couponPrice" readonly/>
+            </Form-item>
+            <Form-item label="下单时间" prop="createTime">
+                <Date-picker v-model="order.createTime" placeholder="下单时间" readonly/>
+            </Form-item>
+            <Form-item label="付款时间" prop="paymentTime">
+                <Date-picker v-model="order.paymentTime" placeholder="付款时间" readonly/>
+            </Form-item>
+            <Form-item>
+                <i-button type="warning" @click="reload" style="margin-left: 8px"/>返回</i-button>
+            </Form-item>
+        </i-form>
+    </Card>
+
+</div>
+<script src="${rc.contextPath}/js/shop/diffOrder.js?_${date.systemTime}"></script>
+</body>
+</html>
