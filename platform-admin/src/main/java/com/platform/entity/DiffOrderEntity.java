@@ -20,7 +20,8 @@ public class DiffOrderEntity implements Serializable {
     //支付方式 1线上支付 2线下支付
     private String payType;
     //门店id
-    private Integer storeId;
+    private Long storeId;
+    private String storeName;
     //支付渠道 1线上默认微信 2线下取数据
     private String payChannel;
     //收款账号
@@ -102,11 +103,11 @@ public class DiffOrderEntity implements Serializable {
         this.payType = payType;
     }
 
-    public Integer getStoreId() {
+    public Long getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(Integer storeId) {
+    public void setStoreId(Long storeId) {
         this.storeId = storeId;
     }
 
@@ -124,5 +125,13 @@ public class DiffOrderEntity implements Serializable {
 
     public void setShroffAccountNumber(String shroffAccountNumber) {
         this.shroffAccountNumber = shroffAccountNumber;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 }

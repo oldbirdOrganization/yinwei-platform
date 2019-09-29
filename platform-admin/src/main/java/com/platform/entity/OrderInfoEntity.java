@@ -167,6 +167,18 @@ public class OrderInfoEntity implements Serializable {
 	 */
 	private Long masterWorkerId;
 
+	private BigDecimal paymentPrice;
+
+	//支付渠道
+	private String payChannel;
+
+	//收款账号
+	private String shroffAccountNumber;
+	//门店id
+	private Long storeId;
+	//门店名称
+	private String storeName;
+
 	//是否为第三方订单 1-是 0-否
 	private Integer isOuterOrder;
 	//第三方服务商名称
@@ -530,5 +542,45 @@ public class OrderInfoEntity implements Serializable {
 
 	public void setOuterServiceCombo(String outerServiceCombo) {
 		this.outerServiceCombo = outerServiceCombo;
+	}
+
+	public BigDecimal getPaymentPrice() {
+		return paymentPrice;
+	}
+
+	public void setPaymentPrice(BigDecimal paymentPrice) {
+		this.paymentPrice = paymentPrice;
+	}
+
+	public String getPayChannel() {
+		return payChannel;
+	}
+
+	public void setPayChannel(String payChannel) {
+		this.payChannel = payChannel;
+	}
+
+	public String getShroffAccountNumber() {
+		return shroffAccountNumber;
+	}
+
+	public void setShroffAccountNumber(String shroffAccountNumber) {
+		this.shroffAccountNumber = shroffAccountNumber;
+	}
+
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 }

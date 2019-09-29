@@ -71,14 +71,16 @@ public class DiffOrderServiceImpl implements DiffOrderService {
                         diffOrderEntity.setPaymentPrice(orderInfoEntity.getOrderPrice());
                         diffOrderEntity.setPayChannel("微信支付");
                         diffOrderEntity.setPayType("1");
-                        diffOrderEntity.setShroffAccountNumber("0");
-                        diffOrderEntity.setStoreId(0);
+                        diffOrderEntity.setShroffAccountNumber(orderInfoEntity.getShroffAccountNumber());
+                        diffOrderEntity.setStoreId(orderInfoEntity.getStoreId());
+                        diffOrderEntity.setPaymentPrice(orderInfoEntity.getPaymentPrice());
+                        diffOrderEntity.setStoreName(orderInfoEntity.getStoreName());
                         return diffOrderEntity;
                     }
 
             ).collect(Collectors.toList());
         }else if("2".equals(payType)){
-            List<OfflineOrderInfoPo> offlineOrderList = offlineOrderService.queryList(query);
+            List<OfflineOrderInfoPo> offlineOrderList = offlineOrderService.queryListByMap(query);
             dataList = offlineOrderList.stream().map(offlineOrderInfoPo -> {
                         DiffOrderEntity diffOrderEntity = new DiffOrderEntity();
                         diffOrderEntity.setOrderType(offlineOrderInfoPo.getOrderType());
@@ -89,16 +91,18 @@ public class DiffOrderServiceImpl implements DiffOrderService {
                         diffOrderEntity.setPaymentNo(offlineOrderInfoPo.getPaymentNo());
                         diffOrderEntity.setOrderPrice(offlineOrderInfoPo.getOrderPrice());
                         diffOrderEntity.setPaymentPrice(offlineOrderInfoPo.getOrderPrice());
-                        diffOrderEntity.setPayChannel("银行支付");
+                        diffOrderEntity.setPayChannel(offlineOrderInfoPo.getPayChannel());
                         diffOrderEntity.setPayType("2");
-                        diffOrderEntity.setShroffAccountNumber("0");
-                        diffOrderEntity.setStoreId(0);
+                        diffOrderEntity.setShroffAccountNumber(offlineOrderInfoPo.getShroffAccountNumber());
+                        diffOrderEntity.setStoreId(offlineOrderInfoPo.getStoreId());
+                        diffOrderEntity.setPaymentPrice(offlineOrderInfoPo.getPaymentPrice());
+                        diffOrderEntity.setStoreName(offlineOrderInfoPo.getStoreName());
                         return diffOrderEntity;
                     }
 
             ).collect(Collectors.toList());
         }else{
-            List<OfflineOrderInfoPo> offlineOrderList = offlineOrderService.queryList(query);
+            List<OfflineOrderInfoPo> offlineOrderList = offlineOrderService.queryListByMap(query);
             List<OrderInfoEntity> orderInfoList = orderInfoService.queryList(map);
             dataList = orderInfoList.stream().map(orderInfoEntity -> {
                         DiffOrderEntity diffOrderEntity = new DiffOrderEntity();
@@ -112,8 +116,10 @@ public class DiffOrderServiceImpl implements DiffOrderService {
                         diffOrderEntity.setPaymentPrice(orderInfoEntity.getOrderPrice());
                         diffOrderEntity.setPayChannel("微信支付");
                         diffOrderEntity.setPayType("1");
-                        diffOrderEntity.setShroffAccountNumber("0");
-                        diffOrderEntity.setStoreId(0);
+                        diffOrderEntity.setShroffAccountNumber(orderInfoEntity.getShroffAccountNumber());
+                        diffOrderEntity.setStoreId(orderInfoEntity.getStoreId());
+                        diffOrderEntity.setPaymentPrice(orderInfoEntity.getPaymentPrice());
+                        diffOrderEntity.setStoreName(orderInfoEntity.getStoreName());
                         return diffOrderEntity;
                     }
 
@@ -128,10 +134,12 @@ public class DiffOrderServiceImpl implements DiffOrderService {
                         diffOrderEntity.setPaymentNo(offlineOrderInfoPo.getPaymentNo());
                         diffOrderEntity.setOrderPrice(offlineOrderInfoPo.getOrderPrice());
                         diffOrderEntity.setPaymentPrice(offlineOrderInfoPo.getOrderPrice());
-                        diffOrderEntity.setPayChannel("银行支付");
+                        diffOrderEntity.setPayChannel(offlineOrderInfoPo.getPayChannel());
                         diffOrderEntity.setPayType("2");
-                        diffOrderEntity.setShroffAccountNumber("0");
-                        diffOrderEntity.setStoreId(0);
+                        diffOrderEntity.setShroffAccountNumber(offlineOrderInfoPo.getShroffAccountNumber());
+                        diffOrderEntity.setStoreId(offlineOrderInfoPo.getStoreId());
+                        diffOrderEntity.setPaymentPrice(offlineOrderInfoPo.getPaymentPrice());
+                        diffOrderEntity.setStoreName(offlineOrderInfoPo.getStoreName());
                         return diffOrderEntity;
                     }
 
@@ -150,13 +158,13 @@ public class DiffOrderServiceImpl implements DiffOrderService {
     }
 
     @Override
-    public void downLoadMaterial(List dataList, ServletOutputStream outputStream) throws Exception {
+    public void downLoadDiffOrder(List dataList, ServletOutputStream outputStream) throws Exception {
 
         List<MultipleSheelPropety> multipleSheelPropetys = new ArrayList<MultipleSheelPropety>();
 
 
         Sheet index = new Sheet(0, 2);
-        index.setSheetName("对账");
+        index.setSheetName("对账订单");
         index.setHead(createPaymentRateIndexHead());
         index.setAutoWidth(Boolean.TRUE);
 
@@ -176,13 +184,19 @@ public class DiffOrderServiceImpl implements DiffOrderService {
         List<String> headCoulumn4 = new ArrayList<String>();
         List<String> headCoulumn5 = new ArrayList<String>();
         List<String> headCoulumn6 = new ArrayList<String>();
+        List<String> headCoulumn7 = new ArrayList<String>();
+        List<String> headCoulumn8 = new ArrayList<String>();
+        List<String> headCoulumn9 = new ArrayList<String>();
 
         headCoulumn1.add("订单号");
         headCoulumn2.add("订单分类");
         headCoulumn3.add("订单金额");
         headCoulumn4.add("实际支付");
         headCoulumn5.add("优惠金额");
-        headCoulumn6.add("支付方式");
+        headCoulumn6.add("支付渠道");
+        headCoulumn7.add("收款账户");
+        headCoulumn8.add("进账流水号");
+        headCoulumn9.add("门店名称");
 
         head.add(headCoulumn1);
         head.add(headCoulumn2);
@@ -190,6 +204,9 @@ public class DiffOrderServiceImpl implements DiffOrderService {
         head.add(headCoulumn4);
         head.add(headCoulumn5);
         head.add(headCoulumn6);
+        head.add(headCoulumn7);
+        head.add(headCoulumn8);
+        head.add(headCoulumn9);
         return head;
     }
 

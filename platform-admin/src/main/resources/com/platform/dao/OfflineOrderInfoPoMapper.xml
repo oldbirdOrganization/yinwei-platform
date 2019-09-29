@@ -50,6 +50,9 @@
     <result column="outer_service_brand" jdbcType="VARCHAR" property="outerServiceBrand" />
     <result column="outer_service_combo" jdbcType="VARCHAR" property="outerServiceCombo" />
     <result column="batch_no" jdbcType="VARCHAR" property="batchNo" />
+    <result column="store_id" jdbcType="BIGINT" property="storeId"/>
+    <result column="shroff_account_number" jdbcType="VARCHAR" property="shroffAccountNumber"/>
+    <result column="pay_channel" jdbcType="VARCHAR" property="payChannel"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -891,4 +894,39 @@
       batch_no = #{batchNo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryListByMap" resultType="com.platform.entity.OfflineOrderInfoPo">
+    select o.*,u.username as userName,
+    nc.name as channelName,sc.name as storeName
+    from nideshop_offline_order_info o
+    left join nideshop_user u on o.create_user_id = u.id
+    left join nideshop_channel nc on nc.id=o.channel_id
+    left join sys_store sc on sc.store_id=o.store_id
+    WHERE 1=1
+    <if test="orderNo != null and orderNo.trim() != ''">
+      AND o.order_no LIKE concat('%',#{orderNo},'%')
+    </if>
+    <if test="paymentstatus != null and paymentstatus.trim() != ''">
+      AND o.payment_status = #{paymentstatus}
+    </if>
+    <if test="orderStatus != null and orderStatus.trim() != ''">
+      AND o.order_status = #{orderStatus}
+    </if>
+    <if test="storeId != null and storeId.trim() != ''">
+      AND o.store_id = #{storeId}
+    </if>
+    <if test="orderType != null and orderType.trim() != ''">
+      AND o.order_type = #{orderType}
+    </if>
+    <if test="startTime != null">
+      and payment_time &gt;= #{startTime }
+    </if>
+    <if test="endTime != null">
+      and payment_time &lt; #{endTime }
+    </if>
+        order by id desc
+    <if test="offset != null and limit != null">
+      limit #{offset}, #{limit}
+    </if>
+  </select>
 </mapper>

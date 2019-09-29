@@ -18,7 +18,7 @@ $(function () {
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
             {
-                label: '订单分类', name: 'orderType', index: 'order_type', width: 120,
+                label: '订单分类', name: 'orderType', index: 'order_type', width: 80,
                 formatter: function (value) {
                     if (value == '1') {
                         return '预约订单';
@@ -28,14 +28,14 @@ $(function () {
                     return '-';
                 }
             },
-            {label: '订单号', name: 'orderNo', index: 'order_no', width: 60},
-            {label: '订单金额',name: 'orderPrice',index: 'order_price',width: 60},
-            {label: '实际支付金额（元）', name: 'orderPrice', index: 'order_price', width: 60},
-            {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 60},
-            {label: '支付渠道', name: 'payChannel', index: 'pay_channel', width: 60},
-            {label: '收款账户', name: 'shroffAccountNumber', index: 'shroff_account_number', width: 60},
-            {label: '进账流水号', name: 'paymentNo', index: 'payment_no', width: 60},
-            {label: '门店名称', name: 'storeId', index: 'store_id', width: 60}
+            {label: '订单号', name: 'orderNo', index: 'order_no', width: 80},
+            {label: '订单金额',name: 'orderPrice',index: 'order_price',width: 80},
+            {label: '实际支付金额（元）', name: 'paymentPrice', index: 'payment_Price', width: 80},
+            {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 80},
+            {label: '支付渠道', name: 'payChannel', index: 'pay_channel', width: 80},
+            {label: '收款账户', name: 'shroffAccountNumber', index: 'shroff_account_number', width: 80},
+            {label: '进账流水号', name: 'paymentNo', index: 'payment_no', width: 80},
+            {label: '门店名称', name: 'storeName', index: 'store_Name', width: 80}
         ]
     });
 });
@@ -52,8 +52,8 @@ let vm = new Vue({
         q: {
             storeId: '',
             payType: '',
-            starttime: '',
-            endtime: '',
+            startTime: '',
+            endTime: '',
             channelId: ''
         }
     },
@@ -93,48 +93,48 @@ let vm = new Vue({
             }
         },
         exportFile: function(event) {
-            // let payType = getQueryString("payType");
-            // let paymentStatus = getQueryString("paymentStatus");
-            // let channelId = getQueryString("channelId");
-            // var oReq = new XMLHttpRequest();
-            // url = "../offlineOrder/exportExcel?order=1&sidx=1&limit=10&page=1";
-            // if (paymentStatus) {
-            //     url += '&paymentStatus=' + paymentStatus;
-            // }
-            // if (payType) {
-            //     url += '&payType=' + payType;
-            // }
-            // if (channelId) {
-            //     url += '&channelId=' + channelId;
-            // }
-            // oReq.open("GET", url, true);
-            // oReq.responseType = "blob";
-            // oReq.onload = function (oEvent) {
-            //     var content = oReq.response;
-            //
-            //     var elink = document.createElement('a');
-            //     elink.download = "线下订单.xlsx";
-            //     elink.style.display = 'none';
-            //
-            //     var blob = new Blob([content]);
-            //     elink.href = URL.createObjectURL(blob);
-            //
-            //     document.body.appendChild(elink);
-            //     elink.click();
-            //
-            //     document.body.removeChild(elink);
-            // };
-            // oReq.data = {
-            //     page:1,
-            //     limit:10,
-            //     sidx:1,
-            //     order:1,
-            //     payType:payType,
-            //     paymentStatus:paymentStatus,
-            //     channelId:channelId
-            // };
-            // oReq.send("payType=" + payType + "&paymentStatus=" + paymentStatus
-            //     + "&channelId=" + channelId + "&order=1&sidx=1&limit=10&page=1");
+            let storeId = getQueryString("storeId");
+            let payType = getQueryString("payType");
+            let channelId = getQueryString("channelId");
+            var oReq = new XMLHttpRequest();
+            url = "../diffOrder/exportExcel?order=1&sidx=1&limit=10&page=1";
+            if (storeId) {
+                url += '&storeId=' + storeId;
+            }
+            if (payType) {
+                url += '&payType=' + payType;
+            }
+            if (channelId) {
+                url += '&channelId=' + channelId;
+            }
+            oReq.open("GET", url, true);
+            oReq.responseType = "blob";
+            oReq.onload = function (oEvent) {
+                var content = oReq.response;
+
+                var elink = document.createElement('a');
+                elink.download = "对账订单.xlsx";
+                elink.style.display = 'none';
+
+                var blob = new Blob([content]);
+                elink.href = URL.createObjectURL(blob);
+
+                document.body.appendChild(elink);
+                elink.click();
+
+                document.body.removeChild(elink);
+            };
+            oReq.data = {
+                page:1,
+                limit:10,
+                sidx:1,
+                order:1,
+                payType:payType,
+                storeId:storeId,
+                channelId:channelId
+            };
+            oReq.send("payType=" + payType + "&storeId=" + storeId
+                + "&channelId=" + channelId + "&order=1&sidx=1&limit=10&page=1");
         },
     },
 });

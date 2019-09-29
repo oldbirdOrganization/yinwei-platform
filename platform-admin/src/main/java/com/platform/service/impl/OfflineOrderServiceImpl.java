@@ -84,6 +84,10 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
         return offlineOrderInfoPoMapper.selectByExample(example);
     }
 
+    @Override
+    public List<OfflineOrderInfoPo> queryListByMap(Query query) {
+        return offlineOrderInfoPoMapper.queryListByMap(query);
+    }
 
     private boolean notNull(Object o) {
         if (o != null && !o.toString().equals("")) {

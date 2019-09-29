@@ -9,6 +9,7 @@ import com.platform.utils.BeanUtils;
 import com.platform.utils.PageUtils;
 import com.platform.utils.Query;
 import com.platform.utils.R;
+import com.platform.vo.DiffOrderInfoVo;
 import com.platform.vo.MaterialInfoVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -48,8 +49,6 @@ public class DiffOrderController extends AbstractController {
     @RequiresPermissions("diffOrder:list")
     public R list(@RequestParam Map<String, Object> params){
         //查询列表数据
-
-
         List<DiffOrderEntity> diffOrderList = diffOrderService.queryList(params);
         int total = diffOrderService.queryTotal(params);
 
@@ -66,13 +65,11 @@ public class DiffOrderController extends AbstractController {
     @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
     public R exportExcel(@RequestParam Map<String, Object> params, HttpServletRequest request, HttpServletResponse response)  throws IOException {
         //查询列表数据
-        Query query = new Query(params);
-        query.put("offset", null);
-        List<MaterialEntity> resultList = null;//materialService.queryList(query);
-        List<MaterialInfoVo> list = new ArrayList<>();
+        List<DiffOrderEntity> resultList = diffOrderService.queryList(params);
+        List<DiffOrderInfoVo> list = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(resultList)) {
             list = resultList.stream().map(a -> {
-                MaterialInfoVo vo = new MaterialInfoVo();
+                DiffOrderInfoVo vo = new DiffOrderInfoVo();
                 BeanUtils.copyProperties(a, vo);
                 return vo;
             }).collect(Collectors.toList());
@@ -81,13 +78,13 @@ public class DiffOrderController extends AbstractController {
 
         ServletOutputStream outputStream = null;
         try {
-            String fileName = "材料列表";
+            String fileName = "对账订单列表";
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/vnd.ms-excel;charset=utf-8");
             response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xlsx").getBytes(), "ISO8859-1"));
             outputStream = response.getOutputStream();
-            //materialService.downLoadMaterial(list,outputStream);
+            diffOrderService.downLoadDiffOrder(list,outputStream);
             outputStream.flush();
 
         } catch (Exception e) {
