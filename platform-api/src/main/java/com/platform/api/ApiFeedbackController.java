@@ -35,7 +35,6 @@ public class ApiFeedbackController extends ApiBaseAction {
      */
     @ApiOperation(value = "添加反馈")
     @PostMapping("save")
-    @IgnoreAuth
     public Object save(@LoginUser UserVo loginUser,
                        @RequestBody @ApiParam(name="FeedbackRequest",value="添加反馈对象",required=true) FeedbackRequest feedbackRequest) {
         if (null != feedbackRequest) {
