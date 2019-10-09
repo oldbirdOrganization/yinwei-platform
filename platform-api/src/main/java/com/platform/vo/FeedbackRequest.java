@@ -18,7 +18,7 @@ public class FeedbackRequest implements Serializable {
 
     //类型
     @ApiModelProperty(value = "类型 1-商品相关 2-客户服务 3-优惠活动 4-其他", example = "1")
-    private Integer feedType;
+    private Integer index;
 
     //移动电话
     @ApiModelProperty(value = "手机号码")
@@ -46,12 +46,12 @@ public class FeedbackRequest implements Serializable {
         this.mobile = mobile;
     }
 
-    public Integer getFeedType() {
-        return feedType;
+    public Integer getIndex() {
+        return index;
     }
 
-    public void setFeedType(Integer feedType) {
-        this.feedType = feedType;
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 }
 

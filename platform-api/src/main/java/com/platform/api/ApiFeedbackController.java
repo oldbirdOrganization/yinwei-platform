@@ -42,7 +42,7 @@ public class ApiFeedbackController extends ApiBaseAction {
             feedbackVo.setUserId(loginUser.getUserId().intValue());
             feedbackVo.setUserName(loginUser.getUsername());
             feedbackVo.setMobile(feedbackRequest.getMobile());
-            feedbackVo.setFeedType(feedbackRequest.getFeedType());
+            feedbackVo.setFeedType(feedbackRequest.getIndex());
             feedbackVo.setStatus(1);
             feedbackVo.setContent(feedbackRequest.getContent());
             feedbackVo.setAddTime(new Date());
