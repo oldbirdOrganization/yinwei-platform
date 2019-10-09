@@ -1,15 +1,18 @@
 package com.platform.api;
 
-import com.alibaba.fastjson.JSONObject;
+import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.FeedbackVo;
 import com.platform.entity.UserVo;
 import com.platform.service.ApiFeedbackService;
 import com.platform.util.ApiBaseAction;
+import com.platform.vo.FeedbackRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,16 +35,17 @@ public class ApiFeedbackController extends ApiBaseAction {
      */
     @ApiOperation(value = "添加反馈")
     @PostMapping("save")
-    public Object save(@LoginUser UserVo loginUser) {
-        JSONObject feedbackJson = super.getJsonRequest();
-        if (null != feedbackJson) {
-            FeedbackVo feedbackVo = new FeedbackVo();
+    @IgnoreAuth
+    public Object save(@LoginUser UserVo loginUser,
+                       @RequestBody @ApiParam(name="FeedbackRequest",value="添加反馈对象",required=true) FeedbackRequest feedbackRequest) {
+        if (null != feedbackRequest) {
+            FeedbackVo feedbackVo=new FeedbackVo();
             feedbackVo.setUserId(loginUser.getUserId().intValue());
             feedbackVo.setUserName(loginUser.getUsername());
-            feedbackVo.setMobile(feedbackJson.getString("mobile"));
-            feedbackVo.setFeedType(feedbackJson.getInteger("index"));
+            feedbackVo.setMobile(feedbackRequest.getMobile());
+            feedbackVo.setFeedType(feedbackRequest.getFeedType());
             feedbackVo.setStatus(1);
-            feedbackVo.setContent(feedbackJson.getString("content"));
+            feedbackVo.setContent(feedbackRequest.getContent());
             feedbackVo.setAddTime(new Date());
             feedbackService.save(feedbackVo);
             return super.toResponsSuccess("感谢你的反馈");
