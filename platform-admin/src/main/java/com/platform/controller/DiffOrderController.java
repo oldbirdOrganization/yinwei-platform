@@ -1,16 +1,12 @@
 package com.platform.controller;
 
 import com.platform.entity.DiffOrderEntity;
-import com.platform.entity.MaterialEntity;
-import com.platform.entity.OrderGoodsEntity;
 import com.platform.service.DiffOrderService;
-import com.platform.service.OrderGoodsService;
 import com.platform.utils.BeanUtils;
 import com.platform.utils.PageUtils;
 import com.platform.utils.Query;
 import com.platform.utils.R;
 import com.platform.vo.DiffOrderInfoVo;
-import com.platform.vo.MaterialInfoVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

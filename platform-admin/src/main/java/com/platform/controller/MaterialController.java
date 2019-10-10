@@ -1,23 +1,17 @@
 package com.platform.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.platform.annotation.SysLog;
 import com.platform.entity.MaterialEntity;
 import com.platform.service.MaterialService;
-import com.platform.utils.BeanUtils;
-import com.platform.utils.PageUtils;
-import com.platform.utils.Query;
-import com.platform.utils.R;
-import com.platform.utils.excelutils.ExcelUtil;
+import com.platform.utils.*;
 import com.platform.utils.excelutils.ExcelUtils;
-import com.platform.vo.MaterialInfoVo;
+import com.platform.vo.MaterialInfoUpVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -134,6 +128,51 @@ public class MaterialController extends AbstractController {
     }
 
 
+//    /**
+//     * 导出excel
+//     * @throws IOException
+//     */
+//    @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
+//    public R exportExcel(@RequestParam Map<String, Object> params, HttpServletRequest request, HttpServletResponse response)  throws IOException {
+//        //查询列表数据
+//        Query query = new Query(params);
+//        query.put("offset", null);
+//        List<MaterialEntity> resultList = materialService.queryList(query);
+//        List<MaterialInfoVo> list = new ArrayList<>();
+//        if (CollectionUtils.isNotEmpty(resultList)) {
+//            list = resultList.stream().map(a -> {
+//                MaterialInfoVo vo = new MaterialInfoVo();
+//                BeanUtils.copyProperties(a, vo);
+//                return vo;
+//            }).collect(Collectors.toList());
+//        }
+//        long t1 = System.currentTimeMillis();
+//
+//        ServletOutputStream outputStream = null;
+//        try {
+//            String fileName = "材料列表";
+//            request.setCharacterEncoding("UTF-8");
+//            response.setCharacterEncoding("UTF-8");
+//            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+//            response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xlsx").getBytes(), "ISO8859-1"));
+//            outputStream = response.getOutputStream();
+//            materialService.downLoadMaterial(list,outputStream);
+//            outputStream.flush();
+//
+//        } catch (Exception e) {
+//            logger.error("download异常", e);
+//        } finally {
+//            if (outputStream != null) {
+//                try {
+//                    outputStream.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return R.ok();
+//    }
+
     /**
      * 导出excel
      * @throws IOException
@@ -144,41 +183,20 @@ public class MaterialController extends AbstractController {
         Query query = new Query(params);
         query.put("offset", null);
         List<MaterialEntity> resultList = materialService.queryList(query);
-        List<MaterialInfoVo> list = new ArrayList<>();
+        List<MaterialInfoUpVo> list = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(resultList)) {
             list = resultList.stream().map(a -> {
-                MaterialInfoVo vo = new MaterialInfoVo();
-                BeanUtils.copyProperties(a, vo);
+                MaterialInfoUpVo vo = new MaterialInfoUpVo();
+                org.springframework.beans.BeanUtils.copyProperties(a, vo);
                 return vo;
             }).collect(Collectors.toList());
         }
         long t1 = System.currentTimeMillis();
-
-        ServletOutputStream outputStream = null;
-        try {
-            String fileName = "材料列表";
-            request.setCharacterEncoding("UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/vnd.ms-excel;charset=utf-8");
-            response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xlsx").getBytes(), "ISO8859-1"));
-            outputStream = response.getOutputStream();
-            materialService.downLoadMaterial(list,outputStream);
-            outputStream.flush();
-
-        } catch (Exception e) {
-            logger.error("download异常", e);
-        } finally {
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        ExcelUtils.writeExcel(response, list, MaterialInfoUpVo.class);
+        long t2 = System.currentTimeMillis();
+        System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
         return R.ok();
     }
-
     /**
      * 导入excel
      * @param file
@@ -186,10 +204,14 @@ public class MaterialController extends AbstractController {
     @RequestMapping(value = "/readExcel", method = RequestMethod.POST)
     public R readExcel(@RequestParam(value="uploadFile", required = false) MultipartFile file){
         long t1 = System.currentTimeMillis();
-        List<MaterialInfoVo> list = ExcelUtils.readExcel("", MaterialInfoVo.class, file);
+        if (file == null) {
+            return R.error(1001,"文件不能为空");
+        }
+        List<MaterialInfoUpVo> list = ExcelUtils.readExcel("", MaterialInfoUpVo.class, file);
         long t2 = System.currentTimeMillis();
+        System.out.println(String.format("read over! cost:%sms", (t2 - t1)));
         //入库
-        //materialService.importOfflineOrders(list);
+        materialService.importOfflineOrders(list);
         return R.ok();
     }
 

@@ -1,6 +1,7 @@
 package com.platform.service;
 
 import com.platform.entity.MaterialEntity;
+import com.platform.vo.MaterialInfoUpVo;
 
 import javax.servlet.ServletOutputStream;
 import java.util.List;
@@ -28,5 +29,5 @@ public interface MaterialService {
 
     void delete(Long id);
 
-    public void downLoadMaterial(List dataList, ServletOutputStream outputStream) throws Exception;
+    void importOfflineOrders(List<MaterialInfoUpVo> vos);
 }

@@ -47,7 +47,15 @@ var vm = new Vue({
                 success: function(data){
                     console.log(data);
                     if (data.code == '0') {
-                        alert('上传成功！');
+                        alert('上传成功!', function (index) {
+                            vm.reload();
+                        });
+                    }
+                    if (data.code == '1001') {
+                        alert(data.msg);
+                    }
+                    if (data.code == '1002') {
+                        alert(data.msg);
                     }
 
                 },

@@ -5,10 +5,7 @@ import com.platform.entity.OfflineOrderInfoPo;
 import com.platform.entity.OrderGoodsEntity;
 import com.platform.entity.OrderInfoEntity;
 import com.platform.service.OfflineOrderService;
-import com.platform.utils.PageUtils;
-import com.platform.utils.Query;
-import com.platform.utils.R;
-import com.platform.utils.ShiroUtils;
+import com.platform.utils.*;
 import com.platform.utils.excelutils.ExcelUtils;
 import com.platform.vo.OfflineOrderInfoVo;
 import org.apache.commons.collections.CollectionUtils;
@@ -42,12 +39,17 @@ public class OfflineOrderController {
     @RequestMapping(value = "/readExcel", method = RequestMethod.POST)
     public R readExcel(@RequestParam(value="uploadFile", required = false) MultipartFile file){
         long t1 = System.currentTimeMillis();
+        if (file == null) {
+            return R.error(1001,"文件不能为空");
+        }
         List<OfflineOrderInfoVo> list = ExcelUtils.readExcel("", OfflineOrderInfoVo.class, file);
         long t2 = System.currentTimeMillis();
         System.out.println(String.format("read over! cost:%sms", (t2 - t1)));
-        list.forEach(
-                b -> System.out.println(JSON.toJSONString(b))
-        );
+        for(OfflineOrderInfoVo str : list) {
+            if(StringUtils.isNullOrEmpty(str.getBatchNo())){
+                return R.error(1002,"批次号不能为空");
+            }
+        }
         //入库
         offlineOrderService.importOfflineOrders(list);
         return R.ok();
