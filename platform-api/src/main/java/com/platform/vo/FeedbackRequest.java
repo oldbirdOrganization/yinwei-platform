@@ -17,7 +17,7 @@ public class FeedbackRequest implements Serializable {
 
 
     //类型
-    @ApiModelProperty(value = "类型 1-商品相关 2-客户服务 3-优惠活动 4-其他", example = "1")
+    @ApiModelProperty(value = "类型 1-产品相关 2-服务态度 3-优惠活动 4-其他", example = "1")
     private Integer index;
 
     //移动电话
