@@ -1,5 +1,8 @@
 package com.platform.vo;
 
+import com.platform.utils.excelutils.ExcelColumn;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -9,22 +12,30 @@ import java.math.BigDecimal;
  * @Description: TODO
  * @date 2019/9/2716:49
  */
+
+@Data
 public class MaterialInfoUpVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
      * 材料id
      */
+    @ExcelColumn(value = "商品id", col = 1)
     private Integer id;
 
+    @ExcelColumn(value = "商品名称", col = 2)
     private String name;
 
+    @ExcelColumn(value = "品牌", col = 3)
     private String brand;
 
+    @ExcelColumn(value = "规格型号", col = 4)
     private String model;
 
+    @ExcelColumn(value = "单位", col = 5)
     private String unit;
 
+    @ExcelColumn(value = "单价", col = 6)
     private BigDecimal price;
 
     public Integer getId() {

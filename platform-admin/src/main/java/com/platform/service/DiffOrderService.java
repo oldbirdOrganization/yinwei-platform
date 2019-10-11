@@ -19,6 +19,4 @@ public interface DiffOrderService {
     int queryTotal(Map<String, Object> map);
 
     List<DiffOrderEntity> queryList(Map<String, Object> map);
-
-    public void downLoadDiffOrder(List dataList, ServletOutputStream outputStream) throws Exception;
 }

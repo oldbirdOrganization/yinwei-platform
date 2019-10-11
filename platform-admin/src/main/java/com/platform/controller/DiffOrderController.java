@@ -6,6 +6,7 @@ import com.platform.utils.BeanUtils;
 import com.platform.utils.PageUtils;
 import com.platform.utils.Query;
 import com.platform.utils.R;
+import com.platform.utils.excelutils.ExcelUtils;
 import com.platform.vo.DiffOrderInfoVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -71,29 +71,9 @@ public class DiffOrderController extends AbstractController {
             }).collect(Collectors.toList());
         }
         long t1 = System.currentTimeMillis();
-
-        ServletOutputStream outputStream = null;
-        try {
-            String fileName = "对账订单列表";
-            request.setCharacterEncoding("UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/vnd.ms-excel;charset=utf-8");
-            response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xlsx").getBytes(), "ISO8859-1"));
-            outputStream = response.getOutputStream();
-            diffOrderService.downLoadDiffOrder(list,outputStream);
-            outputStream.flush();
-
-        } catch (Exception e) {
-            logger.error("download异常", e);
-        } finally {
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        ExcelUtils.writeExcel(response, list, DiffOrderInfoVo.class);
+        long t2 = System.currentTimeMillis();
+        System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
         return R.ok();
     }
 }

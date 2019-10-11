@@ -2,6 +2,8 @@ package com.platform.vo;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.metadata.BaseRowModel;
+import com.platform.utils.excelutils.ExcelColumn;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,37 +14,38 @@ import java.math.BigDecimal;
  * @Description: TODO
  * @date 2019/9/2716:49
  */
+@Data
 public class DiffOrderInfoVo extends BaseRowModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
      * 材料id
      */
-    @ExcelProperty(value = {"订单号"}, index = 1)
+    @ExcelColumn(value = "订单号", col = 1)
     private String orderNo;
 
-    @ExcelProperty(value = {"订单分类"}, index = 2)
+    @ExcelColumn(value = "订单分类", col = 2)
     private Integer orderType;
 
-    @ExcelProperty(value = {"订单金额"}, index = 3)
+    @ExcelColumn(value = "订单金额", col = 3)
     private BigDecimal orderPrice;
 
-    @ExcelProperty(value = {"实际支付"}, index = 4)
+    @ExcelColumn(value = "实际支付", col = 4)
     private BigDecimal paymentPrice;
 
-    @ExcelProperty(value = {"优惠金额"}, index = 5)
+    @ExcelColumn(value = "优惠金额", col = 5)
     private BigDecimal couponPrice;
 
-    @ExcelProperty(value = {"支付渠道"}, index = 6)
+    @ExcelColumn(value = "支付渠道", col = 6)
     private String payChannel;
 
-    @ExcelProperty(value = {"收款账号"}, index = 6)
+    @ExcelColumn(value = "收款账号", col = 7)
     private String shroffAccountNumber;
 
-    @ExcelProperty(value = {"进账流水号"}, index = 6)
+    @ExcelColumn(value = "进账流水号", col = 8)
     private String paymentNo;
 
-    @ExcelProperty(value = {"门店名称"}, index = 6)
+    @ExcelColumn(value = "门店名称", col = 9)
     private String storeName;
 
     public String getOrderNo() {
