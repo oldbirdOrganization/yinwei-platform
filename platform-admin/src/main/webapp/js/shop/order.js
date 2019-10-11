@@ -1,66 +1,35 @@
 $(function () {
-    let paymentStatus = getQueryString("paymentStatus");
-    let orderStatus = getQueryString("orderStatus");
-    let orderType = getQueryString("orderType");
+    let orderNo = getQueryString("orderNo");
+    let channelId = getQueryString("channelId");
+    let storeId = getQueryString("storeId");
+    let payType = getQueryString("payType");
+    let masterWorker = getQueryString("masterWorker");
     let url = '../order/list';
-    if (paymentStatus) {
-        url += '?paymentStatus=' + paymentStatus;
+    if (orderNo) {
+        url += '?orderNo=' + orderNo;
     }
-    if (orderStatus) {
-        url += '?orderStatus=' + orderStatus;
+    if (channelId) {
+        url += '?channelId=' + channelId;
     }
-    if (orderType) {
-        url += '?orderType=' + orderType;
+    if (storeId) {
+        url += '?storeId=' + storeId;
+    }
+    if (payType) {
+        url += '?payType=' + payType;
+    }
+    if (masterWorker) {
+        url += '?masterWorker=' + masterWorker;
     }
     $("#jqGrid").Grid({
         url: url,
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '订单号', name: 'orderNo', index: 'order_no', width: 120},
-            {label: '会员', name: 'userName', index: 'user_name', width: 70},
-            {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 60},
-            {
-                label: '订单类型', name: 'orderType', index: 'order_type', width: 60,
-                formatter: function (value) {
-                    if (value == '1') {
-                        return '预约订单';
-                    } else if (value == '2') {
-                        return '定金订单';
-                    }
-                    return '-';
-                }
-            },
-            {
-                label: '订单状态', name: 'orderStatus', index: 'order_status', width: 60,
-                formatter: function (value) {
-                    if (value == '1') {
-                        return '待指派';
-                    } else if (value == '2') {
-                        return '待服务';
-                    } else if (value == '3') {
-                        return '服务中';
-                    } else if (value == '4') {
-                        return '订单完成';
-                    } else if (value == '5') {
-                        return '已作废';
-                    } else if (value == '6') {
-                        return '待评价';
-                    }
-                    return value;
-                }
-            },
-            {
-                label: '付款状态', name: 'paymentStatus', index: 'payment_status', width: 60,
-                formatter: function (value) {
-                    if (value == '1') {
-                        return '未付款';
-                    } else if (value == '2') {
-                        return '已付定金';
-                    } 
-                    return value;
-                }
-            },
+            {label: '订单号', name: 'orderNo', index: 'order_no', width: 80},
+            {label: '预约订单号', name: 'parentOrderId', index: 'parent_order_id', width: 120},
+            {label: '用户姓名', name: 'userName', index: 'user_name', width: 120},
+            {label: '联系方式', name: 'userMobile', index: 'user_mobile', width: 120},
+            {label: '订单类型',name: 'channelName',index: 'channel_name',width: 120},
             {
                 label: '是否第三方', name: 'isOuterOrder', index: 'is_outer_order', width: 60,
                 formatter: function (value) {
@@ -72,22 +41,51 @@ $(function () {
                     return value;
                 }
             },
-            {label: '支付单号', name: 'paymentNo', index: 'payment_no', width: 110},
-
-            {label: '实际支付金额（元）', name: 'orderPrice', index: 'order_price', width: 80},
             {
-                label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 110,
+                label: '下单时间', name: 'createTime', index: 'create_time', width: 60,
                 formatter: function (value) {
                     return transDate(value);
                 }
             },
-            {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 60},
             {
-                label: '下单时间', name: 'createTime', index: 'create_time', width: 110,
+                label: '订单状态', name: 'paymentStatus', index: 'payment_status', width: 100,
+                formatter: function (value) {
+                    if (value == '1') {
+                        return '未支付';
+                    } else if (value == '2') {
+                        return '已支付';
+                    }
+                    return value;
+                }
+            },
+            {
+                label: '门店名称', name: 'storeName', index: 'store_name', width: 80
+            },
+            {
+                label: '门店地址', name: 'storeAddress', index: 'store_address', width: 80
+            },
+            {
+                label: '门店预约电话', name: 'storeContact', index: 'store_contact', width: 80
+            },
+            {
+                label: '师傅名称', name: 'masterWorker', index: 'master_worker', width: 100
+            },
+            {
+                label: '师傅地址', name: 'masterAddress', index: 'master_address', width: 100
+            },
+            {
+                label: '师傅联系方式', name: 'masterContact', index: 'master_contact', width: 100
+            },
+            {label: '订单金额', name: 'orderPrice', index: 'order_price', width: 100},
+            {label: '待支付金额', name: 'paymentPrice', index: 'payment_price', width: 100},
+            {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 100},
+            {
+                label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 80,
                 formatter: function (value) {
                     return transDate(value);
                 }
             },
+            {label: '支付分类', name: 'payType', index: 'pay_type', width: 100},
             {
                 label: '操作', width: 90, align: 'center', sortable: false,
                 formatter: function (value, col, row) {
@@ -108,9 +106,11 @@ let vm = new Vue({
         order: {},
         shippings: [],
         q: {
-            orderSn: '',
-            orderStatus: '',
-            orderType: ''
+            orderNo: '',
+            channelId: '',
+            storeId: '',
+            payType: '',
+            masterWorker: ''
         }
     },
     methods: {
@@ -184,9 +184,11 @@ let vm = new Vue({
             let page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
                 postData: {
-                    'orderSn': vm.q.orderSn,
-                    'orderStatus': vm.q.orderStatus,
-                    'orderType': vm.q.orderType
+                    'orderNo': vm.q.orderNo,
+                    'channelId': vm.q.channelId,
+                    'payType': vm.q.payType,
+                    'masterWorker': vm.q.masterWorker,
+                    'storeId': vm.q.storeId
                 },
                 page: page
             }).trigger("reloadGrid");

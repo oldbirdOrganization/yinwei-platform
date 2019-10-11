@@ -138,6 +138,7 @@ public class OrderInfoEntity implements Serializable {
 	private Long createUserId;
 	
 	private String userName;
+	private String userMobile;
 	/**
 	 * 修改人id
 	 */
@@ -191,6 +192,12 @@ public class OrderInfoEntity implements Serializable {
 	private String outerServiceBrand;
 	//第三方服务套餐名称
 	private String outerServiceCombo;
+
+	//支付方式 1线上支付 2线下支付
+	private String payType;
+	private String storeAddress;
+	private String storeContact;
+	private String parentOrderId;
 
 	public Integer getId() {
 		return id;
@@ -582,5 +589,45 @@ public class OrderInfoEntity implements Serializable {
 
 	public void setStoreName(String storeName) {
 		this.storeName = storeName;
+	}
+
+	public String getPayType() {
+		return payType;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType;
+	}
+
+	public String getStoreAddress() {
+		return storeAddress;
+	}
+
+	public void setStoreAddress(String storeAddress) {
+		this.storeAddress = storeAddress;
+	}
+
+	public String getStoreContact() {
+		return storeContact;
+	}
+
+	public void setStoreContact(String storeContact) {
+		this.storeContact = storeContact;
+	}
+
+	public String getUserMobile() {
+		return userMobile;
+	}
+
+	public void setUserMobile(String userMobile) {
+		this.userMobile = userMobile;
+	}
+
+	public String getParentOrderId() {
+		return parentOrderId;
+	}
+
+	public void setParentOrderId(String parentOrderId) {
+		this.parentOrderId = parentOrderId;
 	}
 }
