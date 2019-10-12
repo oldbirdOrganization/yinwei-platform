@@ -122,4 +122,14 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
     public OfflineOrderInfoPo queryDetailById(Integer id) {
         return offlineOrderInfoPoMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int save(OfflineOrderInfoPo order) {
+        return offlineOrderInfoPoMapper.insertSelective(order);
+    }
+
+    @Override
+    public int update(OfflineOrderInfoPo order) {
+        return offlineOrderInfoPoMapper.updateByPrimaryKeySelective(order);
+    }
 }

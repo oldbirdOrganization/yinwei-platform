@@ -9,6 +9,10 @@ import java.util.List;
 public interface OfflineOrderService {
     void importOfflineOrders(List<OfflineOrderInfoVo> vos);
 
+    int save(OfflineOrderInfoPo order);
+
+    int update(OfflineOrderInfoPo order);
+
     List<OfflineOrderInfoPo> queryList(Query query);
 
     List<OfflineOrderInfoPo> queryListByMap(Query query);

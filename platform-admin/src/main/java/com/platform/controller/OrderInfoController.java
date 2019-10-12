@@ -9,11 +9,13 @@ import com.platform.utils.PageUtils;
 import com.platform.utils.Query;
 import com.platform.utils.R;
 import com.platform.utils.ShiroUtils;
+import com.platform.vo.InfoVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -56,20 +58,57 @@ public class OrderInfoController {
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
-    @RequiresPermissions("order:info")
-    public R info(@PathVariable("id") Integer id) {
-        OrderInfoEntity order = orderInfoService.queryObject(id);
-        return R.ok().put("order", order);
-    }
+//    @RequestMapping("/info/{id}")
+//    @RequiresPermissions("order:info")
+//    public R info(@PathVariable("id") Integer id) {
+//        OrderInfoEntity order = orderInfoService.queryObject(id);
+//        return R.ok().put("order", order);
+//    }
 
+    @RequestMapping("/info")
+    @RequiresPermissions("order:info")
+    public R info(@RequestBody InfoVo infoVo) {
+        String payType = infoVo.getPayType();
+        String id = infoVo.getId();
+        if("1".equals(payType)){
+            OrderInfoEntity order = orderInfoService.queryObject(Integer.valueOf(id));
+            order.setPayType("1");
+            return R.ok().put("order", order);
+        }else if("2".equals(payType)){
+            OfflineOrderInfoPo order = offlineOrderService.queryDetailById(Integer.valueOf(id));
+            order.setPayType("2");
+            return R.ok().put("order", order);
+        }
+        return R.ok();
+    }
     /**
      * 保存
      */
     @RequestMapping("/save")
     @RequiresPermissions("order:save")
     public R save(@RequestBody OrderInfoEntity order) {
-        orderInfoService.save(order);
+        if("1".equals(order.getPayType())){
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
+            order.setOrderNo(fmt.format(new Date()));
+            order.setPaymentStatus(1);//未支付
+            order.setOrderStatus(1);//下单成功
+            order.setCreateTime(new Date());
+            order.setUpdateTime(new Date());
+            order.setDefunct(0);
+            orderInfoService.save(order);
+        }else if("2".equals(order.getPayType())){
+            OfflineOrderInfoPo offlineOrderInfoPo = new OfflineOrderInfoPo();
+            BeanUtils.copyProperties(order, offlineOrderInfoPo);
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
+            offlineOrderInfoPo.setOrderNo(fmt.format(new Date()));
+            offlineOrderInfoPo.setPaymentStatus(2);//已支付
+            offlineOrderInfoPo.setOrderStatus(1);//下单成功
+            offlineOrderInfoPo.setCreateTime(new Date());
+            offlineOrderInfoPo.setUpdateTime(new Date());
+            offlineOrderInfoPo.setDefunct(0);
+            offlineOrderService.save(offlineOrderInfoPo);
+        }
+
 
         return R.ok();
     }
@@ -84,7 +123,14 @@ public class OrderInfoController {
         order.setUpdateUserId(user.getUserId());
         order.setUpdateTime(new Date());
         order.setOrderStatus(2);
-        orderInfoService.update(order);
+        if("1".equals(order.getPayType())){
+            orderInfoService.update(order);
+        }else if("2".equals(order.getPayType())){
+            OfflineOrderInfoPo offlineOrderInfoPo = new OfflineOrderInfoPo();
+            BeanUtils.copyProperties(order, offlineOrderInfoPo);
+            offlineOrderService.update(offlineOrderInfoPo);
+        }
+
         return R.ok();
     }
 
@@ -149,13 +195,17 @@ public class OrderInfoController {
     public int queryTotalByMap(Map<String, Object> map) {
         Query query = new Query(map);
         String payType = (String) map.get("payType");
+        int total = 0;
         if ("1".equals(payType)) {
-            return orderInfoService.queryTotal(map);
+            total = orderInfoService.queryTotal(map);
         } else if ("2".equals(payType)) {
-            return offlineOrderService.queryTotal(query);
+            total = offlineOrderService.queryTotal(query);
         } else {
-            return orderInfoService.queryTotal(map) + offlineOrderService.queryTotal(query);
+            int s1 = orderInfoService.queryTotal(map);
+            int s2 = offlineOrderService.queryTotal(query);
+            total = orderInfoService.queryTotal(map) + offlineOrderService.queryTotal(query);
         }
+        return total;
     }
 
     public List<OrderInfoEntity> queryListByMap(Map<String, Object> map) {
@@ -220,6 +270,7 @@ public class OrderInfoController {
                 }else{
                     dataList = dataList.subList((query.getPage()-1)*query.getLimit(),query.getPage()*query.getLimit());
                 }
+                map.put("limit","10");
             }
 
 //            Collections.sort(dataList, new Comparator<OrderInfoVo>() {

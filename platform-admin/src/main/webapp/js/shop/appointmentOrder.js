@@ -20,19 +20,18 @@ $(function () {
     if (masterWorker) {
         url += '?masterWorker=' + masterWorker;
     }
-    url += '?orderType=' + "2";
+    url += '?orderType=' + "1";
     $("#jqGrid").Grid({
         url: url,
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '订单号', name: 'orderNo', index: 'order_no', width: 80},
-            {label: '预约订单号', name: 'parentOrderId', index: 'parent_order_id', width: 80},
-            {label: '用户姓名', name: 'userName', index: 'user_name', width: 80},
-            {label: '联系方式', name: 'userMobile', index: 'user_mobile', width: 80},
-            {label: '订单类型',name: 'channelName',index: 'channel_name',width: 80},
+            {label: '订单号', name: 'orderNo', index: 'order_no', width: 100},
+            {label: '用户姓名', name: 'userName', index: 'user_name', width: 100},
+            {label: '联系方式', name: 'userMobile', index: 'user_mobile', width: 100},
+            {label: '订单类型',name: 'channelName',index: 'channel_name',width: 100},
             {
-                label: '是否第三方', name: 'isOuterOrder', index: 'is_outer_order', width: 80,
+                label: '是否第三方', name: 'isOuterOrder', index: 'is_outer_order', width: 100,
                 formatter: function (value) {
                     if (value == '0') {
                         return '否';
@@ -43,7 +42,7 @@ $(function () {
                 }
             },
             {
-                label: '下单时间', name: 'createTime', index: 'create_time', width: 60,
+                label: '下单时间', name: 'createTime', index: 'create_time', width: 100,
                 formatter: function (value) {
                     return transDate(value);
                 }
@@ -60,32 +59,21 @@ $(function () {
                 }
             },
             {
-                label: '门店名称', name: 'storeName', index: 'store_name', width: 60
+                label: '门店名称', name: 'storeName', index: 'store_name', width: 100
             },
             {
-                label: '门店地址', name: 'storeAddress', index: 'store_address', width: 60
+                label: '门店地址', name: 'storeAddress', index: 'store_address', width: 100
             },
             {
-                label: '门店预约电话', name: 'storeContact', index: 'store_contact', width: 60
+                label: '门店预约电话', name: 'storeContact', index: 'store_contact', width: 100
             },
             {
-                label: '师傅名称', name: 'masterWorker', index: 'master_worker', width: 60
+                label: '师傅名称', name: 'masterWorker', index: 'master_worker', width: 100
             },
             {
-                label: '师傅地址', name: 'masterAddress', index: 'master_address', width: 60
-            },
-            {
-                label: '师傅联系方式', name: 'masterContact', index: 'master_contact', width: 60
+                label: '师傅联系方式', name: 'masterContact', index: 'master_contact', width: 100
             },
             {label: '订单金额', name: 'orderPrice', index: 'order_price', width: 100},
-            {label: '待支付金额', name: 'paymentPrice', index: 'payment_price', width: 60},
-            {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 60},
-            {
-                label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 80,
-                formatter: function (value) {
-                    return transDate(value);
-                }
-            },
             {label: '支付分类', name: 'payType', index: 'pay_type', width: 100},
             {
                 label: '操作', width: 90, align: 'center', sortable: false,
@@ -103,7 +91,6 @@ let vm = new Vue({
     data: {
         showList: true,
         detail: false,
-        addList: false,
         title: null,
         order: {},
         shippings: [],
@@ -187,7 +174,6 @@ let vm = new Vue({
         reload: function (event) {
             vm.showList = true;
             vm.detail = false;
-            vm.addList = false;
             let page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
                 postData: {
@@ -210,20 +196,6 @@ let vm = new Vue({
                     vm.order = r.order;
                 }
             });
-        },
-
-        onlineAdd: function () {
-            vm.addList = true;
-            vm.title = "新增";
-            vm.order = {};
-            vm.order.payType = "1";
-        },
-
-        offlineAdd: function () {
-            vm.addList = true;
-            vm.title = "新增";
-            vm.order = {};
-            vm.order.payType = "2";
         },
 
         update: function (rowId,rowPayType) { //第三步：定义编辑操作
