@@ -49,6 +49,9 @@ public class ApiOrderInfoService {
         model.setDefunct(0);
         model.setCreateUserId(user.getUserId());
         model.setUpdateUserId(user.getUserId());
+        if ( null== model.getIsOuterOrder()){
+             model.setIsOuterOrder(0);
+        }
         nideshopOrderInfoDao.insert(model);
 
         //保存订单图片
