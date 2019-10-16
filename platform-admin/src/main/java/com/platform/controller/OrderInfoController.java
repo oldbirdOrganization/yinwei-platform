@@ -13,10 +13,12 @@ import com.platform.vo.InfoVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -88,6 +90,18 @@ public class OrderInfoController {
     @RequiresPermissions("order:save")
     public R save(@RequestBody OrderInfoEntity order) {
         if("1".equals(order.getPayType())){
+            Map<String, Object> map = new HashMap<>();
+            map.put("orderNo",order.getOrderNo());
+            map.put("payType","1");
+            map.put("page",1);
+            map.put("limit",10);
+            map.put("offset",10);
+            map.put("sidx","");
+            map.put("order","asc");
+            List<OrderInfoEntity> orderList = queryListByMap(map);
+            if(ObjectUtils.isEmpty(orderList)){
+                return R.error(400,"此预约单号不正确，无法添加线上待支付订单");
+            }
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
             order.setOrderNo(fmt.format(new Date()));
             order.setPaymentStatus(1);//未支付
