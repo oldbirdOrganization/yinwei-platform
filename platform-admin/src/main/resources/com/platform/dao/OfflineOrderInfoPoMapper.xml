@@ -53,6 +53,7 @@
     <result column="store_id" jdbcType="BIGINT" property="storeId"/>
     <result column="shroff_account_number" jdbcType="VARCHAR" property="shroffAccountNumber"/>
     <result column="pay_channel" jdbcType="VARCHAR" property="payChannel"/>
+    <result column="item" jdbcType="VARCHAR" property="item"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -369,6 +370,9 @@
       <if test="batchNo != null">
         batch_no,
       </if>
+      <if test="item != null">
+        item,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="goodsId != null">
@@ -496,6 +500,9 @@
       </if>
       <if test="batchNo != null">
         #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="item != null">
+        #{item,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

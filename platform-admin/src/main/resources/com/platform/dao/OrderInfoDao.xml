@@ -51,6 +51,7 @@
         <result property="storeId" column="store_id"/>
         <result property="shroffAccountNumber" column="shroff_account_number"/>
         <result property="payChannel" column="pay_channel"/>
+        <result property="item" column="item"/>
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.OrderInfoEntity">
@@ -128,12 +129,16 @@
 			`order_type`, 
 			`payment_status`, 
 			`order_price`, 
-			`contact_name`, 
+			`payment_price`,
+			`coupon_price`,
+			`parent_order_id`,
+			`contact_name`,
 			`contact_mobile`, 
 			`address`, 
 			`create_user_id`,
 			`create_time`,
-			`defunct`
+			`defunct`,
+			`item`
 		)
 		values
 		(
@@ -143,12 +148,16 @@
 			#{orderType},
 			#{paymentStatus}, 
 			#{orderPrice}, 
-			#{contactName}, 
+			#{paymentPrice},
+			#{couponPrice},
+			#{parentOrderId},
+			#{contactName},
 			#{contactMobile}, 
 			#{address}, 
 			#{createUserId},
 			#{createTime},
-			#{defunct}
+			#{defunct},
+			#{item}
 		)
 	</insert>
 

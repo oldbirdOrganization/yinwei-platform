@@ -106,6 +106,8 @@ let vm = new Vue({
         addList: false,
         title: null,
         order: {},
+        orderInfos: [],
+        orderInfo1:'',
         shippings: [],
         info: {
             id: '',
@@ -122,6 +124,10 @@ let vm = new Vue({
     methods: {
         query: function () {
             vm.reload();
+        },
+        handleChangeOrder: function(value) {
+            console.log(value)
+            vm.orderInfo1 = value;
         },
         /*dispatchOrder: function (event) {
             let id = getSelectedRow("#jqGrid");
@@ -216,14 +222,16 @@ let vm = new Vue({
             vm.addList = true;
             vm.title = "新增";
             vm.order = {};
-            vm.order.payType = "1";
+            // vm.order.payType = "1";
+            vm.getOrderInfo();
         },
 
         offlineAdd: function () {
             vm.addList = true;
             vm.title = "新增";
             vm.order = {};
-            vm.order.payType = "2";
+            // vm.order.payType = "2";
+            vm.getOrderInfo();
         },
 
         update: function (rowId,rowPayType) { //第三步：定义编辑操作
@@ -263,6 +271,16 @@ let vm = new Vue({
                 vm.saveOrUpdate()
             });
         },
+        getOrderInfo: function () {
+            Ajax.request({
+                url: "../order/list?orderType=1&_search=false&limit=10&page=1&sidx=&order=asc",
+                async: true,
+                successCallback: function (r) {
+                    vm.orderInfos = r.page.list;
+                    console.log(vm.orderInfos);
+                }
+            });
+        }
     },
     created: function () {
         let vue = this;
