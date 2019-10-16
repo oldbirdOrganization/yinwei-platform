@@ -13,7 +13,7 @@
                     <i-input v-model="q.orderNo" @on-enter="query" placeholder="订单号"/>
                 </i-col>
                 <i-col span="4">
-                    <i-select v-model="q.channelId" placeholder="订单类型">
+                    <i-select v-model="q.channelId" placeholder="渠道名称">
                         <i-option value="1">维修</i-option>
                         <i-option value="2">改造</i-option>
                         <i-option value="3">设计</i-option>
@@ -25,13 +25,7 @@
                     </i-select>
                 </i-col>
                 <i-col span="4">
-                    <i-select v-model="q.storeId" placeholder="门店名称">
-                        <i-option value="1">上海</i-option>
-                        <i-option value="2">北京</i-option>
-                        <i-option value="3">武汉</i-option>
-                        <i-option value="4">深圳</i-option>
-                        <i-option value="5">重庆</i-option>
-                    </i-select>
+                    <i-input v-model="q.storeId" @on-enter="query" placeholder="门店名称"/>
                 </i-col>
                 <i-col span="4">
                     <i-input v-model="q.masterWorker" @on-enter="query" placeholder="师傅名称"/>

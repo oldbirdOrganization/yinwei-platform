@@ -26,11 +26,11 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '订单号', name: 'orderNo', index: 'order_no', width: 80},
-            {label: '预约订单号', name: 'parentOrderId', index: 'parent_order_id', width: 80},
+            {label: '订单号', name: 'orderNo', index: 'order_no', width: 120},
+            {label: '关联预约订单编号', name: 'parentOrderId', index: 'parent_order_id', width: 120},
             {label: '用户姓名', name: 'userName', index: 'user_name', width: 80},
             {label: '联系方式', name: 'userMobile', index: 'user_mobile', width: 80},
-            {label: '订单类型',name: 'channelName',index: 'channel_name',width: 80},
+            {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 80},
             {
                 label: '是否第三方', name: 'isOuterOrder', index: 'is_outer_order', width: 80,
                 formatter: function (value) {
@@ -43,13 +43,32 @@ $(function () {
                 }
             },
             {
-                label: '下单时间', name: 'createTime', index: 'create_time', width: 60,
+                label: '下单时间', name: 'createTime', index: 'create_time', width: 120,
                 formatter: function (value) {
                     return transDate(value);
                 }
             },
             {
-                label: '订单状态', name: 'paymentStatus', index: 'payment_status', width: 100,
+                label: '订单状态', name: 'orderStatus', index: 'order_status', width: 80,
+                formatter: function (value) {
+                    if (value == '1') {
+                        return '待指派';
+                    } else if (value == '2') {
+                        return '待确认';
+                    }else if (value == '3') {
+                        return '已确认';
+                    }else if (value == '4') {
+                        return '完成服务';
+                    }else if (value == '5') {
+                        return '作废';
+                    }else if (value == '6') {
+                        return '待评价';
+                    }
+                    return value;
+                }
+            },
+            {
+                label: '付款状态', name: 'paymentStatus', index: 'payment_status', width: 100,
                 formatter: function (value) {
                     if (value == '1') {
                         return '未支付';
@@ -77,8 +96,8 @@ $(function () {
             {
                 label: '师傅联系方式', name: 'masterContact', index: 'master_contact', width: 60
             },
-            {label: '订单金额', name: 'orderPrice', index: 'order_price', width: 100},
-            {label: '待支付金额', name: 'paymentPrice', index: 'payment_price', width: 60},
+            {label: '待支付金额', name: 'orderPrice', index: 'order_price', width: 100},
+            {label: '订单金额', name: 'paymentPrice', index: 'payment_price', width: 60},
             {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 60},
             {
                 label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 80,

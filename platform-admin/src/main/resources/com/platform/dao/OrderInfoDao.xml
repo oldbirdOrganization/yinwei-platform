@@ -87,10 +87,10 @@
             AND o.order_type = #{orderType}
         </if>
         <if test="channelId != null and channelId.trim() != ''">
-            and channel_id &gt;= #{channelId }
+            and channel_id = #{channelId }
         </if>
         <if test="masterWorker != null and masterWorker.trim() != ''">
-            and master_worker &lt; #{masterWorker }
+            and master_worker = #{masterWorker }
         </if>
         <if test="startTime != null and startTime.trim() != ''">
             and payment_time &gt;= #{startTime }

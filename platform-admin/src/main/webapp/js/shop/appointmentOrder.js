@@ -29,7 +29,7 @@ $(function () {
             {label: '订单号', name: 'orderNo', index: 'order_no', width: 100},
             {label: '用户姓名', name: 'userName', index: 'user_name', width: 100},
             {label: '联系方式', name: 'userMobile', index: 'user_mobile', width: 100},
-            {label: '订单类型',name: 'channelName',index: 'channel_name',width: 100},
+            {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 100},
             {
                 label: '是否第三方', name: 'isOuterOrder', index: 'is_outer_order', width: 100,
                 formatter: function (value) {
@@ -48,7 +48,26 @@ $(function () {
                 }
             },
             {
-                label: '订单状态', name: 'paymentStatus', index: 'payment_status', width: 100,
+                label: '订单状态', name: 'orderStatus', index: 'order_status', width: 100,
+                formatter: function (value) {
+                    if (value == '1') {
+                        return '待指派';
+                    } else if (value == '2') {
+                        return '待确认';
+                    }else if (value == '3') {
+                        return '已确认';
+                    }else if (value == '4') {
+                        return '完成服务';
+                    }else if (value == '5') {
+                        return '作废';
+                    }else if (value == '6') {
+                        return '待评价';
+                    }
+                    return value;
+                }
+            },
+            {
+                label: '付款状态', name: 'paymentStatus', index: 'payment_status', width: 100,
                 formatter: function (value) {
                     if (value == '1') {
                         return '未支付';
@@ -179,7 +198,6 @@ let vm = new Vue({
                 postData: {
                     'orderNo': vm.q.orderNo,
                     'channelId': vm.q.channelId,
-                    'payType': vm.q.payType,
                     'masterWorker': vm.q.masterWorker,
                     'storeId': vm.q.storeId
                 },

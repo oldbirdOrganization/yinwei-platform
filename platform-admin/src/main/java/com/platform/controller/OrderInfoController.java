@@ -102,30 +102,61 @@ public class OrderInfoController {
             if(ObjectUtils.isEmpty(orderList)){
                 return R.error(400,"此预约单号不正确，无法添加线上待支付订单");
             }
+            if(orderList.get(0).getOrderStatus() == 1){
+                return R.error(400,"此预约单号未指派，请先指派工人师傅");
+            }
+//            if(orderList.get(0).getOrderStatus() == 2){
+//                return R.error(400,"此预约单号，师傅还未确认");
+//            }
+            if(orderList.get(0).getOrderStatus() == 5){
+                return R.error(400,"此预约单号已作废，无法添加线上待支付订单");
+            }
             order.setParentOrderId(orderList.get(0).getId().toString());
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
             order.setOrderNo(fmt.format(new Date()));
             order.setPaymentStatus(1);//未支付
-            order.setOrderStatus(1);//下单成功
+            order.setOrderStatus(3);//已确认
+            order.setContactMobile(orderList.get(0).getContactMobile());
+            order.setContactName(orderList.get(0).getContactName());
+            order.setCreateUserId(orderList.get(0).getCreateUserId());
+            order.setAddress(orderList.get(0).getAddress());
+            order.setServiceTime(orderList.get(0).getServiceTime());
             order.setCreateTime(new Date());
             order.setUpdateTime(new Date());
             order.setDefunct(0);
             orderInfoService.save(order);
         }else if("2".equals(order.getPayType())){
             map.put("payType","2");
+            List<OrderInfoEntity> orderList = queryListByMap(map);
+            if(ObjectUtils.isEmpty(orderList)){
+                return R.error(400,"此预约单号不正确，无法添加线下已支付订单");
+            }
+            if(orderList.get(0).getOrderStatus() == 1){
+                return R.error(400,"此预约单号未指派，请先指派工人师傅");
+            }
+//            if(orderList.get(0).getOrderStatus() == 2){
+//                return R.error(400,"此预约单号，师傅还未确认");
+//            }
+            if(orderList.get(0).getOrderStatus() == 5){
+                return R.error(400,"此预约单号已作废，无法添加线下已支付订单");
+            }
+            order.setParentOrderId(orderList.get(0).getId().toString());
             OfflineOrderInfoPo offlineOrderInfoPo = new OfflineOrderInfoPo();
             BeanUtils.copyProperties(order, offlineOrderInfoPo);
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
             offlineOrderInfoPo.setOrderNo(fmt.format(new Date()));
             offlineOrderInfoPo.setPaymentStatus(2);//已支付
-            offlineOrderInfoPo.setOrderStatus(1);//下单成功
+            offlineOrderInfoPo.setOrderStatus(3);//已确认
+            order.setContactMobile(orderList.get(0).getContactMobile());
+            order.setContactName(orderList.get(0).getContactName());
+            order.setCreateUserId(orderList.get(0).getCreateUserId());
+            order.setAddress(orderList.get(0).getAddress());
+            order.setServiceTime(orderList.get(0).getServiceTime());
             offlineOrderInfoPo.setCreateTime(new Date());
             offlineOrderInfoPo.setUpdateTime(new Date());
             offlineOrderInfoPo.setDefunct(0);
             offlineOrderService.save(offlineOrderInfoPo);
         }
-
-
         return R.ok();
     }
 
@@ -271,16 +302,6 @@ public class OrderInfoController {
 
                 ).collect(Collectors.toList());
 
-                List<OfflineOrderInfoPo> offlineOrderList = offlineOrderService.queryListByMap(query2);
-                List<OrderInfoEntity> dataOfflineList = offlineOrderList.stream().map(offlineOrderInfoPo -> {
-                            OrderInfoEntity orderInfoVo = new OrderInfoEntity();
-                            BeanUtils.copyProperties(offlineOrderInfoPo, orderInfoVo);
-                            orderInfoVo.setPayType("2");
-                            return orderInfoVo;
-                        }
-
-                ).collect(Collectors.toList());
-                dataList.addAll(dataOfflineList);
                 if(dataList.size()<query.getPage()*query.getLimit()){
                     dataList = dataList.subList((query.getPage()-1)*query.getLimit(),dataList.size());
                 }else{
@@ -288,13 +309,6 @@ public class OrderInfoController {
                 }
                 map.put("limit","10");
             }
-
-//            Collections.sort(dataList, new Comparator<OrderInfoVo>() {
-//                @Override
-//                public int compare(OrderInfoVo o1, OrderInfoVo o2) {
-//                    return o1.getOrderNo().compareTo(o2.getOrderNo());
-//                }
-//            });
         }
         return dataList;
     }
