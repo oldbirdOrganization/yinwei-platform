@@ -89,19 +89,20 @@ public class OrderInfoController {
     @RequestMapping("/save")
     @RequiresPermissions("order:save")
     public R save(@RequestBody OrderInfoEntity order) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("orderNo",order.getOrderNo());
+        map.put("page",1);
+        map.put("limit",1);
+        map.put("offset",10);
+        map.put("sidx","");
+        map.put("order","asc");
         if("1".equals(order.getPayType())){
-            Map<String, Object> map = new HashMap<>();
-            map.put("orderNo",order.getOrderNo());
             map.put("payType","1");
-            map.put("page",1);
-            map.put("limit",10);
-            map.put("offset",10);
-            map.put("sidx","");
-            map.put("order","asc");
             List<OrderInfoEntity> orderList = queryListByMap(map);
             if(ObjectUtils.isEmpty(orderList)){
                 return R.error(400,"此预约单号不正确，无法添加线上待支付订单");
             }
+            order.setParentOrderId(orderList.get(0).getId().toString());
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
             order.setOrderNo(fmt.format(new Date()));
             order.setPaymentStatus(1);//未支付
@@ -111,6 +112,7 @@ public class OrderInfoController {
             order.setDefunct(0);
             orderInfoService.save(order);
         }else if("2".equals(order.getPayType())){
+            map.put("payType","2");
             OfflineOrderInfoPo offlineOrderInfoPo = new OfflineOrderInfoPo();
             BeanUtils.copyProperties(order, offlineOrderInfoPo);
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
