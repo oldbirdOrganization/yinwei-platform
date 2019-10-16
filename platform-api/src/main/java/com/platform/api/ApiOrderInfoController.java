@@ -1,5 +1,6 @@
 package com.platform.api;
 
+import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.*;
 import com.platform.service.ApiGoodsService;
@@ -40,6 +41,7 @@ public class ApiOrderInfoController extends ApiBaseAction {
 
 
     @ApiOperation(value = "下单")
+//    @IgnoreAuth
     @PostMapping("submitOrder")
     public Object submitOrder(@LoginUser UserVo loginUser,@RequestBody SubmitOrderVo submitOrderVo) {
         String orderNo = orderInfoService.submitOrder(loginUser,submitOrderVo);
@@ -47,6 +49,7 @@ public class ApiOrderInfoController extends ApiBaseAction {
     }
 
     @ApiOperation(value = "订单详情")
+    @IgnoreAuth
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderNo", value = "订单编号", paramType = "query", dataType = "String",required = true)
     })
@@ -78,24 +81,28 @@ public class ApiOrderInfoController extends ApiBaseAction {
     }
 
     @ApiOperation(value = "待指派订单列表")
+//    @IgnoreAuth
     @GetMapping("designateingOrderList")
     public Object designateingOrderList(@LoginUser UserVo loginUser) {
         return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,1,null));
     }
 
     @ApiOperation(value = "待确认订单列表")
+//    @IgnoreAuth
     @GetMapping("confirmingOrderList")
     public Object confirmingOrderList(@LoginUser UserVo loginUser) {
         return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,2,null));
     }
 
     @ApiOperation(value = "待付款订单列表")
+//    @IgnoreAuth
     @GetMapping("paymentingOrderList")
     public Object paymentingOrderList(@LoginUser UserVo loginUser) {
         return toResponsSuccess(orderInfoService.findPaymentingOrderList(loginUser));
     }
 
     @ApiOperation(value = "已完成订单列表")
+//    @IgnoreAuth
     @GetMapping("finishOrderList")
     public Object finishOrderList(@LoginUser UserVo loginUser) {
         return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,4,null));
