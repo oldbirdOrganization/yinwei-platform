@@ -66,13 +66,13 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         if (2 == payStatus) {
             throw new RRException("此订单已付款，不能作废！");
         }
-        if (3 == orderStatus) {
+        if (2 == orderStatus || 3 == orderStatus) {
             throw new RRException("此订单处于施工中，不能作废！");
         }
         if (4 == orderStatus || 6 == orderStatus) {
             throw new RRException("此订单已完成服务，不能作废！");
         }
-        if (5 == payStatus) {
+        if (5 == orderStatus) {
             throw new RRException("此订单已作废，勿重复操作！");
         }
 
