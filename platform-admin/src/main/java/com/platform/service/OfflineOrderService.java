@@ -20,4 +20,6 @@ public interface OfflineOrderService {
     int queryTotal(Query query);
 
     OfflineOrderInfoPo queryDetailById(Integer id);
+
+    OfflineOrderInfoPo selectBySelective(OfflineOrderInfoPo order);
 }

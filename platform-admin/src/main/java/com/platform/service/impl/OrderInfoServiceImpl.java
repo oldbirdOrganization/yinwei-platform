@@ -105,4 +105,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         }
         return orderInfoDao.update(order);
     }
+
+    @Override
+    public OrderInfoEntity selectBySelective(OrderInfoEntity order) {
+        return orderInfoDao.selectBySelective(order);
+    }
 }

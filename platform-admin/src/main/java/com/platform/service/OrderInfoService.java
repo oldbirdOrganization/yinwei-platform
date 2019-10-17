@@ -39,4 +39,6 @@ public interface OrderInfoService {
      */
 
     int dispatchOrder(OrderInfoEntity order);
+
+    OrderInfoEntity selectBySelective(OrderInfoEntity order);
 }

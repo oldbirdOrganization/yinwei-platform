@@ -124,6 +124,11 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
     }
 
     @Override
+    public OfflineOrderInfoPo selectBySelective(OfflineOrderInfoPo order) {
+        return offlineOrderInfoPoMapper.selectBySelective(order);
+    }
+
+    @Override
     public int save(OfflineOrderInfoPo order) {
         return offlineOrderInfoPoMapper.insertSelective(order);
     }

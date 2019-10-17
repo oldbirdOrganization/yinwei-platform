@@ -120,6 +120,37 @@
             AND o.order_type = #{orderType}
         </if>
     </select>
+    <select id="selectBySelective" resultType="com.platform.entity.OrderInfoEntity">
+        select * from nideshop_order_info where 1=1
+        <if test="id != null" >
+            and id = #{id}
+        </if>
+        <if test="parentOrderId != null" >
+            and parent_order_id = #{parentOrderId}
+        </if>
+        <if test="goodsId != null" >
+            and goods_id = #{goodsId}
+        </if>
+        <if test="orderNo != null" >
+            and order_no = #{orderNo}
+        </if>
+        <if test="orderType != null" >
+            and order_type = #{orderType}
+        </if>
+        <if test="orderStatus != null" >
+            and order_status = #{orderStatus}
+        </if>
+        <if test="paymentStatus != null" >
+            and payment_status = #{paymentStatus}
+        </if>
+        <if test="payChannel != null" >
+            and pay_channel = #{payChannel}
+        </if>
+        <if test="item != null" >
+            and item = #{item}
+        </if>
+        order by create_time desc limit 1
+    </select>
 
     <insert id="save" parameterType="com.platform.entity.OrderInfoEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into nideshop_order_info
@@ -198,5 +229,6 @@
             #{id}
         </foreach>
     </delete>
+
 
 </mapper>

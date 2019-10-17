@@ -97,62 +97,66 @@ public class OrderInfoController {
         map.put("sidx","");
         map.put("order","asc");
         if("1".equals(order.getPayType())){
-            map.put("payType","1");
-            List<OrderInfoEntity> orderList = queryListByMap(map);
-            if(ObjectUtils.isEmpty(orderList)){
+            OrderInfoEntity orderInfoEntity = new OrderInfoEntity();
+            orderInfoEntity.setOrderNo(order.getOrderNo());
+            orderInfoEntity = orderInfoService.selectBySelective(orderInfoEntity);
+            if(ObjectUtils.isEmpty(orderInfoEntity)){
                 return R.error(400,"此预约单号不正确，无法添加线上待支付订单");
             }
-            if(orderList.get(0).getOrderStatus() == 1){
+            if(orderInfoEntity.getOrderStatus() == 1){
                 return R.error(400,"此预约单号未指派，请先指派工人师傅");
             }
 //            if(orderList.get(0).getOrderStatus() == 2){
 //                return R.error(400,"此预约单号，师傅还未确认");
 //            }
-            if(orderList.get(0).getOrderStatus() == 5){
+            if(orderInfoEntity.getOrderStatus() == 5){
                 return R.error(400,"此预约单号已作废，无法添加线上待支付订单");
             }
-            order.setParentOrderId(orderList.get(0).getId().toString());
+            order.setParentOrderId(orderInfoEntity.getId().toString());
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
             order.setOrderNo(fmt.format(new Date()));
             order.setPaymentStatus(1);//未支付
             order.setOrderStatus(3);//已确认
-            order.setContactMobile(orderList.get(0).getContactMobile());
-            order.setContactName(orderList.get(0).getContactName());
-            order.setCreateUserId(orderList.get(0).getCreateUserId());
-            order.setAddress(orderList.get(0).getAddress());
-            order.setServiceTime(orderList.get(0).getServiceTime());
+            order.setContactMobile(orderInfoEntity.getContactMobile());
+            order.setContactName(orderInfoEntity.getContactName());
+            order.setCreateUserId(orderInfoEntity.getCreateUserId());
+            order.setAddress(orderInfoEntity.getAddress());
+            order.setServiceTime(orderInfoEntity.getServiceTime());
             order.setCreateTime(new Date());
             order.setUpdateTime(new Date());
             order.setDefunct(0);
             orderInfoService.save(order);
         }else if("2".equals(order.getPayType())){
             map.put("payType","2");
-            List<OrderInfoEntity> orderList = queryListByMap(map);
-            if(ObjectUtils.isEmpty(orderList)){
+            OfflineOrderInfoPo offlineOrderInfo = new OfflineOrderInfoPo();
+            offlineOrderInfo.setOrderNo(order.getOrderNo());
+            offlineOrderInfo = offlineOrderService.selectBySelective(offlineOrderInfo);
+
+            if(ObjectUtils.isEmpty(offlineOrderInfo)){
                 return R.error(400,"此预约单号不正确，无法添加线下已支付订单");
             }
-            if(orderList.get(0).getOrderStatus() == 1){
+            if(offlineOrderInfo.getOrderStatus() == 1){
                 return R.error(400,"此预约单号未指派，请先指派工人师傅");
             }
 //            if(orderList.get(0).getOrderStatus() == 2){
 //                return R.error(400,"此预约单号，师傅还未确认");
 //            }
-            if(orderList.get(0).getOrderStatus() == 5){
+            if(offlineOrderInfo.getOrderStatus() == 5){
                 return R.error(400,"此预约单号已作废，无法添加线下已支付订单");
             }
 
             OfflineOrderInfoPo offlineOrderInfoPo = new OfflineOrderInfoPo();
             BeanUtils.copyProperties(order, offlineOrderInfoPo);
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
-            offlineOrderInfoPo.setParentOrderId(orderList.get(0).getId().toString());
+            offlineOrderInfoPo.setParentOrderId(offlineOrderInfo.getId().toString());
             offlineOrderInfoPo.setOrderNo(fmt.format(new Date()));
             offlineOrderInfoPo.setPaymentStatus(2);//已支付
             offlineOrderInfoPo.setOrderStatus(3);//已确认
-            order.setContactMobile(orderList.get(0).getContactMobile());
-            order.setContactName(orderList.get(0).getContactName());
-            order.setCreateUserId(orderList.get(0).getCreateUserId());
-            order.setAddress(orderList.get(0).getAddress());
-            order.setServiceTime(orderList.get(0).getServiceTime());
+            order.setContactMobile(offlineOrderInfo.getContactMobile());
+            order.setContactName(offlineOrderInfo.getContactName());
+            order.setCreateUserId(offlineOrderInfo.getCreateUserId());
+            order.setAddress(offlineOrderInfo.getAddress());
+            order.setServiceTime(offlineOrderInfo.getServiceTime());
             offlineOrderInfoPo.setCreateTime(new Date());
             offlineOrderInfoPo.setUpdateTime(new Date());
             offlineOrderInfoPo.setDefunct(0);

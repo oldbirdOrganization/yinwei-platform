@@ -97,4 +97,6 @@ public interface OfflineOrderInfoPoMapper {
      * @mbggenerated Mon Sep 23 10:05:23 CST 2019
      */
     int updateByPrimaryKey(OfflineOrderInfoPo record);
+
+    OfflineOrderInfoPo selectBySelective(OfflineOrderInfoPo record);
 }
