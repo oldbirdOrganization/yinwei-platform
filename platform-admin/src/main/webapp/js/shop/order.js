@@ -242,6 +242,7 @@ let vm = new Vue({
             vm.title = "新增";
             vm.order = {};
             // vm.order.payType = "1";
+            vm.order.orderType = "2";
             vm.getOrderInfo();
         },
 
@@ -250,6 +251,7 @@ let vm = new Vue({
             vm.title = "新增";
             vm.order = {};
             // vm.order.payType = "2";
+            vm.order.orderType = "2";
             vm.getOrderInfo();
         },
 
