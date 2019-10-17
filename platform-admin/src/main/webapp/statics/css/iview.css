@@ -11756,7 +11756,7 @@ textarea.ivu-input {
 
 .ivu-input-wrapper {
     display: inline-block;
-    width: 100%;
+    width: 40%;
     position: relative;
     vertical-align: middle
 }

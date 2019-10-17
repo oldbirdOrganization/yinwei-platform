@@ -99,7 +99,7 @@
         <if test="endTime != null and endTime.trim() != ''">
             and payment_time &lt; #{endTime }
         </if>
-                order by id asc
+                order by id desc
         <if test="offset != null and limit != null and limit != 0">
             limit #{offset}, #{limit}
         </if>

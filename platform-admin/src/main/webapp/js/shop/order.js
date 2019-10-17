@@ -26,13 +26,15 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '订单号', name: 'orderNo', index: 'order_no', width: 120},
-            {label: '关联预约订单编号', name: 'parentOrderNo', index: 'parent_order_no', width: 120},
-            {label: '用户姓名', name: 'userName', index: 'user_name', width: 80},
-            {label: '联系方式', name: 'userMobile', index: 'user_mobile', width: 80},
+            {label: '支付订单号', name: 'orderNo', index: 'order_no', width: 130},
+            {label: '预约订单号', name: '', index: '', width: 130},
+            {label: '下单用户', name: 'contactName', index: 'contact_name', width: 80},
+            {label: '联系电话', name: 'contactMobile', index: 'contact_mobile', width: 100},
+            {label: '地址', name: 'address', index: 'address', width: 120},
+            {label: '问题描述', name: 'problemDescription', index: 'problem_description', width: 120},
             {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 80},
             {
-                label: '是否第三方', name: 'isOuterOrder', index: 'is_outer_order', width: 80,
+                label: '是否外部订单', name: 'isOuterOrder', index: 'is_outer_order', width: 80,
                 formatter: function (value) {
                     if (value == '0') {
                         return '否';
@@ -51,14 +53,12 @@ $(function () {
             {
                 label: '订单状态', name: 'orderStatus', index: 'order_status', width: 80,
                 formatter: function (value) {
-                    if (value == '1') {
-                        return '待指派';
-                    } else if (value == '2') {
+                    if (value == '2') {
                         return '待确认';
                     }else if (value == '3') {
                         return '已确认';
                     }else if (value == '4') {
-                        return '完成服务';
+                        return '已完成';
                     }else if (value == '5') {
                         return '作废';
                     }else if (value == '6') {
@@ -78,34 +78,15 @@ $(function () {
                     return value;
                 }
             },
+            {label: '支付金额(元)', name: 'orderPrice', index: 'order_price', width: 100},
+            {label: '订单金额(元)', name: 'paymentPrice', index: 'payment_price', width: 100},
+            {label: '优惠金额(元)', name: 'couponPrice', index: 'coupon_price', width: 100},
             {
-                label: '门店名称', name: 'storeName', index: 'store_name', width: 60
-            },
-            {
-                label: '门店地址', name: 'storeAddress', index: 'store_address', width: 60
-            },
-            {
-                label: '门店预约电话', name: 'storeContact', index: 'store_contact', width: 60
-            },
-            {
-                label: '师傅名称', name: 'masterWorker', index: 'master_worker', width: 60
-            },
-            {
-                label: '师傅地址', name: 'masterAddress', index: 'master_address', width: 60
-            },
-            {
-                label: '师傅联系方式', name: 'masterContact', index: 'master_contact', width: 60
-            },
-            {label: '待支付金额', name: 'orderPrice', index: 'order_price', width: 100},
-            {label: '订单金额', name: 'paymentPrice', index: 'payment_price', width: 60},
-            {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 60},
-            {
-                label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 80,
+                label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 120,
                 formatter: function (value) {
                     return transDate(value);
                 }
             },
-            {label: '支付分类', name: 'payType', index: 'pay_type', width: 100},
             {
                 label: '操作', width: 90, align: 'center', sortable: false,
                 formatter: function (value, col, row) {
@@ -258,6 +239,7 @@ let vm = new Vue({
         update: function (rowId,rowPayType) { //第三步：定义编辑操作
             vm.detail = true;
             vm.title = "编辑";
+
             debugger;
             vm.info.id = rowId;
             vm.info.payType = rowPayType;
