@@ -904,7 +904,8 @@
 
   <select id="queryListByMap" resultType="com.platform.entity.OfflineOrderInfoPo">
     select o.*,u.username as userName,u.mobile as userMobile,
-    nc.name as channelName,sc.name as storeName,sc.address as storeAddress,sc.contact as storeContact
+    nc.name as channelName,sc.name as storeName,sc.address as storeAddress,sc.contact as storeContact,
+    (select op.order_no from nideshop_offline_order_info op where op.id = o.parent_order_id) parentOrderNo
     from nideshop_offline_order_info o
     left join nideshop_user u on o.create_user_id = u.id
     left join nideshop_channel nc on nc.id=o.channel_id

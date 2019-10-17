@@ -140,10 +140,11 @@ public class OrderInfoController {
             if(orderList.get(0).getOrderStatus() == 5){
                 return R.error(400,"此预约单号已作废，无法添加线下已支付订单");
             }
-            order.setParentOrderId(orderList.get(0).getId().toString());
+
             OfflineOrderInfoPo offlineOrderInfoPo = new OfflineOrderInfoPo();
             BeanUtils.copyProperties(order, offlineOrderInfoPo);
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
+            offlineOrderInfoPo.setParentOrderId(orderList.get(0).getId().toString());
             offlineOrderInfoPo.setOrderNo(fmt.format(new Date()));
             offlineOrderInfoPo.setPaymentStatus(2);//已支付
             offlineOrderInfoPo.setOrderStatus(3);//已确认

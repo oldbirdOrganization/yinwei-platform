@@ -199,6 +199,7 @@ public class OrderInfoEntity implements Serializable {
 	private String storeContact;
 	private String parentOrderId;
 	private String item;
+	private String parentOrderNo;
 
 	public Integer getId() {
 		return id;
@@ -638,5 +639,13 @@ public class OrderInfoEntity implements Serializable {
 
 	public void setItem(String item) {
 		this.item = item;
+	}
+
+	public String getParentOrderNo() {
+		return parentOrderNo;
+	}
+
+	public void setParentOrderNo(String parentOrderNo) {
+		this.parentOrderNo = parentOrderNo;
 	}
 }
