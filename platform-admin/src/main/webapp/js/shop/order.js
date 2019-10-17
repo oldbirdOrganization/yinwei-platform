@@ -27,7 +27,7 @@ $(function () {
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
             {label: '支付订单号', name: 'orderNo', index: 'order_no', width: 130},
-            {label: '预约订单号', name: '', index: '', width: 130},
+            {label: '预约订单号', name: 'parentOrderNo', index: 'parent_order_no', width: 130},
             {label: '下单用户', name: 'contactName', index: 'contact_name', width: 80},
             {label: '联系电话', name: 'contactMobile', index: 'contact_mobile', width: 100},
             {label: '地址', name: 'address', index: 'address', width: 120},
