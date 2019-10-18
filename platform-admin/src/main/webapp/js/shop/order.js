@@ -78,8 +78,8 @@ $(function () {
                     return value;
                 }
             },
+            {label: '订单总金额(元)', name: 'paymentPrice', index: 'payment_price', width: 100},
             {label: '支付金额(元)', name: 'orderPrice', index: 'order_price', width: 100},
-            {label: '订单金额(元)', name: 'paymentPrice', index: 'payment_price', width: 100},
             {label: '优惠金额(元)', name: 'couponPrice', index: 'coupon_price', width: 100},
             {
                 label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 120,

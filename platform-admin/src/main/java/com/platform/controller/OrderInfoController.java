@@ -117,6 +117,7 @@ public class OrderInfoController {
             order.setOrderNo(fmt.format(new Date()));
             order.setPaymentStatus(1);//未支付
             order.setOrderStatus(3);//已确认
+            order.setChannelId(orderInfoEntity.getChannelId());
             order.setContactMobile(orderInfoEntity.getContactMobile());
             order.setContactName(orderInfoEntity.getContactName());
             order.setCreateUserId(orderInfoEntity.getCreateUserId());
@@ -152,11 +153,12 @@ public class OrderInfoController {
             offlineOrderInfoPo.setOrderNo(fmt.format(new Date()));
             offlineOrderInfoPo.setPaymentStatus(2);//已支付
             offlineOrderInfoPo.setOrderStatus(3);//已确认
-            order.setContactMobile(offlineOrderInfo.getContactMobile());
-            order.setContactName(offlineOrderInfo.getContactName());
-            order.setCreateUserId(offlineOrderInfo.getCreateUserId());
-            order.setAddress(offlineOrderInfo.getAddress());
-            order.setServiceTime(offlineOrderInfo.getServiceTime());
+            offlineOrderInfoPo.setChannelId(offlineOrderInfo.getChannelId());
+            offlineOrderInfoPo.setContactMobile(offlineOrderInfo.getContactMobile());
+            offlineOrderInfoPo.setContactName(offlineOrderInfo.getContactName());
+            offlineOrderInfoPo.setCreateUserId(offlineOrderInfo.getCreateUserId());
+            offlineOrderInfoPo.setAddress(offlineOrderInfo.getAddress());
+            offlineOrderInfoPo.setServiceTime(offlineOrderInfo.getServiceTime());
             offlineOrderInfoPo.setCreateTime(new Date());
             offlineOrderInfoPo.setUpdateTime(new Date());
             offlineOrderInfoPo.setDefunct(0);

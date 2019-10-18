@@ -26,12 +26,14 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '订单号', name: 'orderNo', index: 'order_no', width: 100},
-            {label: '用户姓名', name: 'userName', index: 'user_name', width: 100},
-            {label: '联系方式', name: 'userMobile', index: 'user_mobile', width: 100},
-            {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 100},
+            {label: '预约订单号', name: 'orderNo', index: 'order_no', width: 100},
+            {label: '下单用户', name: 'contactName', index: 'contact_name', width: 80},
+            {label: '联系电话', name: 'contactMobile', index: 'contact_mobile', width: 100},
+            {label: '地址', name: 'address', index: 'address', width: 120},
+            {label: '问题描述', name: 'problemDescription', index: 'problem_description', width: 120},
+            {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 80},
             {
-                label: '是否第三方', name: 'isOuterOrder', index: 'is_outer_order', width: 100,
+                label: '是否外部订单', name: 'isOuterOrder', index: 'is_outer_order', width: 100,
                 formatter: function (value) {
                     if (value == '0') {
                         return '否';
@@ -53,9 +55,7 @@ $(function () {
                     if (value == '1') {
                         return '待指派';
                     } else if (value == '2') {
-                        return '待确认';
-                    }else if (value == '3') {
-                        return '已确认';
+                        return '已指派';
                     }else if (value == '4') {
                         return '完成服务';
                     }else if (value == '5') {
@@ -77,23 +77,6 @@ $(function () {
                     return value;
                 }
             },
-            {
-                label: '门店名称', name: 'storeName', index: 'store_name', width: 100
-            },
-            {
-                label: '门店地址', name: 'storeAddress', index: 'store_address', width: 100
-            },
-            {
-                label: '门店预约电话', name: 'storeContact', index: 'store_contact', width: 100
-            },
-            {
-                label: '师傅名称', name: 'masterWorker', index: 'master_worker', width: 100
-            },
-            {
-                label: '师傅联系方式', name: 'masterContact', index: 'master_contact', width: 100
-            },
-            {label: '订单金额', name: 'orderPrice', index: 'order_price', width: 100},
-            {label: '支付分类', name: 'payType', index: 'pay_type', width: 100},
             {
                 label: '操作', width: 90, align: 'center', sortable: false,
                 formatter: function (value, col, row) {
