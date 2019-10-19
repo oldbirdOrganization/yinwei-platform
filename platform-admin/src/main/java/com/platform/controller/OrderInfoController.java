@@ -5,17 +5,18 @@ import com.platform.entity.OrderInfoEntity;
 import com.platform.entity.SysUserEntity;
 import com.platform.service.OfflineOrderService;
 import com.platform.service.OrderInfoService;
-import com.platform.utils.PageUtils;
-import com.platform.utils.Query;
-import com.platform.utils.R;
-import com.platform.utils.ShiroUtils;
+import com.platform.utils.*;
 import com.platform.vo.InfoVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -83,19 +84,51 @@ public class OrderInfoController {
         }
         return R.ok();
     }
+
+    /**
+     * 预约订单号是否首次新增支付单
+     * @param order
+     * @return
+     */
+    @RequestMapping("/isFirstPayOrder")
+    @RequiresPermissions("order:info")
+    public R isFirstPayOrder(@RequestBody OrderInfoEntity order) {
+        OrderInfoEntity orderInfoEntity = new OrderInfoEntity();
+        if(!StringUtils.isNotEmpty(order.getOrderNo())){
+            return R.error(400,"预约单号为空，请重新输入");
+        }
+        orderInfoEntity.setOrderNo(order.getOrderNo());
+        orderInfoEntity.setOrderType(1);
+        orderInfoEntity = orderInfoService.selectBySelective(orderInfoEntity);
+        if(ObjectUtils.isEmpty(orderInfoEntity)){
+            return R.error(400,"未查到此预约单号信息，请重新输入");
+        }
+
+        //查询此预约单关联的支付单信息
+        Map<String, Object> resultmap=new HashMap<>();
+        Map<String, Object> premap = new HashMap<>();
+        premap.put("parentOrderId",orderInfoEntity.getId());
+        List<OrderInfoEntity> preorderList=orderInfoService.queryList(premap);
+        if(preorderList.size()>0){
+            for (OrderInfoEntity preorderlist:preorderList){
+                if((preorderlist.getTotalAmount()).compareTo(BigDecimal.ZERO) !=0 ){
+                    resultmap.put("totalAmount", preorderlist.getTotalAmount());
+                    resultmap.put("isFirstPayOrder", false);
+                }
+            }
+            return R.ok(resultmap);
+        }else{
+            resultmap.put("isFirstPayOrder", true);
+            return R.ok(resultmap);
+        }
+    }
+
     /**
      * 保存
      */
     @RequestMapping("/save")
     @RequiresPermissions("order:save")
     public R save(@RequestBody OrderInfoEntity order) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("orderNo",order.getOrderNo());
-        map.put("page",1);
-        map.put("limit",1);
-        map.put("offset",10);
-        map.put("sidx","");
-        map.put("order","asc");
         if("1".equals(order.getPayType())){
             OrderInfoEntity orderInfoEntity = new OrderInfoEntity();
             orderInfoEntity.setOrderNo(order.getOrderNo());
@@ -106,29 +139,27 @@ public class OrderInfoController {
             if(orderInfoEntity.getOrderStatus() == 1){
                 return R.error(400,"此预约单号未指派，请先指派工人师傅");
             }
-//            if(orderList.get(0).getOrderStatus() == 2){
-//                return R.error(400,"此预约单号，师傅还未确认");
-//            }
-            if(orderInfoEntity.getOrderStatus() == 5){
+            if(orderInfoEntity.getOrderStatus() == 4){
                 return R.error(400,"此预约单号已作废，无法添加线上待支付订单");
             }
+
             order.setParentOrderId(orderInfoEntity.getId().toString());
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
             order.setOrderNo(fmt.format(new Date()));
             order.setPaymentStatus(1);//未支付
-            order.setOrderStatus(3);//已确认
+            order.setOrderStatus(2);//已确认
             order.setChannelId(orderInfoEntity.getChannelId());
             order.setContactMobile(orderInfoEntity.getContactMobile());
             order.setContactName(orderInfoEntity.getContactName());
             order.setCreateUserId(orderInfoEntity.getCreateUserId());
             order.setAddress(orderInfoEntity.getAddress());
             order.setServiceTime(orderInfoEntity.getServiceTime());
+            order.setIsOuterOrder(orderInfoEntity.getIsOuterOrder());
             order.setCreateTime(new Date());
             order.setUpdateTime(new Date());
             order.setDefunct(0);
             orderInfoService.save(order);
         }else if("2".equals(order.getPayType())){
-            map.put("payType","2");
             OfflineOrderInfoPo offlineOrderInfo = new OfflineOrderInfoPo();
             offlineOrderInfo.setOrderNo(order.getOrderNo());
             offlineOrderInfo = offlineOrderService.selectBySelective(offlineOrderInfo);
@@ -139,10 +170,7 @@ public class OrderInfoController {
             if(offlineOrderInfo.getOrderStatus() == 1){
                 return R.error(400,"此预约单号未指派，请先指派工人师傅");
             }
-//            if(orderList.get(0).getOrderStatus() == 2){
-//                return R.error(400,"此预约单号，师傅还未确认");
-//            }
-            if(offlineOrderInfo.getOrderStatus() == 5){
+            if(offlineOrderInfo.getOrderStatus() == 4){
                 return R.error(400,"此预约单号已作废，无法添加线下已支付订单");
             }
 
@@ -152,13 +180,14 @@ public class OrderInfoController {
             offlineOrderInfoPo.setParentOrderId(offlineOrderInfo.getId().toString());
             offlineOrderInfoPo.setOrderNo(fmt.format(new Date()));
             offlineOrderInfoPo.setPaymentStatus(2);//已支付
-            offlineOrderInfoPo.setOrderStatus(3);//已确认
+            offlineOrderInfoPo.setOrderStatus(2);//已确认
             offlineOrderInfoPo.setChannelId(offlineOrderInfo.getChannelId());
             offlineOrderInfoPo.setContactMobile(offlineOrderInfo.getContactMobile());
             offlineOrderInfoPo.setContactName(offlineOrderInfo.getContactName());
             offlineOrderInfoPo.setCreateUserId(offlineOrderInfo.getCreateUserId());
             offlineOrderInfoPo.setAddress(offlineOrderInfo.getAddress());
             offlineOrderInfoPo.setServiceTime(offlineOrderInfo.getServiceTime());
+            offlineOrderInfoPo.setIsOuterOrder(offlineOrderInfo.getIsOuterOrder());
             offlineOrderInfoPo.setCreateTime(new Date());
             offlineOrderInfoPo.setUpdateTime(new Date());
             offlineOrderInfoPo.setDefunct(0);

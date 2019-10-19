@@ -50,10 +50,20 @@ public class OrderInfoEntity implements Serializable {
 	
 	private Date paymentTime;
 	/**
+	 * 实际支付金额
+	 */
+	private BigDecimal paymentPrice;
+
+	/**
+	 * 订单总金额
+	 */
+	private BigDecimal totalAmount;
+
+	/**
 	 * 订单金额
 	 */
 	private BigDecimal orderPrice;
-	
+
 	//使用的优惠券id
     private Integer couponId;
    
@@ -167,8 +177,6 @@ public class OrderInfoEntity implements Serializable {
 	 * 工人师傅编号
 	 */
 	private Long masterWorkerId;
-
-	private BigDecimal paymentPrice;
 
 	//支付渠道
 	private String payChannel;
@@ -559,6 +567,14 @@ public class OrderInfoEntity implements Serializable {
 
 	public void setPaymentPrice(BigDecimal paymentPrice) {
 		this.paymentPrice = paymentPrice;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 	public String getPayChannel() {

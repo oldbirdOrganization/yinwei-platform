@@ -5,6 +5,7 @@ $(function () {
     let payType = getQueryString("payType");
     let masterWorker = getQueryString("masterWorker");
     let url = '../order/list';
+
     if (orderNo) {
         url += '?orderNo=' + orderNo;
     }
@@ -54,15 +55,11 @@ $(function () {
                 label: '订单状态', name: 'orderStatus', index: 'order_status', width: 80,
                 formatter: function (value) {
                     if (value == '2') {
-                        return '待确认';
+                        return '服务中';
                     }else if (value == '3') {
-                        return '已确认';
-                    }else if (value == '4') {
                         return '已完成';
-                    }else if (value == '5') {
+                    }else if (value == '4') {
                         return '作废';
-                    }else if (value == '6') {
-                        return '待评价';
                     }
                     return value;
                 }
@@ -71,14 +68,14 @@ $(function () {
                 label: '付款状态', name: 'paymentStatus', index: 'payment_status', width: 100,
                 formatter: function (value) {
                     if (value == '1') {
-                        return '未支付';
+                        return '待付款';
                     } else if (value == '2') {
-                        return '已支付';
+                        return '已付款';
                     }
                     return value;
                 }
             },
-            {label: '订单总金额(元)', name: 'paymentPrice', index: 'payment_price', width: 100},
+            {label: '订单总金额(元)', name: 'totalAmount', index: 'total_amount', width: 100},
             {label: '支付金额(元)', name: 'orderPrice', index: 'order_price', width: 100},
             {label: '优惠金额(元)', name: 'couponPrice', index: 'coupon_price', width: 100},
             {
@@ -88,7 +85,7 @@ $(function () {
                 }
             },
             {
-                label: '操作', width: 90, align: 'center', sortable: false,
+                label: '操作', width: 120, align: 'center', sortable: false,
                 formatter: function (value, col, row) {
                     return '<button class="btn btn-outline btn-info" onclick="vm.update(' + row.id +","+ row.payType+')">' +
                         '<i class="fa fa-info-circle"></i>&nbsp;编辑</button>';
@@ -101,6 +98,7 @@ $(function () {
 let vm = new Vue({
     el: '#rrapp',
     data: {
+        isAble:false,
         showList: true,
         detail: false,
         addList: false,
@@ -119,8 +117,11 @@ let vm = new Vue({
             storeId: '',
             payType: '',
             masterWorker: ''
-        }
-    },
+        },
+        isFirstPayOrder:'',
+        totalAmount:'',
+
+},
     methods: {
         query: function () {
             vm.reload();
@@ -236,11 +237,28 @@ let vm = new Vue({
             vm.getOrderInfo();
         },
 
+        checkPreorder:function () {
+            var url ="../order/isFirstPayOrder";
+            Ajax.request({
+                type: "POST",
+                url: url,
+                contentType: "application/json",
+                params: JSON.stringify(vm.order),
+                successCallback: function (r) {
+                   if(!r.isFirstPayOrder){//不为首次添加支付单
+                        //总金额输入框不可用
+                        vm.order.totalAmount=r.totalAmount;
+                        vm.isAble = true;
+                    }
+                }
+            });
+
+        },
+
         update: function (rowId,rowPayType) { //第三步：定义编辑操作
             vm.detail = true;
             vm.title = "编辑";
 
-            debugger;
             vm.info.id = rowId;
             vm.info.payType = rowPayType;
             Ajax.request({
@@ -276,7 +294,7 @@ let vm = new Vue({
         },
         getOrderInfo: function () {
             Ajax.request({
-                url: "../order/list?orderType=1&_search=false&limit=10&page=1&sidx=&order=asc",
+                url: "../order/list?orderType=2&_search=false&limit=10&page=1&sidx=&order=asc",
                 async: true,
                 successCallback: function (r) {
                     vm.orderInfos = r.page.list;

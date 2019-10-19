@@ -91,7 +91,7 @@ public class ApiOrderInfoController extends ApiBaseAction {
 //    @IgnoreAuth
     @GetMapping("confirmingOrderList")
     public Object confirmingOrderList(@LoginUser UserVo loginUser) {
-        return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,2,null));
+        return toResponsSuccess(orderInfoService.findOrderList(loginUser,1,2,null));
     }
 
     @ApiOperation(value = "待付款订单列表")
@@ -105,7 +105,7 @@ public class ApiOrderInfoController extends ApiBaseAction {
 //    @IgnoreAuth
     @GetMapping("finishOrderList")
     public Object finishOrderList(@LoginUser UserVo loginUser) {
-        return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,4,null));
+        return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,3,null));
     }
 
 

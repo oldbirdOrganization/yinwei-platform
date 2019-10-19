@@ -15,11 +15,12 @@
         <result property="paymentTime" column="payment_time"/>
         <result property="paymentNo" column="payment_no"/>
         <result property="paymentPrice" column="payment_price"/>
+        <result property="totalAmount" column="total_amount"/>
         <result property="orderPrice" column="order_price"/>
         <result property="serviceHouseName" column="service_house_name"/>
         <result property="serviceTime" column="service_time"/>
         <result property="serviceRequired" column="service_required"/>
-        <result property="descriptionDescription" column="description_description"/>
+        <result property="problemDescription" column="problem_description"/>
         <result property="serviceType" column="service_type"/>
         <result property="serviceSpace" column="service_space"/>
         <result property="serviceAcreage" column="service_acreage"/>
@@ -37,9 +38,9 @@
         <result property="createUserId" column="create_user_id"/>
         <result property="updateUserId" column="update_user_id"/>
         <result property="defunct" column="defunct"/>
-        <result property="channelId" column="channel_id"/>
         <result property="couponId" column="coupon_id"/>
         <result property="couponPrice" column="coupon_price"/>
+        <result property="channelId" column="channel_id"/>
         <result property="masterWorker" column="master_worker"/>
         <result property="masterWorkerId" column="master_worker_id"/>
         <result property="isOuterOrder" column="is_outer_order"/>
@@ -99,6 +100,9 @@
         <if test="endTime != null and endTime.trim() != ''">
             and payment_time &lt; #{endTime }
         </if>
+        <if test="parentOrderId != null">
+            and parent_order_id = #{parentOrderId }
+        </if>
                 order by id desc
         <if test="offset != null and limit != null and limit != 0">
             limit #{offset}, #{limit}
@@ -153,6 +157,8 @@
     </select>
 
     <insert id="save" parameterType="com.platform.entity.OrderInfoEntity" useGeneratedKeys="true" keyProperty="id">
+
+
 		insert into nideshop_order_info
 		(
 			`order_no`, 
@@ -160,7 +166,8 @@
 			`order_status`, 
 			`order_type`, 
 			`payment_status`, 
-			`order_price`, 
+			`total_amount`,
+			`order_price`,
 			`payment_price`,
 			`coupon_price`,
 			`parent_order_id`,
@@ -170,6 +177,19 @@
 			`create_user_id`,
 			`create_time`,
 			`defunct`,
+			`coupon_id`,
+			`channel_id`,
+			`master_worker`,
+			`master_worker_id`,
+			`is_outer_order`,
+			`outer_merchant_name`,
+			`outer_service_category`,
+			`outer_service_content`,
+			`outer_service_brand`,
+			`outer_service_combo`,
+			`store_id`,
+			`shroff_account_number`,
+			`pay_channel`,
 			`item`
 		)
 		values
@@ -179,7 +199,8 @@
 			#{orderStatus}, 
 			#{orderType},
 			#{paymentStatus}, 
-			#{orderPrice}, 
+			#{totalAmount},
+			#{orderPrice},
 			#{paymentPrice},
 			#{couponPrice},
 			#{parentOrderId},
@@ -189,6 +210,19 @@
 			#{createUserId},
 			#{createTime},
 			#{defunct},
+			#{couponId},
+			#{channelId},
+			#{masterWorker},
+			#{masterWorkerId},
+			#{isOuterOrder},
+			#{outerMerchantName},
+			#{outerServiceCategory},
+			#{outerServiceContent},
+			#{outerServiceBrand},
+			#{outerServiceCombo},
+			#{storeId},
+			#{shroffAccountNumber},
+			#{payChannel},
 			#{item}
 		)
 	</insert>

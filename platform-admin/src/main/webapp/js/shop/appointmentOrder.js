@@ -26,12 +26,12 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '预约订单号', name: 'orderNo', index: 'order_no', width: 100},
+            {label: '预约订单号', name: 'orderNo', index: 'order_no', width: 130},
+            {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 80},
             {label: '下单用户', name: 'contactName', index: 'contact_name', width: 80},
             {label: '联系电话', name: 'contactMobile', index: 'contact_mobile', width: 100},
             {label: '地址', name: 'address', index: 'address', width: 120},
             {label: '问题描述', name: 'problemDescription', index: 'problem_description', width: 120},
-            {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 80},
             {
                 label: '是否外部订单', name: 'isOuterOrder', index: 'is_outer_order', width: 100,
                 formatter: function (value) {
@@ -44,37 +44,24 @@ $(function () {
                 }
             },
             {
-                label: '下单时间', name: 'createTime', index: 'create_time', width: 100,
-                formatter: function (value) {
-                    return transDate(value);
-                }
-            },
-            {
                 label: '订单状态', name: 'orderStatus', index: 'order_status', width: 100,
                 formatter: function (value) {
                     if (value == '1') {
                         return '待指派';
                     } else if (value == '2') {
                         return '已指派';
-                    }else if (value == '4') {
-                        return '完成服务';
-                    }else if (value == '5') {
+                    }else if(value == '2'){
+                        return '已指派';
+                    }else if(value == '4'){
                         return '作废';
-                    }else if (value == '6') {
-                        return '待评价';
                     }
                     return value;
                 }
             },
             {
-                label: '付款状态', name: 'paymentStatus', index: 'payment_status', width: 100,
+                label: '下单时间', name: 'createTime', index: 'create_time', width: 100,
                 formatter: function (value) {
-                    if (value == '1') {
-                        return '未支付';
-                    } else if (value == '2') {
-                        return '已支付';
-                    }
-                    return value;
+                    return transDate(value);
                 }
             },
             {
