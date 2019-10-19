@@ -64,6 +64,11 @@ public class OrderInfoEntity implements Serializable {
 	 */
 	private BigDecimal orderPrice;
 
+	//已付金额
+	private BigDecimal alreadyPayAmount;
+
+	//剩余尾款金额
+	private BigDecimal residuesPayAmount;
 	//使用的优惠券id
     private Integer couponId;
    
@@ -85,7 +90,7 @@ public class OrderInfoEntity implements Serializable {
 	/**
 	 * 问题描述
 	 */
-	private String descriptionDescription;
+	private String problemDescription;
 	/**
 	 * 服务类型
 	 */
@@ -178,6 +183,7 @@ public class OrderInfoEntity implements Serializable {
 	 */
 	private Long masterWorkerId;
 
+	private String workerMobile;
 	//支付渠道
 	private String payChannel;
 
@@ -206,8 +212,8 @@ public class OrderInfoEntity implements Serializable {
 	private String storeAddress;
 	private String storeContact;
 	private String parentOrderId;
-	private String item;
-	private String parentOrderNo;
+	private String item;//进账科目 1定金 2进度款 3尾款
+	private String parentOrderNo;//预约单号
 
 	public Integer getId() {
 		return id;
@@ -321,12 +327,12 @@ public class OrderInfoEntity implements Serializable {
 		this.serviceRequired = serviceRequired;
 	}
 
-	public String getDescriptionDescription() {
-		return descriptionDescription;
+	public String getProblemDescription() {
+		return problemDescription;
 	}
 
-	public void setDescriptionDescription(String descriptionDescription) {
-		this.descriptionDescription = descriptionDescription;
+	public void setProblemDescription(String problemDescription) {
+		this.problemDescription = problemDescription;
 	}
 
 	public String getServiceType() {
@@ -663,5 +669,29 @@ public class OrderInfoEntity implements Serializable {
 
 	public void setParentOrderNo(String parentOrderNo) {
 		this.parentOrderNo = parentOrderNo;
+	}
+
+	public BigDecimal getAlreadyPayAmount() {
+		return alreadyPayAmount;
+	}
+
+	public void setAlreadyPayAmount(BigDecimal alreadyPayAmount) {
+		this.alreadyPayAmount = alreadyPayAmount;
+	}
+
+	public BigDecimal getResiduesPayAmount() {
+		return residuesPayAmount;
+	}
+
+	public void setResiduesPayAmount(BigDecimal residuesPayAmount) {
+		this.residuesPayAmount = residuesPayAmount;
+	}
+
+	public String getWorkerMobile() {
+		return workerMobile;
+	}
+
+	public void setWorkerMobile(String workerMobile) {
+		this.workerMobile = workerMobile;
 	}
 }

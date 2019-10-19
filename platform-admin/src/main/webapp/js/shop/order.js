@@ -1,9 +1,11 @@
 $(function () {
     let orderNo = getQueryString("orderNo");
+    let parentOrderNo = getQueryString("parentOrderNo");
     let channelId = getQueryString("channelId");
-    let storeId = getQueryString("storeId");
+    let orderStatus = getQueryString("orderStatus");
+    let paymentStatus = getQueryString("paymentStatus");
     let payType = getQueryString("payType");
-    let masterWorker = getQueryString("masterWorker");
+
     let url = '../order/list';
 
     if (orderNo) {
@@ -12,14 +14,17 @@ $(function () {
     if (channelId) {
         url += '?channelId=' + channelId;
     }
-    if (storeId) {
-        url += '?storeId=' + storeId;
+    if (orderStatus) {
+        url += '?orderStatus=' + orderStatus;
     }
     if (payType) {
         url += '?payType=' + payType;
     }
-    if (masterWorker) {
-        url += '?masterWorker=' + masterWorker;
+    if (orderStatus) {
+        url += '?orderStatus=' + orderStatus;
+    }
+    if (paymentStatus) {
+        url += '?paymentStatus=' + paymentStatus;
     }
     url += '?orderType=' + "2";
     $("#jqGrid").Grid({
@@ -27,8 +32,8 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '支付订单号', name: 'orderNo', index: 'order_no', width: 130},
-            {label: '预约订单号', name: 'parentOrderNo', index: 'parent_order_no', width: 130},
+            {label: '支付订单号', name: 'orderNo', index: 'order_no', width: 180},
+            {label: '预约订单号', name: 'parentOrderNo', index: 'parent_order_no', width: 180},
             {label: '下单用户', name: 'contactName', index: 'contact_name', width: 80},
             {label: '联系电话', name: 'contactMobile', index: 'contact_mobile', width: 100},
             {label: '地址', name: 'address', index: 'address', width: 120},
@@ -85,10 +90,18 @@ $(function () {
                 }
             },
             {
-                label: '操作', width: 120, align: 'center', sortable: false,
+                label: '操作', width: 140, align: 'center', sortable: false,
                 formatter: function (value, col, row) {
-                    return '<button class="btn btn-outline btn-info" onclick="vm.update(' + row.id +","+ row.payType+')">' +
-                        '<i class="fa fa-info-circle"></i>&nbsp;编辑</button>';
+                    if(row.paymentStatus == 1 && row.payType ==1 && row.orderStatus != 4){
+                        return '<button class="btn btn-outline btn-info" onclick="vm.update(' + row.id +","+ row.payType+')">' +
+                            '<i class="fa fa-info-circle"></i>&nbsp;编辑</button>' +
+                            '<button class="btn btn-outline btn-info" onclick="vm.cancelOrder(' + row.id +","+ row.payType+')">' +
+                            '<i class="fa fa-times-rectangle"></i>&nbsp;作废</button>';
+                    }else{
+                        return '<button class="btn btn-outline btn-info" onclick="vm.update(' + row.id +","+ row.payType+')">' +
+                            '<i class="fa fa-info-circle"></i>&nbsp;编辑</button>';
+                    }
+
                 }
             }
         ]
@@ -114,9 +127,9 @@ let vm = new Vue({
         q: {
             orderNo: '',
             channelId: '',
-            storeId: '',
+            orderStatus: '',
             payType: '',
-            masterWorker: ''
+            paymentStatus: ''
         },
         isFirstPayOrder:'',
         totalAmount:'',
@@ -159,16 +172,16 @@ let vm = new Vue({
             })
         },
 
-        cancelOrder: function (event) {
-            let id = getSelectedRow("#jqGrid");
-            if (id == null) {
+        cancelOrder: function (rowId) {
+            // let id = getSelectedRow("#jqGrid");
+            if (rowId == null) {
                 return;
             }
             Ajax.request({
                 type: "POST",
                 url: "../order/cancelOrder",
                 contentType: "application/json",
-                params: JSON.stringify(id),
+                params: JSON.stringify(rowId),
                 successCallback: function (r) {
                     if (r.code == 0) {
                         alert('操作成功', function (index) {
@@ -201,8 +214,8 @@ let vm = new Vue({
                     'orderNo': vm.q.orderNo,
                     'channelId': vm.q.channelId,
                     'payType': vm.q.payType,
-                    'masterWorker': vm.q.masterWorker,
-                    'storeId': vm.q.storeId
+                    'orderStatus': vm.q.orderStatus,
+                    'paymentStatus': vm.q.paymentStatus
                 },
                 page: page
             }).trigger("reloadGrid");

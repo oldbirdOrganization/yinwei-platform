@@ -10,10 +10,7 @@
         <Row :gutter="16">
             <div class="search-group">
                 <i-col span="4">
-                    <i-input v-model="q.orderNo" @on-enter="query" placeholder="订单号"/>
-                </i-col>
-                <i-col span="4">
-                    <i-input v-model="q.orderNo" @on-enter="query" placeholder="预约订单号"/>
+                    <i-input v-model="q.orderNo" @on-enter="query" placeholder="支付订单号"/>
                 </i-col>
                 <i-col span="4">
                     <i-select v-model="q.channelId" placeholder="渠道名称">
@@ -28,6 +25,19 @@
                     </i-select>
                 </i-col>
                 <i-col span="4">
+                    <i-select v-model="q.orderStatus" placeholder="订单状态">
+                        <i-option value="2">服务中</i-option>
+                        <i-option value="3">已完成</i-option>
+                        <i-option value="4">作废</i-option>
+                    </i-select>
+                </i-col>
+                <i-col span="4">
+                    <i-select v-model="q.paymentStatus" placeholder="付款状态">
+                        <i-option value="1">待付款</i-option>
+                        <i-option value="2">已付款</i-option>
+                    </i-select>
+                </i-col>
+                <i-col span="4">
                     <i-select v-model="q.payType" placeholder="支付分类">
                         <i-option value="1">线上</i-option>
                         <i-option value="2">线下</i-option>
@@ -35,6 +45,8 @@
                 </i-col>
                 <i-button @click="query">查询</i-button>
             </div>
+        </Row>
+        <Row :gutter="16">
             <div class="buttons-group">
                 #if($shiro.hasPermission("order:save"))
                 <i-button type="info" @click="onlineAdd">线上待支付订单新增</i-button>
@@ -52,16 +64,16 @@
         <p slot="title" style="height: auto">
             {{title}}
         </p>
-        <el-table-column label="支付订单信息" ></el-table-column>
+        <span>支付订单信息</span>
         <i-form ref="formValidate" :model="order" :label-width="130">
             <Form-item label="支付订单号" prop="orderNo">
-                <i-input v-model="order.orderNo" placeholder="" readonly/>
+                <i-input v-model="order.orderNo" placeholder="支付订单号" readonly/>
             </Form-item>
-<!--            <Form-item label="预约订单号" prop="">-->
-<!--                <i-input v-model="" placeholder="" readonly/>-->
-<!--            </Form-item>-->
+            <Form-item label="预约订单号" prop="预约订单号">
+                <i-input v-model="order.parentOrderNo" placeholder="预约订单号" readonly/>
+            </Form-item>
             <Form-item label="是否外部订单" prop="isOuterOrder">
-                <Radio-group v-model="order.isOuterOrder">
+                <Radio-group v-model="order.isOuterOrder" placeholder="是否外部订单">
                     <Radio label="0" disabled>
                         <span>否</span>
                     </Radio>
@@ -90,20 +102,20 @@
                     </Radio>
                 </Radio-group>
             </Form-item>
-            <Form-item label="总金额（元）" prop="paymentPrice">
-                <i-input v-model="order.paymentPrice" placeholder="" readonly/>
+            <Form-item label="总金额（元）" prop="totalAmount">
+                <i-input v-model="order.totalAmount" placeholder="总金额（元）" readonly/>
             </Form-item>
-            <Form-item label="已付金额（元）" prop="orderPrice"><!-- 总金额 - 历次支付金额 = 已付金额-->
-                <i-input v-model="order.orderPrice" placeholder="" readonly/>
+            <Form-item label="已付金额（元）" prop="alreadyPayAmount"><!-- 总金额 - 历次支付金额 = 已付金额-->
+                <i-input v-model="order.alreadyPayAmount" placeholder="" readonly/>
             </Form-item>
             <Form-item label="本次支付金额（元）" prop="orderPrice">
-                <i-input v-model="order.orderPrice" placeholder="" readonly/>
+                <i-input v-model="order.orderPrice" placeholder="本次支付金额（元）" v-bind:disabled="order.paymentStatus==2"/>
             </Form-item>
-            <Form-item label="尾款金额（元）" prop="orderPrice"><!-- 总金额 -  已付金额 = 尾款金额 -->
-                <i-input v-model="order.orderPrice" placeholder="" readonly/>
+            <Form-item label="尾款金额（元）" prop="residuesPayAmount"><!-- 总金额 -  已付金额 = 尾款金额 -->
+                <i-input v-model="order.residuesPayAmount" placeholder="" readonly/>
             </Form-item>
             <Form-item label="优惠金额" prop="couponPrice">
-                <i-input v-model="order.couponPrice" placeholder="" readonly/>
+                <i-input v-model="order.couponPrice" placeholder="优惠金额" readonly/>
             </Form-item>
             <Form-item label="订单支付时间" prop="paymentTime">
                 <Date-picker v-model="order.paymentTime" placeholder="订单支付时间" readonly/>
@@ -112,7 +124,7 @@
                 <i-input v-model="order.paymentNo" placeholder="支付流水号"  readonly/>
             </Form-item>
             <Form-item label="门店名称" prop="storeName">
-                <i-input v-model="order.storeName" placeholder="" readonly/>
+                <i-input v-model="order.storeName" placeholder="门店名称" readonly/>
             </Form-item>
 
 <!--            <Form-item label="维修前图片" prop="">-->
@@ -129,7 +141,7 @@
                 <i-input v-model="order.problemDescription" placeholder="问题描述" readonly/>
             </Form-item>
 
-            <el-table-column label="地址信息" ></el-table-column>
+            <span>地址信息</span>
             <Form-item label="下单人姓名" prop="contactName">
                 <i-input v-model="order.contactName" placeholder="下单人姓名" readonly/>
             </Form-item>
@@ -140,16 +152,16 @@
                 <i-input v-model="order.contactMobile" placeholder="联系电话" readonly/>
             </Form-item>
 
-            <el-table-column label="师傅信息" ></el-table-column>
+            <span>师傅信息</span>
             <Form-item label="师傅编号" prop="masterWorkerId">
                 <i-input v-model="order.masterWorkerId" placeholder="师傅编号" readonly/>
             </Form-item>
             <Form-item label="师傅姓名" prop="masterWorker">
                 <i-input v-model="order.masterWorker" placeholder="师傅姓名" readonly/>
             </Form-item>
-<!--            <Form-item label="师傅联系方式" prop="">-->
-<!--                <i-input v-model="" placeholder="师傅联系方式" readonly/>-->
-<!--            </Form-item>-->
+            <Form-item label="师傅联系方式" prop="workerMobile">
+                <i-input v-model="order.workerMobile" placeholder="师傅联系方式" readonly/>
+            </Form-item>
 <!--            <Form-item label="师傅工种" prop="">-->
 <!--                <i-input v-model="" placeholder="师傅工种" readonly/>-->
 <!--            </Form-item>-->

@@ -56,11 +56,18 @@
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.OrderInfoEntity">
-		select o.*,u.username as userName,
-		nc.name as channelName
+		select
+            o.*,
+            u.username as userName,u.mobile as userMobile,
+            nc.name as channelName,sc.name as storeName,
+            sc.address as storeAddress,sc.contact as storeContact,
+            su.username as masterWorker,su.mobile workerMobile,
+            (select op.order_no from nideshop_order_info op where op.id = o.parent_order_id) parentOrderNo
         from nideshop_order_info o
         left join nideshop_user u on o.create_user_id = u.id
         left join nideshop_channel nc on nc.id=o.channel_id
+        left join sys_store sc on sc.store_id=o.store_id
+        left join sys_user su on su.user_id=o.master_worker_id
         where o.id = #{value}
 	</select>
 
@@ -157,74 +164,106 @@
     </select>
 
     <insert id="save" parameterType="com.platform.entity.OrderInfoEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into nideshop_order_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="parentOrderId != null">`parent_order_id`,</if>
+            <if test="goodsId != null">`goods_id`,</if>
+            <if test="orderNo != null">`order_no`,</if>
+            <if test="orderType != null">`order_type`,</if>
+            <if test="orderStatus != null">`order_status`,</if>
+            <if test="paymentStatus != null">`payment_status`,</if>
+            <if test="paymentTime != null">`payment_time` ,</if>
+            <if test="paymentNo != null">`payment_no`,</if>
+            <if test="paymentPrice != null">`payment_price`,</if>
+            <if test="totalAmount != null">`total_amount`,</if>
+            <if test="orderPrice != null">`order_price`,</if>
+            <if test="serviceHouseName != null">`service_house_name`,</if>
+            <if test="serviceTime != null">`service_time`,</if>
+            <if test="serviceRequired != null">`service_required`,</if>
+            <if test="problemDescription != null">`problem_description`,</if>
+            <if test="serviceType != null">`service_type`,</if>
+            <if test="serviceSpace != null">`service_space`,</if>
+            <if test="serviceAcreage != null">`service_acreage`,</if>
+            <if test="serviceIdea != null">`service_idea`,</if>
+            <if test="serviceAirConditionerModel != null">`service_air_conditioner_model`,</if>
+            <if test="serviceAirConditionerType != null">`service_air_conditioner_type`,</if>
+            <if test="serviceFurniture != null">`service_furniture`,</if>
+            <if test="serviceHouseType != null">`service_house_type`,</if>
+            <if test="serviceHouseDeliveryStandards != null">`service_house_delivery_standards`,</if>
+            <if test="contactName != null">`contact_name`,</if>
+            <if test="contactMobile != null">`contact_mobile`,</if>
+            <if test="address != null">`address`,</if>
+            <if test="createTime != null">`create_time`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+            <if test="createUserId != null">`create_user_id`,</if>
+            <if test="updateUserId != null">`update_user_id`,</if>
+            <if test="defunct != null">`defunct`,</if>
+            <if test="couponId != null">`coupon_id`,</if>
+            <if test="couponPrice != null">`coupon_price`,</if>
+            <if test="channelId != null">`channel_id`,</if>
+            <if test="masterWorker != null">`master_worker`,</if>
+            <if test="masterWorkerId != null">`master_worker_id`,</if>
+            <if test="isOuterOrder != null">`is_outer_order`,</if>
+            <if test="outerMerchantName != null">`outer_merchant_name`,</if>
+            <if test="outerServiceCategory != null">`outer_service_category`,</if>
+            <if test="outerServiceContent != null">`outer_service_content`,</if>
+            <if test="outerServiceBrand != null">`outer_service_brand`,</if>
+            <if test="outerServiceCombo != null">`outer_service_combo`,</if>
+            <if test="storeId != null">`store_id`,</if>
+            <if test="shroffAccountNumber != null">`shroff_account_number`,</if>
+            <if test="payChannel != null">`pay_channel`,</if>
+            <if test="item != null">`item`,</if>
+        </trim>
 
-
-		insert into nideshop_order_info
-		(
-			`order_no`, 
-			`goods_id`, 
-			`order_status`, 
-			`order_type`, 
-			`payment_status`, 
-			`total_amount`,
-			`order_price`,
-			`payment_price`,
-			`coupon_price`,
-			`parent_order_id`,
-			`contact_name`,
-			`contact_mobile`, 
-			`address`, 
-			`create_user_id`,
-			`create_time`,
-			`defunct`,
-			`coupon_id`,
-			`channel_id`,
-			`master_worker`,
-			`master_worker_id`,
-			`is_outer_order`,
-			`outer_merchant_name`,
-			`outer_service_category`,
-			`outer_service_content`,
-			`outer_service_brand`,
-			`outer_service_combo`,
-			`store_id`,
-			`shroff_account_number`,
-			`pay_channel`,
-			`item`
-		)
-		values
-		(
-			#{orderNo}, 
-			#{goodsId}, 
-			#{orderStatus}, 
-			#{orderType},
-			#{paymentStatus}, 
-			#{totalAmount},
-			#{orderPrice},
-			#{paymentPrice},
-			#{couponPrice},
-			#{parentOrderId},
-			#{contactName},
-			#{contactMobile}, 
-			#{address}, 
-			#{createUserId},
-			#{createTime},
-			#{defunct},
-			#{couponId},
-			#{channelId},
-			#{masterWorker},
-			#{masterWorkerId},
-			#{isOuterOrder},
-			#{outerMerchantName},
-			#{outerServiceCategory},
-			#{outerServiceContent},
-			#{outerServiceBrand},
-			#{outerServiceCombo},
-			#{storeId},
-			#{shroffAccountNumber},
-			#{payChannel},
-			#{item}
-		)
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="parentOrderId != null">#{parentOrderId},</if>
+            <if test="goodsId != null">#{goodsId},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="orderType != null">#{orderType},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+            <if test="paymentStatus != null">#{paymentStatus},</if>
+            <if test="paymentTime != null">#{paymentTime} ,</if>
+            <if test="paymentNo != null">#{paymentNo},</if>
+            <if test="paymentPrice != null">#{paymentPrice},</if>
+            <if test="totalAmount != null">#{totalAmount},</if>
+            <if test="orderPrice != null">#{orderPrice},</if>
+            <if test="serviceHouseName != null">#{serviceHouseName},</if>
+            <if test="serviceTime != null">#{serviceTime},</if>
+            <if test="serviceRequired != null">#{serviceRequired},</if>
+            <if test="problemDescription != null">#{problemDescription},</if>
+            <if test="serviceType != null">#{serviceType},</if>
+            <if test="serviceSpace != null">#{serviceSpace},</if>
+            <if test="serviceAcreage != null">#{serviceAcreage},</if>
+            <if test="serviceIdea != null">#{serviceIdea},</if>
+            <if test="serviceAirConditionerModel != null">#{serviceAirConditionerModel},</if>
+            <if test="serviceAirConditionerType != null">#{serviceAirConditionerType},</if>
+            <if test="serviceFurniture != null">#{serviceFurniture},</if>
+            <if test="serviceHouseType != null">#{serviceHouseType},</if>
+            <if test="serviceHouseDeliveryStandards != null">#{serviceHouseDeliveryStandards},</if>
+            <if test="contactName != null">#{contactName},</if>
+            <if test="contactMobile != null">#{contactMobile},</if>
+            <if test="address != null">#{address},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createUserId != null">#{createUserId},</if>
+            <if test="updateUserId != null">#{updateUserId},</if>
+            <if test="defunct != null">#{defunct},</if>
+            <if test="couponId != null">#{couponId},</if>
+            <if test="couponPrice != null">#{couponPrice},</if>
+            <if test="channelId != null">#{channelId},</if>
+            <if test="masterWorker != null">#{masterWorker},</if>
+            <if test="masterWorkerId != null">#{masterWorkerId},</if>
+            <if test="isOuterOrder != null">#{isOuterOrder},</if>
+            <if test="outerMerchantName != null">#{outerMerchantName},</if>
+            <if test="outerServiceCategory != null">#{outerServiceCategory},</if>
+            <if test="outerServiceContent != null">#{outerServiceContent},</if>
+            <if test="outerServiceBrand != null">#{outerServiceBrand},</if>
+            <if test="outerServiceCombo != null">#{outerServiceCombo},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="shroffAccountNumber != null">#{shroffAccountNumber},</if>
+            <if test="payChannel != null">#{payChannel},</if>
+            <if test="item != null">#{item},</if>
+        </trim>
 	</insert>
 
     <update id="update" parameterType="com.platform.entity.OrderInfoEntity">

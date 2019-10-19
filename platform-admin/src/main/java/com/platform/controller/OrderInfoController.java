@@ -45,15 +45,11 @@ public class OrderInfoController {
     @RequestMapping("/list")
     @RequiresPermissions("order:list")
     public R list(@RequestParam Map<String, Object> params) {
-
-
         List<OrderInfoEntity> orderList = queryListByMap(params);
         int total = queryTotalByMap(params);
-
         // 查询列表数据
         Query query = new Query(params);
         PageUtils pageUtil = new PageUtils(orderList, total, query.getLimit(), query.getPage());
-
         return R.ok().put("page", pageUtil);
     }
 
@@ -75,6 +71,23 @@ public class OrderInfoController {
         String id = infoVo.getId();
         if("1".equals(payType)){
             OrderInfoEntity order = orderInfoService.queryObject(Integer.valueOf(id));
+            if(!ObjectUtils.isEmpty(order)){
+                //查询预约单信息
+                Map<String, Object> premap = new HashMap<>();
+                premap.put("parentOrderId",order.getParentOrderId());
+                List<OrderInfoEntity> preorderList=orderInfoService.queryList(premap);
+                if(preorderList.size()> 0){
+                    BigDecimal alreadyAmount=new BigDecimal(0);
+                    for (OrderInfoEntity preorderlist:preorderList){
+                        if(preorderlist.getPaymentStatus() == 2){//已付金额= 总金额 - 历次已支付金额 -历次优惠金额
+                            alreadyAmount=(alreadyAmount.add(preorderlist.getOrderPrice())).subtract(order.getCouponPrice());
+                        }
+                    }
+                    order.setAlreadyPayAmount(alreadyAmount);//此预约单已支付金额
+                    order.setResiduesPayAmount(order.getTotalAmount().subtract(alreadyAmount));//预约单剩余尾款金额=总金额 -已付金额
+                }
+            }
+
             order.setPayType("1");
             return R.ok().put("order", order);
         }else if("2".equals(payType)){
@@ -142,7 +155,6 @@ public class OrderInfoController {
             if(orderInfoEntity.getOrderStatus() == 4){
                 return R.error(400,"此预约单号已作废，无法添加线上待支付订单");
             }
-
             order.setParentOrderId(orderInfoEntity.getId().toString());
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
             order.setOrderNo(fmt.format(new Date()));
@@ -152,9 +164,23 @@ public class OrderInfoController {
             order.setContactMobile(orderInfoEntity.getContactMobile());
             order.setContactName(orderInfoEntity.getContactName());
             order.setCreateUserId(orderInfoEntity.getCreateUserId());
+            order.setMasterWorkerId(orderInfoEntity.getMasterWorkerId());
+            order.setMasterWorker(orderInfoEntity.getMasterWorker());
+            order.setStoreId(orderInfoEntity.getStoreId());
             order.setAddress(orderInfoEntity.getAddress());
+            order.setProblemDescription(orderInfoEntity.getProblemDescription());
             order.setServiceTime(orderInfoEntity.getServiceTime());
             order.setIsOuterOrder(orderInfoEntity.getIsOuterOrder());
+            order.setServiceRequired(orderInfoEntity.getServiceRequired());
+            order.setServiceHouseName(orderInfoEntity.getServiceHouseName());
+            order.setServiceHouseType(orderInfoEntity.getServiceHouseType());
+            order.setServiceAcreage(orderInfoEntity.getServiceAcreage());
+            order.setServiceAirConditionerModel(orderInfoEntity.getServiceAirConditionerModel());
+            order.setServiceAirConditionerType(orderInfoEntity.getServiceAirConditionerType());
+            order.setServiceFurniture(orderInfoEntity.getServiceFurniture());
+            order.setServiceIdea(orderInfoEntity.getServiceIdea());
+            order.setServiceSpace(orderInfoEntity.getServiceSpace());
+            order.setServiceType(orderInfoEntity.getServiceType());
             order.setCreateTime(new Date());
             order.setUpdateTime(new Date());
             order.setDefunct(0);
@@ -184,7 +210,10 @@ public class OrderInfoController {
             offlineOrderInfoPo.setChannelId(offlineOrderInfo.getChannelId());
             offlineOrderInfoPo.setContactMobile(offlineOrderInfo.getContactMobile());
             offlineOrderInfoPo.setContactName(offlineOrderInfo.getContactName());
+            offlineOrderInfoPo.setProblemDescription(offlineOrderInfo.getProblemDescription());
             offlineOrderInfoPo.setCreateUserId(offlineOrderInfo.getCreateUserId());
+            offlineOrderInfoPo.setMasterWorkerId(offlineOrderInfo.getMasterWorkerId());
+            offlineOrderInfoPo.setStoreId(offlineOrderInfo.getStoreId());
             offlineOrderInfoPo.setAddress(offlineOrderInfo.getAddress());
             offlineOrderInfoPo.setServiceTime(offlineOrderInfo.getServiceTime());
             offlineOrderInfoPo.setIsOuterOrder(offlineOrderInfo.getIsOuterOrder());
