@@ -206,37 +206,41 @@ public class OrderInfoController {
             order.setDefunct(0);
             orderInfoService.save(order);
         }else if("2".equals(order.getPayType())){
-            OfflineOrderInfoPo offlineOrderInfo = new OfflineOrderInfoPo();
-            offlineOrderInfo.setOrderNo(order.getOrderNo());
-            offlineOrderInfo = offlineOrderService.selectBySelective(offlineOrderInfo);
+            OrderInfoEntity orderInfoEntity = new OrderInfoEntity();
+            orderInfoEntity.setOrderNo(order.getOrderNo());
+            orderInfoEntity = orderInfoService.selectBySelective(orderInfoEntity);
 
-            if(ObjectUtils.isEmpty(offlineOrderInfo)){
+//            OfflineOrderInfoPo offlineOrderInfo = new OfflineOrderInfoPo();
+//            offlineOrderInfo.setOrderNo(order.getOrderNo());
+//            offlineOrderInfo = offlineOrderService.selectBySelective(offlineOrderInfo);
+
+            if(ObjectUtils.isEmpty(orderInfoEntity)){
                 return R.error(400,"此预约单号不正确，无法添加线下已支付订单");
             }
-            if(offlineOrderInfo.getOrderStatus() == 1){
+            if(orderInfoEntity.getOrderStatus() == 1){
                 return R.error(400,"此预约单号未指派，请先指派工人师傅");
             }
-            if(offlineOrderInfo.getOrderStatus() == 4){
+            if(orderInfoEntity.getOrderStatus() == 4){
                 return R.error(400,"此预约单号已作废，无法添加线下已支付订单");
             }
 
             OfflineOrderInfoPo offlineOrderInfoPo = new OfflineOrderInfoPo();
             BeanUtils.copyProperties(order, offlineOrderInfoPo);
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
-            offlineOrderInfoPo.setParentOrderId(offlineOrderInfo.getId().toString());
+            offlineOrderInfoPo.setParentOrderId(orderInfoEntity.getId().toString());
             offlineOrderInfoPo.setOrderNo(fmt.format(new Date()));
             offlineOrderInfoPo.setPaymentStatus(2);//已支付
             offlineOrderInfoPo.setOrderStatus(2);//已确认
-            offlineOrderInfoPo.setChannelId(offlineOrderInfo.getChannelId());
-            offlineOrderInfoPo.setContactMobile(offlineOrderInfo.getContactMobile());
-            offlineOrderInfoPo.setContactName(offlineOrderInfo.getContactName());
-            offlineOrderInfoPo.setProblemDescription(offlineOrderInfo.getProblemDescription());
-            offlineOrderInfoPo.setCreateUserId(offlineOrderInfo.getCreateUserId());
-            offlineOrderInfoPo.setMasterWorkerId(offlineOrderInfo.getMasterWorkerId());
-            offlineOrderInfoPo.setStoreId(offlineOrderInfo.getStoreId());
-            offlineOrderInfoPo.setAddress(offlineOrderInfo.getAddress());
-            offlineOrderInfoPo.setServiceTime(offlineOrderInfo.getServiceTime());
-            offlineOrderInfoPo.setIsOuterOrder(offlineOrderInfo.getIsOuterOrder());
+            offlineOrderInfoPo.setChannelId(orderInfoEntity.getChannelId());
+            offlineOrderInfoPo.setContactMobile(orderInfoEntity.getContactMobile());
+            offlineOrderInfoPo.setContactName(orderInfoEntity.getContactName());
+            offlineOrderInfoPo.setProblemDescription(orderInfoEntity.getProblemDescription());
+            offlineOrderInfoPo.setCreateUserId(orderInfoEntity.getCreateUserId());
+            offlineOrderInfoPo.setMasterWorkerId(orderInfoEntity.getMasterWorkerId());
+            offlineOrderInfoPo.setStoreId(orderInfoEntity.getStoreId());
+            offlineOrderInfoPo.setAddress(orderInfoEntity.getAddress());
+            offlineOrderInfoPo.setServiceTime(orderInfoEntity.getServiceTime());
+            offlineOrderInfoPo.setIsOuterOrder((short)orderInfoEntity.getIsOuterOrder().intValue());
             offlineOrderInfoPo.setCreateTime(new Date());
             offlineOrderInfoPo.setUpdateTime(new Date());
             offlineOrderInfoPo.setDefunct(0);
