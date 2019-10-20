@@ -1,62 +1,37 @@
 $(function () {
-    let orderStatus = getQueryString("orderStatus");
+    let orderNo = getQueryString("orderNo");
     let paymentStatus = getQueryString("paymentStatus");
-    let orderType = getQueryString("orderType");
+    let channelId = getQueryString("channelId")
+    let isOuterOrder = getQueryString("isOuterOrder")
     let url = '../offlineOrder/list';
     if (paymentStatus) {
         url += '?paymentStatus=' + paymentStatus;
     }
-    if (orderStatus) {
-        url += '?orderStatus=' + orderStatus;
+    if (orderNo) {
+        url += '?orderNo=' + orderNo;
     }
-    if (orderType) {
-        url += '?orderType=' + orderType;
+    if (channelId) {
+        url += '?channelId=' + channelId;
+    }
+    if (isOuterOrder) {
+        url += '?isOuterOrder=' + isOuterOrder;
     }
     $("#jqGrid").Grid({
         url: url,
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '订单号', name: 'orderNo', index: 'order_no', width: 120},
-            {label: '会员', name: 'userName', index: 'user_name', width: 70},
+            {label: '支付订单号', name: 'orderNo', index: 'order_no', width: 150},
+            {label: '预约订单号', name: 'orderNo', index: 'order_no', width: 150},
+            {label: '下单用户', name: 'userName', index: 'user_name', width: 80},
             {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 60},
-            {
-                label: '订单类型', name: 'orderType', index: 'order_type', width: 60,
-                formatter: function (value) {
-                    if (value == '1') {
-                        return '预约订单';
-                    } else if (value == '2') {
-                        return '定金订单';
-                    }
-                    return '-';
-                }
-            },
-            {
-                label: '订单状态', name: 'orderStatus', index: 'order_status', width: 60,
-                formatter: function (value) {
-                    if (value == '1') {
-                        return '待指派';
-                    } else if (value == '2') {
-                        return '待服务';
-                    } else if (value == '3') {
-                        return '服务中';
-                    } else if (value == '4') {
-                        return '订单完成';
-                    } else if (value == '5') {
-                        return '已作废';
-                    } else if (value == '6') {
-                        return '待评价';
-                    }
-                    return value;
-                }
-            },
             {
                 label: '付款状态', name: 'paymentStatus', index: 'payment_status', width: 60,
                 formatter: function (value) {
                     if (value == '1') {
                         return '未付款';
                     } else if (value == '2') {
-                        return '已付定金';
+                        return '已付款';
                     } 
                     return value;
                 }
@@ -72,18 +47,26 @@ $(function () {
                     return value;
                 }
             },
-            {label: '支付单号', name: 'paymentNo', index: 'payment_no', width: 110},
-
-            {label: '实际支付金额（元）', name: 'orderPrice', index: 'order_price', width: 80},
             {
-                label: '支付时间', name: 'paymentTime', index: 'payment_time', width: 110,
+                label: '进账科目', name: 'item', index: 'item', width: 60,
                 formatter: function (value) {
-                    return transDate(value);
+                    if (value == '1') {
+                        return '定金';
+                    } else if (value == '2') {
+                        return '进度款';
+                    }else if (value == '3') {
+                        return '尾款';
+                    }
+                    return value;
                 }
             },
-            {label: '优惠金额', name: 'couponPrice', index: 'coupon_price', width: 60},
+            {label: '总金额(元)', name: 'totalAmount', index: 'total_amount', width: 110},
+            {label: '收款账号', name: 'shroffAccountNumber', index: 'shroff_account_number', width: 110},
+            {label: '进账流水号', name: 'paymentNo', index: 'paymentNo', width: 110},
+            {label: '实际支付金额(元)', name: 'orderPrice', index: 'order_price', width: 80},
+            {label: '优惠金额(元)', name: 'couponPrice', index: 'coupon_price', width: 80},
             {
-                label: '下单时间', name: 'createTime', index: 'create_time', width: 110,
+                label: '下单时间', name: 'createTime', index: 'create_time', width: 130,
                 formatter: function (value) {
                     return transDate(value);
                 }
@@ -108,9 +91,10 @@ let vm = new Vue({
         order: {},
         shippings: [],
         q: {
-            orderSn: '',
-            orderStatus: '',
-            orderType: ''
+            orderNo: '',
+            paymentStatus: '',
+            channelId:'',
+            isOuterOrder:''
         }
     },
     methods: {
@@ -181,20 +165,32 @@ let vm = new Vue({
             });
         },
         exportFile: function(event) {
-            let orderStatus = getQueryString("orderStatus");
+
+            let orderNo = getQueryString("orderNo");
             let paymentStatus = getQueryString("paymentStatus");
-            let orderType = getQueryString("orderType");
+            let channelId = getQueryString("channelId")
+            let isOuterOrder = getQueryString("isOuterOrder")
+
             var oReq = new XMLHttpRequest();
-            url = "../offlineOrder/exportExcel?order=1&sidx=1&limit=10&page=1";
+            let url = "../offlineOrder/exportExcel?order=1&sidx=1&limit=10&page=1";
+
+            if (paymentStatus) {
+                url += '?paymentStatus=' + paymentStatus;
+            }
+            if (orderNo) {
+                url += '?orderNo=' + orderNo;
+            }
+            if (channelId) {
+                url += '?channelId=' + channelId;
+            }
+            if (isOuterOrder) {
+                url += '?isOuterOrder=' + isOuterOrder;
+            }
+
             if (paymentStatus) {
                 url += '&paymentStatus=' + paymentStatus;
             }
-            if (orderStatus) {
-                url += '&orderStatus=' + orderStatus;
-            }
-            if (orderType) {
-                url += '&orderType=' + orderType;
-            }
+
             oReq.open("GET", url, true);
             oReq.responseType = "blob";
             oReq.onload = function (oEvent) {
@@ -217,17 +213,19 @@ let vm = new Vue({
                 limit:10,
                 sidx:1,
                 order:1,
-                orderStatus:orderStatus,
-                paymentStatus:paymentStatus,
-                orderType:orderType
+                orderNo: orderNo,
+                paymentStatus: paymentStatus,
+                channelId:channelId,
+                isOuterOrder:isOuterOrder
             };
-            oReq.send("orderStatus=" + orderStatus + "&paymentStatus=" + paymentStatus
-            + "&orderType=" + orderType + "&order=1&sidx=1&limit=10&page=1");
+            oReq.send("orderNo=" + orderNo + "&paymentStatus=" + paymentStatus
+            + "&channelId=" + channelId + "&isOuterOrder=" + isOuterOrder +"&order=1&sidx=1&limit=10&page=1");
         },
         exportFile2: function (event) {
-            let orderStatus = getQueryString("orderStatus");
+            let orderNo = getQueryString("orderNo");
             let paymentStatus = getQueryString("paymentStatus");
-            let orderType = getQueryString("orderType");
+            let channelId = getQueryString("channelId")
+            let isOuterOrder = getQueryString("isOuterOrder")
             let url = '../offlineOrder/exportExcel?1=1';
             $.ajax({
                 url: url,
@@ -237,9 +235,10 @@ let vm = new Vue({
                     limit:10,
                     sidx:1,
                     order:1,
-                    orderStatus:orderStatus,
-                    paymentStatus:paymentStatus,
-                    orderType:orderType
+                    orderNo: orderNo,
+                    paymentStatus: paymentStatus,
+                    channelId:channelId,
+                    isOuterOrder:isOuterOrder
                 },
                 cache: false,
                 dataType: "json",
@@ -262,9 +261,10 @@ let vm = new Vue({
             let page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
                 postData: {
-                    'orderSn': vm.q.orderSn,
-                    'orderStatus': vm.q.orderStatus,
-                    'orderType': vm.q.orderType
+                    'orderNo': vm.q.orderNo,
+                    'paymentStatus': vm.q.paymentStatus,
+                    'channelId': vm.q.channelId,
+                    'isOuterOrder':vm.q.isOuterOrder
                 },
                 page: page
             }).trigger("reloadGrid");

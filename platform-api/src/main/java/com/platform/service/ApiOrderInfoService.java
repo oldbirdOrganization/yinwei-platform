@@ -190,12 +190,12 @@ public class ApiOrderInfoService {
         logger.info("@@ApiOrderInfoService.doRun  order job begin");
         List<NideshopOrderInfoEntity> list1 = findNotPayment();
         for(NideshopOrderInfoEntity m1 : list1){
-            m1.setOrderStatus(5);
+            m1.setOrderStatus(4);
             nideshopOrderInfoDao.updateById(m1);
         }
         List<NideshopOrderInfoEntity> list2 = findNotDesignate();
         for(NideshopOrderInfoEntity m2 : list2){
-            m2.setOrderStatus(5);
+            m2.setOrderStatus(4);
             nideshopOrderInfoDao.updateById(m2);
         }
         logger.info("@@ApiOrderInfoService.doRun  order job end");

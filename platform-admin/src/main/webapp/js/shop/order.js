@@ -1,6 +1,5 @@
 $(function () {
     let orderNo = getQueryString("orderNo");
-    let parentOrderNo = getQueryString("parentOrderNo");
     let channelId = getQueryString("channelId");
     let orderStatus = getQueryString("orderStatus");
     let paymentStatus = getQueryString("paymentStatus");
@@ -32,10 +31,10 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-            {label: '支付订单号', name: 'orderNo', index: 'order_no', width: 180},
-            {label: '预约订单号', name: 'parentOrderNo', index: 'parent_order_no', width: 180},
-            {label: '下单用户', name: 'contactName', index: 'contact_name', width: 80},
-            {label: '联系电话', name: 'contactMobile', index: 'contact_mobile', width: 100},
+            {label: '支付订单号', name: 'orderNo', index: 'order_no', width: 190},
+            {label: '预约订单号', name: 'parentOrderNo', index: 'parent_order_no', width: 190},
+            {label: '下单用户', name: 'contactName', index: 'contact_name', width: 100},
+            {label: '联系电话', name: 'contactMobile', index: 'contact_mobile', width: 140},
             {label: '地址', name: 'address', index: 'address', width: 120},
             {label: '问题描述', name: 'problemDescription', index: 'problem_description', width: 120},
             {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 80},
@@ -51,13 +50,13 @@ $(function () {
                 }
             },
             {
-                label: '下单时间', name: 'createTime', index: 'create_time', width: 120,
+                label: '下单时间', name: 'createTime', index: 'create_time', width: 140,
                 formatter: function (value) {
                     return transDate(value);
                 }
             },
             {
-                label: '订单状态', name: 'orderStatus', index: 'order_status', width: 80,
+                label: '订单状态', name: 'orderStatus', index: 'order_status', width: 90,
                 formatter: function (value) {
                     if (value == '2') {
                         return '服务中';

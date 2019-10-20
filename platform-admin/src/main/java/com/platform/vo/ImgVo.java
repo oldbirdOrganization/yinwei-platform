@@ -1,4 +1,4 @@
-package com.platform.entity;
+package com.platform.vo;
 
 public class ImgVo implements java.io.Serializable{
 

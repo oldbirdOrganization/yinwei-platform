@@ -1,16 +1,14 @@
 package com.platform.dao;
 
-import com.platform.entity.OrderInfoEntity;
+import com.platform.entity.OrderImageEntity;
 
 /**
  * 
  * 
  * @author oldbird
  * @email oldbirdteam@163.com
- * @date 2019-08-13 10:41:09
+ * @date 2019-10-20 10:41:09
  */
-public interface OrderInfoDao extends BaseDao<OrderInfoEntity> {
-
-    OrderInfoEntity selectBySelective(OrderInfoEntity record);
+public interface OrderImageDao extends BaseDao<OrderImageEntity> {
 
 }

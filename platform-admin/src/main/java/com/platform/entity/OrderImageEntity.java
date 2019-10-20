@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 
@@ -15,7 +14,7 @@ import lombok.Data;
  * @date 2019-08-17 17:30:51
  */
 @TableName("nideshop_order_image")
-public class NideshopOrderImageEntity implements Serializable {
+public class OrderImageEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -31,6 +30,11 @@ public class NideshopOrderImageEntity implements Serializable {
 	 * 图片url
 	 */
 	private String url;
+
+	/**
+	 * 图片类型 1-服务前 2-服务后
+	 */
+	private int sortType;
 	/**
 	 * 
 	 */
@@ -114,5 +118,13 @@ public class NideshopOrderImageEntity implements Serializable {
 
 	public void setDefunct(Integer defunct) {
 		this.defunct = defunct;
+	}
+
+	public int getSortType() {
+		return sortType;
+	}
+
+	public void setSortType(int sortType) {
+		this.sortType = sortType;
 	}
 }

@@ -2,10 +2,12 @@ package com.platform.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.platform.vo.ImgVo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -91,6 +93,12 @@ public class OrderInfoEntity implements Serializable {
 	 * 问题描述
 	 */
 	private String problemDescription;
+
+	/**
+	 * 描述图片集合
+	 */
+	private List<ImgVo> imgVoList;
+
 	/**
 	 * 服务类型
 	 */
@@ -693,5 +701,13 @@ public class OrderInfoEntity implements Serializable {
 
 	public void setWorkerMobile(String workerMobile) {
 		this.workerMobile = workerMobile;
+	}
+
+	public List<ImgVo> getImgVoList() {
+		return imgVoList;
+	}
+
+	public void setImgVoList(List<ImgVo> imgVoList) {
+		this.imgVoList = imgVoList;
 	}
 }

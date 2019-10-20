@@ -1,6 +1,6 @@
 package com.platform.service;
 
-import com.platform.entity.OrderInfoEntity;
+import com.platform.entity.OrderImageEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -10,35 +10,19 @@ import java.util.Map;
  * @email oldbirdteam@163.com
  * @date 2019-08-13 10:41:09
  */
-public interface OrderInfoService {
+public interface OrderImageService {
 
-    OrderInfoEntity queryObject(Integer id);
+    OrderImageEntity queryObject(Integer id);
 
-    List<OrderInfoEntity> queryList(Map<String, Object> map);
+    List<OrderImageEntity> queryList(Map<String, Object> map);
 
-    int queryTotal(Map<String, Object> map);
+    int save(OrderImageEntity order);
 
-    int save(OrderInfoEntity order);
-
-    int update(OrderInfoEntity order);
+    int update(OrderImageEntity order);
 
     int delete(Integer id);
 
     int deleteBatch(Integer[] ids);
 
-    /**
-     * 订单作废
-     *
-     * @param id
-     * @return
-     */
-    int cancelOrder(Integer id);
 
-    /**
-     * 订单指派
-     */
-
-    int dispatchOrder(OrderInfoEntity order);
-
-    OrderInfoEntity selectBySelective(OrderInfoEntity order);
 }

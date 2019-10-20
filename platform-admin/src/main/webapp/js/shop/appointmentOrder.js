@@ -1,9 +1,7 @@
 $(function () {
     let orderNo = getQueryString("orderNo");
     let channelId = getQueryString("channelId");
-    let storeId = getQueryString("storeId");
-    let payType = getQueryString("payType");
-    let masterWorker = getQueryString("masterWorker");
+    let orderStatus = getQueryString("orderStatus");
     let url = '../order/list';
     if (orderNo) {
         url += '?orderNo=' + orderNo;
@@ -11,14 +9,8 @@ $(function () {
     if (channelId) {
         url += '?channelId=' + channelId;
     }
-    if (storeId) {
-        url += '?storeId=' + storeId;
-    }
-    if (payType) {
-        url += '?payType=' + payType;
-    }
-    if (masterWorker) {
-        url += '?masterWorker=' + masterWorker;
+    if (orderStatus) {
+        url += '?orderStatus=' + orderStatus;
     }
     url += '?orderType=' + "1";
     $("#jqGrid").Grid({
@@ -50,8 +42,6 @@ $(function () {
                         return '待指派';
                     } else if (value == '2') {
                         return '已指派';
-                    }else if(value == '2'){
-                        return '已指派';
                     }else if(value == '4'){
                         return '作废';
                     }
@@ -59,7 +49,7 @@ $(function () {
                 }
             },
             {
-                label: '下单时间', name: 'createTime', index: 'create_time', width: 100,
+                label: '下单时间', name: 'createTime', index: 'create_time', width: 130,
                 formatter: function (value) {
                     return transDate(value);
                 }
@@ -68,7 +58,7 @@ $(function () {
                 label: '操作', width: 90, align: 'center', sortable: false,
                 formatter: function (value, col, row) {
                     return '<button class="btn btn-outline btn-info" onclick="vm.update(' + row.id +","+ row.payType+')">' +
-                        '<i class="fa fa-info-circle"></i>&nbsp;编辑</button>';
+                        '<i class="fa fa-info-circle"></i>&nbsp;详情</button>';
                 }
             }
         ]
@@ -90,9 +80,7 @@ let vm = new Vue({
         q: {
             orderNo: '',
             channelId: '',
-            storeId: '',
-            payType: '',
-            masterWorker: ''
+            orderStatus: ''
         }
     },
     methods: {
@@ -130,14 +118,14 @@ let vm = new Vue({
 
         cancelOrder: function (event) {
             let id = getSelectedRow("#jqGrid");
-            if (id == null) {
+            if (rowId == null) {
                 return;
             }
             Ajax.request({
                 type: "POST",
                 url: "../order/cancelOrder",
                 contentType: "application/json",
-                params: JSON.stringify(id),
+                params: JSON.stringify(rowId),
                 successCallback: function (r) {
                     if (r.code == 0) {
                         alert('操作成功', function (index) {

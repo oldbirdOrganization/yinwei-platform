@@ -1,11 +1,14 @@
 package com.platform.controller;
 
 import com.platform.entity.OfflineOrderInfoPo;
+import com.platform.entity.OrderImageEntity;
 import com.platform.entity.OrderInfoEntity;
 import com.platform.entity.SysUserEntity;
 import com.platform.service.OfflineOrderService;
+import com.platform.service.OrderImageService;
 import com.platform.service.OrderInfoService;
 import com.platform.utils.*;
+import com.platform.vo.ImgVo;
 import com.platform.vo.InfoVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -18,10 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -38,6 +38,9 @@ public class OrderInfoController {
 
     @Autowired
     private OfflineOrderService offlineOrderService;
+
+    @Autowired
+    private OrderImageService orderImageService;
 
     /**
      * 列表
@@ -70,8 +73,9 @@ public class OrderInfoController {
         String payType = infoVo.getPayType();
         String id = infoVo.getId();
         if("1".equals(payType)){
+            Map<String, Object> imgmap = new HashMap<>();
             OrderInfoEntity order = orderInfoService.queryObject(Integer.valueOf(id));
-            if(!ObjectUtils.isEmpty(order)){
+            if(!ObjectUtils.isEmpty(order) && order.getOrderType() == 2){//支付订单
                 //查询预约单信息
                 Map<String, Object> premap = new HashMap<>();
                 premap.put("parentOrderId",order.getParentOrderId());
@@ -86,8 +90,24 @@ public class OrderInfoController {
                     order.setAlreadyPayAmount(alreadyAmount);//此预约单已支付金额
                     order.setResiduesPayAmount(order.getTotalAmount().subtract(alreadyAmount));//预约单剩余尾款金额=总金额 -已付金额
                 }
+                imgmap.put("orderId",order.getParentOrderId());
             }
-
+            if(!ObjectUtils.isEmpty(order) && order.getOrderType() == 1){//预约订单
+                imgmap.put("orderId",order.getId());
+            }
+            //查询预约订单相关图片信息
+            List<ImgVo> imgVoList=new ArrayList<ImgVo>();
+            List<OrderImageEntity> imglist=orderImageService.queryList(imgmap);
+            for (OrderImageEntity ilist:imglist){
+                ImgVo imgVo =new ImgVo();
+                if(ilist.getSortType() !=2) {
+                    imgVo.setServiceFrontImgUrl(ilist.getUrl());
+                }else {
+                    imgVo.setServiceLaterImgUrl(ilist.getUrl());
+                }
+                imgVoList.add(imgVo);
+            }
+            order.setImgVoList(imgVoList);
             order.setPayType("1");
             return R.ok().put("order", order);
         }else if("2".equals(payType)){

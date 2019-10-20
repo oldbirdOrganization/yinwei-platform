@@ -192,4 +192,308 @@ public class OfflineOrderInfoVo implements Serializable {
 	//批次号
 	@ExcelColumn(value = "批次号", col = 38)
 	private String batchNo;
+
+	public Integer getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(Integer goodsId) {
+		this.goodsId = goodsId;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public Integer getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(Integer orderType) {
+		this.orderType = orderType;
+	}
+
+	public Integer getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(Integer orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public Integer getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(Integer paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public String getPaymentNo() {
+		return paymentNo;
+	}
+
+	public void setPaymentNo(String paymentNo) {
+		this.paymentNo = paymentNo;
+	}
+
+	public String getPaymentTime() {
+		return paymentTime;
+	}
+
+	public void setPaymentTime(String paymentTime) {
+		this.paymentTime = paymentTime;
+	}
+
+	public BigDecimal getOrderPrice() {
+		return orderPrice;
+	}
+
+	public void setOrderPrice(BigDecimal orderPrice) {
+		this.orderPrice = orderPrice;
+	}
+
+	public Integer getCouponId() {
+		return couponId;
+	}
+
+	public void setCouponId(Integer couponId) {
+		this.couponId = couponId;
+	}
+
+	public BigDecimal getCouponPrice() {
+		return couponPrice;
+	}
+
+	public void setCouponPrice(BigDecimal couponPrice) {
+		this.couponPrice = couponPrice;
+	}
+
+	public String getServiceHouseName() {
+		return serviceHouseName;
+	}
+
+	public void setServiceHouseName(String serviceHouseName) {
+		this.serviceHouseName = serviceHouseName;
+	}
+
+	public String getServiceTime() {
+		return serviceTime;
+	}
+
+	public void setServiceTime(String serviceTime) {
+		this.serviceTime = serviceTime;
+	}
+
+	public String getServiceRequired() {
+		return serviceRequired;
+	}
+
+	public void setServiceRequired(String serviceRequired) {
+		this.serviceRequired = serviceRequired;
+	}
+
+	public String getDescriptionDescription() {
+		return descriptionDescription;
+	}
+
+	public void setDescriptionDescription(String descriptionDescription) {
+		this.descriptionDescription = descriptionDescription;
+	}
+
+	public String getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
+	}
+
+	public String getServiceSpace() {
+		return serviceSpace;
+	}
+
+	public void setServiceSpace(String serviceSpace) {
+		this.serviceSpace = serviceSpace;
+	}
+
+	public String getServiceAcreage() {
+		return serviceAcreage;
+	}
+
+	public void setServiceAcreage(String serviceAcreage) {
+		this.serviceAcreage = serviceAcreage;
+	}
+
+	public String getServiceIdea() {
+		return serviceIdea;
+	}
+
+	public void setServiceIdea(String serviceIdea) {
+		this.serviceIdea = serviceIdea;
+	}
+
+	public String getServiceAirConditionerModel() {
+		return serviceAirConditionerModel;
+	}
+
+	public void setServiceAirConditionerModel(String serviceAirConditionerModel) {
+		this.serviceAirConditionerModel = serviceAirConditionerModel;
+	}
+
+	public String getServiceAirConditionerType() {
+		return serviceAirConditionerType;
+	}
+
+	public void setServiceAirConditionerType(String serviceAirConditionerType) {
+		this.serviceAirConditionerType = serviceAirConditionerType;
+	}
+
+	public String getServiceFurniture() {
+		return serviceFurniture;
+	}
+
+	public void setServiceFurniture(String serviceFurniture) {
+		this.serviceFurniture = serviceFurniture;
+	}
+
+	public String getServiceHouseType() {
+		return serviceHouseType;
+	}
+
+	public void setServiceHouseType(String serviceHouseType) {
+		this.serviceHouseType = serviceHouseType;
+	}
+
+	public String getServiceHouseDeliveryStandards() {
+		return serviceHouseDeliveryStandards;
+	}
+
+	public void setServiceHouseDeliveryStandards(String serviceHouseDeliveryStandards) {
+		this.serviceHouseDeliveryStandards = serviceHouseDeliveryStandards;
+	}
+
+	public String getContactName() {
+		return contactName;
+	}
+
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+
+	public String getContactMobile() {
+		return contactMobile;
+	}
+
+	public void setContactMobile(String contactMobile) {
+		this.contactMobile = contactMobile;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Integer getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(Integer channelId) {
+		this.channelId = channelId;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+	public String getMasterWorker() {
+		return masterWorker;
+	}
+
+	public void setMasterWorker(String masterWorker) {
+		this.masterWorker = masterWorker;
+	}
+
+	public Long getMasterWorkerId() {
+		return masterWorkerId;
+	}
+
+	public void setMasterWorkerId(Long masterWorkerId) {
+		this.masterWorkerId = masterWorkerId;
+	}
+
+	public Integer getIsOuterOrder() {
+		return isOuterOrder;
+	}
+
+	public void setIsOuterOrder(Integer isOuterOrder) {
+		this.isOuterOrder = isOuterOrder;
+	}
+
+	public String getOuterMerchantName() {
+		return outerMerchantName;
+	}
+
+	public void setOuterMerchantName(String outerMerchantName) {
+		this.outerMerchantName = outerMerchantName;
+	}
+
+	public String getOuterServiceCategory() {
+		return outerServiceCategory;
+	}
+
+	public void setOuterServiceCategory(String outerServiceCategory) {
+		this.outerServiceCategory = outerServiceCategory;
+	}
+
+	public String getOuterServiceContent() {
+		return outerServiceContent;
+	}
+
+	public void setOuterServiceContent(String outerServiceContent) {
+		this.outerServiceContent = outerServiceContent;
+	}
+
+	public String getOuterServiceBrand() {
+		return outerServiceBrand;
+	}
+
+	public void setOuterServiceBrand(String outerServiceBrand) {
+		this.outerServiceBrand = outerServiceBrand;
+	}
+
+	public String getOuterServiceCombo() {
+		return outerServiceCombo;
+	}
+
+	public void setOuterServiceCombo(String outerServiceCombo) {
+		this.outerServiceCombo = outerServiceCombo;
+	}
+
+	public BigDecimal getPaymentPrice() {
+		return paymentPrice;
+	}
+
+	public void setPaymentPrice(BigDecimal paymentPrice) {
+		this.paymentPrice = paymentPrice;
+	}
+
+	public String getBatchNo() {
+		return batchNo;
+	}
+
+	public void setBatchNo(String batchNo) {
+		this.batchNo = batchNo;
+	}
 }
