@@ -118,14 +118,14 @@ let vm = new Vue({
 
         cancelOrder: function (event) {
             let id = getSelectedRow("#jqGrid");
-            if (rowId == null) {
+            if (id == null) {
                 return;
             }
             Ajax.request({
                 type: "POST",
                 url: "../order/cancelOrder",
                 contentType: "application/json",
-                params: JSON.stringify(rowId),
+                params: JSON.stringify(id),
                 successCallback: function (r) {
                     if (r.code == 0) {
                         alert('操作成功', function (index) {

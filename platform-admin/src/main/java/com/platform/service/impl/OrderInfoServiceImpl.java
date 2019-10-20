@@ -63,16 +63,13 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         Integer orderStatus = orderEntity.getOrderStatus();//订单状态  1 下单成功（待指派） 2已指派 3已完成 4作废
         Integer payStatus = orderEntity.getPaymentStatus();//支付状态 1待付款 2 已付款
 
-        if (2 == payStatus) {
+        if (null !=payStatus && 2 == payStatus) {
             throw new RRException("此订单已付款，不能作废！");
         }
-//        if (2 == orderStatus) {
-//            throw new RRException("此订单处于施工中，不能作废！");
-//        }
-        if (3 == orderStatus) {
+        if (null !=orderStatus && 3 == orderStatus) {
             throw new RRException("此订单已完成服务，不能作废！");
         }
-        if (4 == orderStatus) {
+        if (null !=orderStatus && 4 == orderStatus) {
             throw new RRException("此订单已作废，勿重复操作！");
         }
 

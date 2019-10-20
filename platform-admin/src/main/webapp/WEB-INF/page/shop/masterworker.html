@@ -24,7 +24,7 @@
                 <i-button @click="query">查询</i-button>
             </div>
             <div class="buttons-group">
-                #if($shiro.hasPermission("order:update"))
+                #if($shiro.hasPermission("appointmentOrder:update"))
                 <i-button type="error" @click="dispatchMaster"><i class="fa fa-share-square-o"></i>&nbsp指派工人师傅</i-button>
                 #end
             </div>

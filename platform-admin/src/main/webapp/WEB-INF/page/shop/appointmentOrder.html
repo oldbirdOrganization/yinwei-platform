@@ -36,10 +36,10 @@
         </Row>
         <Row :gutter="16">
             <div class="buttons-group">
-                #if($shiro.hasPermission("order:cancelOrder"))
+                #if($shiro.hasPermission("appointmentOrder:cancelOrder"))
                 <i-button type="warning" @click="cancelOrder">订单作废</i-button>
                 #end
-                #if($shiro.hasPermission("order:dispatchOrder"))
+                #if($shiro.hasPermission("appointmentOrder:dispatchOrder"))
                 <i-button type="error" @click="dispatchOrder">订单指派</i-button>
                 #end
             </div>
