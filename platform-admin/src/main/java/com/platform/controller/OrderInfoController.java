@@ -60,13 +60,6 @@ public class OrderInfoController {
     /**
      * 信息
      */
-//    @RequestMapping("/info/{id}")
-//    @RequiresPermissions("order:info")
-//    public R info(@PathVariable("id") Integer id) {
-//        OrderInfoEntity order = orderInfoService.queryObject(id);
-//        return R.ok().put("order", order);
-//    }
-
     @RequestMapping("/info")
     @RequiresPermissions("order:info")
     public R info(@RequestBody InfoVo infoVo) {
@@ -76,20 +69,28 @@ public class OrderInfoController {
             Map<String, Object> imgmap = new HashMap<>();
             OrderInfoEntity order = orderInfoService.queryObject(Integer.valueOf(id));
             if(!ObjectUtils.isEmpty(order) && order.getOrderType() == 2){//支付订单
-                //查询预约单信息
+                BigDecimal onalreadyAmount=new BigDecimal(0);//线上已付金额
+                BigDecimal offalreadyAmount=new BigDecimal(0);//线下已付金额
+                // 查询线上支付订单信息
                 Map<String, Object> premap = new HashMap<>();
                 premap.put("parentOrderId",order.getParentOrderId());
                 List<OrderInfoEntity> preorderList=orderInfoService.queryList(premap);
-                if(preorderList.size()> 0){
-                    BigDecimal alreadyAmount=new BigDecimal(0);
-                    for (OrderInfoEntity preorderlist:preorderList){
-                        if(preorderlist.getPaymentStatus() == 2){//已付金额= 总金额 - 历次已支付金额 -历次优惠金额
-                            alreadyAmount=(alreadyAmount.add(preorderlist.getOrderPrice())).subtract(order.getCouponPrice());
-                        }
+                for (OrderInfoEntity preorderlist:preorderList){
+                    if(preorderlist.getPaymentStatus() == 2){//线上已付金额= 总金额 - 历次已支付金额 -历次优惠金额
+                        onalreadyAmount=(onalreadyAmount.add(preorderlist.getOrderPrice())).subtract(preorderlist.getCouponPrice());
                     }
-                    order.setAlreadyPayAmount(alreadyAmount);//此预约单已支付金额
-                    order.setResiduesPayAmount(order.getTotalAmount().subtract(alreadyAmount));//预约单剩余尾款金额=总金额 -已付金额
                 }
+                // 查询线下已支付订单信息
+                Map<String, Object> offlineMap=new HashMap<String, Object>();
+                offlineMap.put("parentOrderId",order.getParentOrderId());
+                List<OfflineOrderInfoPo> offlineorderList = offlineOrderService.queryListCondtion(offlineMap);
+                for(OfflineOrderInfoPo offlist:offlineorderList){
+                    if(offlist.getPaymentStatus() == 2){//线下已付金额= 总金额 - 历次已支付金额
+                        offalreadyAmount=(offalreadyAmount.add(offlist.getOrderPrice()));
+                    }
+                }
+                order.setAlreadyPayAmount(onalreadyAmount.add(offalreadyAmount));//此预约单已支付金额
+                order.setResiduesPayAmount(order.getTotalAmount().subtract(onalreadyAmount.add(offalreadyAmount)));//预约单剩余尾款金额=总金额 -已付金额
                 imgmap.put("orderId",order.getParentOrderId());
             }
             if(!ObjectUtils.isEmpty(order) && order.getOrderType() == 1){//预约订单
@@ -227,10 +228,11 @@ public class OrderInfoController {
             OfflineOrderInfoPo offlineOrderInfoPo = new OfflineOrderInfoPo();
             BeanUtils.copyProperties(order, offlineOrderInfoPo);
             SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
-            offlineOrderInfoPo.setParentOrderId(orderInfoEntity.getId().toString());
+            offlineOrderInfoPo.setParentOrderId(orderInfoEntity.getId());
             offlineOrderInfoPo.setOrderNo(fmt.format(new Date()));
             offlineOrderInfoPo.setPaymentStatus(2);//已支付
-            offlineOrderInfoPo.setOrderStatus(2);//已确认
+            offlineOrderInfoPo.setPaymentTime(new Date());
+            offlineOrderInfoPo.setOrderStatus(2);//已指派
             offlineOrderInfoPo.setChannelId(orderInfoEntity.getChannelId());
             offlineOrderInfoPo.setContactMobile(orderInfoEntity.getContactMobile());
             offlineOrderInfoPo.setContactName(orderInfoEntity.getContactName());

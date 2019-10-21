@@ -114,6 +114,19 @@
             <Form-item label="优惠金额（元）" prop="couponPrice">
                 <i-input v-model="order.couponPrice" placeholder="优惠金额" readonly/>
             </Form-item>
+            <Form-item label="进账科目" prop="item">
+                <Radio-group v-model="order.item" placeholder="进账科目">
+                    <Radio label="1" disabled>
+                        <span>定金</span>
+                    </Radio>
+                    <Radio label="2" disabled>
+                        <span>进度款</span>
+                    </Radio>
+                    <Radio label="3" disabled>
+                        <span>尾款</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
             <Form-item label="订单支付时间" prop="paymentTime">
                 <Date-picker v-model="order.paymentTime" placeholder="订单支付时间" readonly/>
             </Form-item>

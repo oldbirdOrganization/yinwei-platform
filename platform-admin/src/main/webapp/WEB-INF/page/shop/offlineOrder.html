@@ -91,10 +91,10 @@
             <Form-item label="付款状态" prop="paymentStatus">
                 <Radio-group v-model="order.paymentStatus" placeholder="付款状态">
                     <Radio label="1" disabled>
-                        <span>待付定金</span>
+                        <span>待付款</span>
                     </Radio>
                     <Radio label="2" disabled>
-                        <span>已付定金</span>
+                        <span>已付款</span>
                     </Radio>
                 </Radio-group>
             </Form-item>
@@ -109,7 +109,7 @@
                 <i-input v-model="order.alreadyPayAmount" placeholder="已付金额（元）" readonly/>
             </Form-item>
             <Form-item label="本次支付金额（元）" prop="orderPrice">
-                <i-input v-model="order.orderPrice" placeholder="本次支付金额（元）" v-bind:disabled="order.paymentStatus==2"/>
+                <i-input v-model="order.orderPrice" placeholder="本次支付金额（元）" readonly/>
             </Form-item>
             <Form-item label="尾款金额（元）" prop="residuesPayAmount"><!-- 总金额 -  已付金额 = 尾款金额 -->
                 <i-input v-model="order.residuesPayAmount" placeholder="尾款金额（元）" readonly/>
@@ -117,19 +117,55 @@
             <Form-item label="优惠金额（元）" prop="couponPrice">
                 <i-input v-model="order.couponPrice" placeholder="优惠金额" readonly/>
             </Form-item>
+            <Form-item label="进账科目" prop="item">
+                <Radio-group v-model="order.item" placeholder="进账科目">
+                    <Radio label="1" disabled>
+                        <span>定金</span>
+                    </Radio>
+                    <Radio label="2" disabled>
+                        <span>进度款</span>
+                    </Radio>
+                    <Radio label="3" disabled>
+                        <span>尾款</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
             <Form-item label="收款账户" prop="shroffAccountNumber">
                 <i-input v-model="order.shroffAccountNumber" placeholder="收款账户"  readonly/>
             </Form-item>
             <Form-item label="支付流水号" prop="paymentNo">
                 <i-input v-model="order.paymentNo" placeholder="支付流水号"  readonly/>
             </Form-item>
-            <Form-item label="下单时间" prop="createTime">
-                <Date-picker v-model="order.createTime" placeholder="下单时间" readonly/>
+            <Form-item label="订单支付时间" prop="paymentTime">
+                <Date-picker v-model="order.paymentTime" placeholder="订单支付时间" readonly/>
             </Form-item>
             <Form-item label="门店名称" prop="storeName">
                 <i-input v-model="order.storeName" placeholder="门店名称" readonly/>
             </Form-item>
+            <Form-item label="维修前图片" prop="order.imgVoList">
+                <div v-for="img in order.imgVoList" :key="img.serviceFrontImgUrl">
+                    <div class="contract-item">
+                        <img :src="img.serviceFrontImgUrl" style="width: 110px;height: 110px;margin-right:10px;float:left;"/>
+                    </div>
+                </div>
+            </Form-item>
+            <Form-item label="维修后图片" prop="order.imgVoList">
+                <div v-for="img in order.imgVoList" :key="img.serviceLaterImgUrl">
+                    <div class="contract-item">
+                        <img :src="img.serviceLaterImgUrl" style="width: 110px;height: 110px;margin-right:10px;float:left;"/>
+                    </div>
+                </div>
+            </Form-item>
+            <Form-item label="服务时间" prop="serviceTime">
+                <i-input v-model="order.serviceTime" placeholder="服务时间" readonly/>
+            </Form-item>
 
+            <Form-item label="问题描述" prop="problemDescription">
+                <i-input v-model="order.problemDescription" placeholder="问题描述" readonly/>
+            </Form-item>
+            <Form-item label="创建时间" prop="createTime">
+                <Date-picker v-model="order.createTime" placeholder="创建时间" readonly/>
+            </Form-item>
             <row>
                 <i-col span="8">
                     <p style="font-size: 20px;margin-left: 40px;margin-bottom: 30px;">地址信息</p>

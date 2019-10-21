@@ -196,6 +196,7 @@ public class ApiOrderPayController extends ApiBaseAction {
                 // 业务处理
                 NideshopOrderInfoEntity orderInfo = orderInfoService.findByOrderNo(out_trade_no);
                 orderInfo.setPaymentStatus(2);
+                orderInfo.setOrderStatus(3);
                 orderInfo.setPaymentTime(new Date());
                 orderInfoService.update(orderInfo);
                 response.getWriter().write(setXml("SUCCESS", "OK"));

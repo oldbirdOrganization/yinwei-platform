@@ -193,6 +193,16 @@ public class OfflineOrderInfoVo implements Serializable {
 	@ExcelColumn(value = "批次号", col = 38)
 	private String batchNo;
 
+
+	private Integer parentOrderId;
+	private String item;
+	private String parentOrderNo;
+	private BigDecimal totalAmount;	//订单总金额(单位：元)
+	//已付金额
+	private BigDecimal alreadyPayAmount;
+	//剩余尾款金额
+	private BigDecimal residuesPayAmount;
+
 	public Integer getGoodsId() {
 		return goodsId;
 	}
@@ -495,5 +505,53 @@ public class OfflineOrderInfoVo implements Serializable {
 
 	public void setBatchNo(String batchNo) {
 		this.batchNo = batchNo;
+	}
+
+	public Integer getParentOrderId() {
+		return parentOrderId;
+	}
+
+	public void setParentOrderId(Integer parentOrderId) {
+		this.parentOrderId = parentOrderId;
+	}
+
+	public String getItem() {
+		return item;
+	}
+
+	public void setItem(String item) {
+		this.item = item;
+	}
+
+	public String getParentOrderNo() {
+		return parentOrderNo;
+	}
+
+	public void setParentOrderNo(String parentOrderNo) {
+		this.parentOrderNo = parentOrderNo;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public BigDecimal getAlreadyPayAmount() {
+		return alreadyPayAmount;
+	}
+
+	public void setAlreadyPayAmount(BigDecimal alreadyPayAmount) {
+		this.alreadyPayAmount = alreadyPayAmount;
+	}
+
+	public BigDecimal getResiduesPayAmount() {
+		return residuesPayAmount;
+	}
+
+	public void setResiduesPayAmount(BigDecimal residuesPayAmount) {
+		this.residuesPayAmount = residuesPayAmount;
 	}
 }

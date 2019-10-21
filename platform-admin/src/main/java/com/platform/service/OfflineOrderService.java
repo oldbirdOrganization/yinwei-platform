@@ -5,6 +5,7 @@ import com.platform.utils.Query;
 import com.platform.vo.OfflineOrderInfoVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OfflineOrderService {
     void importOfflineOrders(List<OfflineOrderInfoVo> vos);
@@ -22,4 +23,6 @@ public interface OfflineOrderService {
     OfflineOrderInfoPo queryDetailById(Integer id);
 
     OfflineOrderInfoPo selectBySelective(OfflineOrderInfoPo order);
+
+    List<OfflineOrderInfoPo> queryListCondtion(Map<String, Object> map);
 }
