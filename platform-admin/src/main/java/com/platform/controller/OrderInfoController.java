@@ -10,6 +10,7 @@ import com.platform.service.OrderInfoService;
 import com.platform.utils.*;
 import com.platform.vo.ImgVo;
 import com.platform.vo.InfoVo;
+import com.platform.vo.OrderStatusCountVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -330,6 +331,14 @@ public class OrderInfoController {
         return R.ok();
     }
 
+    /**
+     * 统计订单状态数量
+     */
+    @RequestMapping("/count")
+    public R count(@RequestParam String orderType) {
+        OrderStatusCountVo vo = orderInfoService.countByStatus(orderType);
+        return R.ok().put("count",vo);
+    }
     public int queryTotalByMap(Map<String, Object> map) {
         Query query = new Query(map);
         String payType = (String) map.get("payType");

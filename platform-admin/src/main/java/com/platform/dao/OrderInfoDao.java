@@ -1,6 +1,8 @@
 package com.platform.dao;
 
 import com.platform.entity.OrderInfoEntity;
+import com.platform.vo.OrderStatusCountVo;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 
@@ -13,4 +15,5 @@ public interface OrderInfoDao extends BaseDao<OrderInfoEntity> {
 
     OrderInfoEntity selectBySelective(OrderInfoEntity record);
 
+    OrderStatusCountVo countByStatus(@Param("orderType") String orderType);
 }

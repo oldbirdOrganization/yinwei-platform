@@ -6,6 +6,7 @@ import com.platform.entity.SysUserEntity;
 import com.platform.service.OrderInfoService;
 import com.platform.utils.Constant;
 import com.platform.utils.RRException;
+import com.platform.vo.OrderStatusCountVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,5 +107,10 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Override
     public OrderInfoEntity selectBySelective(OrderInfoEntity order) {
         return orderInfoDao.selectBySelective(order);
+    }
+
+    @Override
+    public OrderStatusCountVo countByStatus(String orderType) {
+        return orderInfoDao.countByStatus(orderType);
     }
 }

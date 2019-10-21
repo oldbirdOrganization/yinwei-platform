@@ -162,6 +162,22 @@
         </if>
         order by create_time desc limit 1
     </select>
+    <select id="countByStatus" resultType="com.platform.vo.OrderStatusCountVo">
+        select *
+         <if test="orderType==2">
+             ,assigned+completed+invalid+toBePaid+paid  'all'
+         </if>
+        <if test="orderType==1">
+            ,assigned+toBeAssigned+invalid  'all'
+        </if>
+         from
+        (select count(*) 'toBeAssigned' from  nideshop_order_info aa where aa.order_type = #{orderType} and aa.order_status = 1)bb
+        ,(select count(*) 'assigned' from  nideshop_order_info aa where aa.order_type = #{orderType} and aa.order_status = 2)cc
+        ,(select count(*) 'completed' from  nideshop_order_info aa where aa.order_type = #{orderType} and aa.order_status = 3)dd
+        ,(select count(*) 'invalid' from  nideshop_order_info aa where aa.order_type = #{orderType} and aa.order_status = 4)ee
+        ,(select count(*) 'toBePaid' from  nideshop_order_info aa where aa.order_type = #{orderType} and aa.payment_status = 1)ff
+        ,(select count(*) 'paid' from  nideshop_order_info aa where aa.order_type = #{orderType} and aa.payment_status)gg
+    </select>
 
     <insert id="save" parameterType="com.platform.entity.OrderInfoEntity" useGeneratedKeys="true" keyProperty="id">
         insert into nideshop_order_info

@@ -7,6 +7,14 @@
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="!detail&&!addList&&showList">
+        <Row :gutter="16" style="margin-top: 30px;margin-bottom: 30px">
+            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">全部</span></i-col>
+            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">服务中</span></i-col>
+            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">待付款</span></i-col>
+            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">已付款</span></i-col>
+            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">已完成</span></i-col>
+            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">已作废</span></i-col>
+        </Row>
         <Row :gutter="16">
             <div class="search-group">
                 <i-col span="4">

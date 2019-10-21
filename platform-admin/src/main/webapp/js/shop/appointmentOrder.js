@@ -63,6 +63,7 @@ $(function () {
             }
         ]
     });
+    vm.countOrderStatus();
 });
 
 let vm = new Vue({
@@ -211,6 +212,16 @@ let vm = new Vue({
                 vm.saveOrUpdate()
             });
         },
+        countOrderStatus: function () {
+            Ajax.request({
+                url: "../order/count?orderType=1",
+                async: true,
+                successCallback: function (r) {
+                    vm.count = r.count;
+                    console.log(vm.count);
+                }
+            });
+        }
     },
     created: function () {
         let vue = this;

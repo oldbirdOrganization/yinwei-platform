@@ -105,6 +105,7 @@ $(function () {
             }
         ]
     });
+    vm.countOrderStatus();
 });
 
 let vm = new Vue({
@@ -311,6 +312,16 @@ let vm = new Vue({
                 successCallback: function (r) {
                     vm.orderInfos = r.page.list;
                     console.log(vm.orderInfos);
+                }
+            });
+        },
+        countOrderStatus: function () {
+            Ajax.request({
+                url: "../order/count?orderType=2",
+                async: true,
+                successCallback: function (r) {
+                    vm.count = r.count;
+                    console.log(vm.count);
                 }
             });
         }
