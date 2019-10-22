@@ -1,6 +1,7 @@
 package com.platform.service;
 
 import com.platform.entity.OrderInfoEntity;
+import com.platform.vo.OrderStatusCountVo;
 
 import java.util.List;
 import java.util.Map;
@@ -39,4 +40,8 @@ public interface OrderInfoService {
      */
 
     int dispatchOrder(OrderInfoEntity order);
+
+    OrderInfoEntity selectBySelective(OrderInfoEntity order);
+
+    OrderStatusCountVo countByStatus(String orderType);
 }

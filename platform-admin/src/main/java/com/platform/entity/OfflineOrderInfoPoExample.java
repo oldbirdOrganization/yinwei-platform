@@ -275,6 +275,66 @@ public class OfflineOrderInfoPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andParentOrderIdIsNull() {
+            addCriterion("parent_order_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdIsNotNull() {
+            addCriterion("parent_order_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdEqualTo(Integer value) {
+            addCriterion("parent_order_id =", value, "parentOrderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdNotEqualTo(Integer value) {
+            addCriterion("parent_order_id <>", value, "parentOrderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdGreaterThan(Integer value) {
+            addCriterion("parent_order_id >", value, "parentOrderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("parent_order_id >=", value, "parentOrderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdLessThan(Integer value) {
+            addCriterion("parent_order_id <", value, "parentOrderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdLessThanOrEqualTo(Integer value) {
+            addCriterion("parent_order_id <=", value, "parentOrderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdIn(List<Integer> values) {
+            addCriterion("parent_order_id in", values, "parentOrderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdNotIn(List<Integer> values) {
+            addCriterion("parent_order_id not in", values, "parentOrderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdBetween(Integer value1, Integer value2) {
+            addCriterion("parent_order_id between", value1, value2, "parentOrderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentOrderIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("parent_order_id not between", value1, value2, "parentOrderId");
+            return (Criteria) this;
+        }
+
         public Criteria andGoodsIdIsNull() {
             addCriterion("goods_id is null");
             return (Criteria) this;

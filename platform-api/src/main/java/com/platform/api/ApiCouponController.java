@@ -1,6 +1,7 @@
 package com.platform.api;
 
 import com.alibaba.fastjson.JSONObject;
+import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
 import com.platform.cache.J2CacheUtils;
 import com.platform.entity.*;
@@ -47,6 +48,7 @@ public class ApiCouponController extends ApiBaseAction {
      * 获取优惠券列表
      */
     @ApiOperation(value = "获取优惠券列表")
+    @IgnoreAuth
     @PostMapping("/list")
     public Object list() {
         Map param = new HashMap();
@@ -105,6 +107,7 @@ public class ApiCouponController extends ApiBaseAction {
      * 兑换优惠券
      */
     @ApiOperation(value = "兑换优惠券")
+    @IgnoreAuth
     @PostMapping("exchange")
     public Object exchange(@LoginUser UserVo loginUser) {
         JSONObject jsonParam = getJsonRequest();
@@ -138,6 +141,7 @@ public class ApiCouponController extends ApiBaseAction {
      * 　　填写手机号码，领券
      */
     @ApiOperation(value = "新用户领取优惠券")
+    @IgnoreAuth
     @PostMapping("newuser")
     public Object newuser(@LoginUser UserVo loginUser) {
         JSONObject jsonParam = getJsonRequest();

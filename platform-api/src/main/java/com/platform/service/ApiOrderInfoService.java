@@ -41,14 +41,19 @@ public class ApiOrderInfoService {
         NideshopOrderInfoEntity model = new NideshopOrderInfoEntity();
         BeanUtils.copyProperties(submitOrderVo,model);
         SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
+        if(model.getOrderType().intValue()==2){//支付订单下单
+            model.setPaymentStatus(1);//未支付
+        }
+        model.setOrderStatus(1);//下单成功（预约-待指派）
         model.setOrderNo(fmt.format(new Date()));
-        model.setPaymentStatus(1);//未支付
-        model.setOrderStatus(1);//下单成功
         model.setCreateTime(new Date());
         model.setUpdateTime(new Date());
         model.setDefunct(0);
         model.setCreateUserId(user.getUserId());
         model.setUpdateUserId(user.getUserId());
+        if ( null== model.getIsOuterOrder()){
+             model.setIsOuterOrder(0);
+        }
         nideshopOrderInfoDao.insert(model);
 
         //保存订单图片
@@ -102,7 +107,7 @@ public class ApiOrderInfoService {
         QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
         wrapper.eq("create_user_id",user.getUserId());
         wrapper.eq("order_type",2);
-        wrapper.ne("order_status",5);
+        wrapper.ne("order_status",4);
         wrapper.eq("payment_status",1);
         return nideshopOrderInfoDao.selectList(wrapper);
     }
@@ -185,12 +190,12 @@ public class ApiOrderInfoService {
         logger.info("@@ApiOrderInfoService.doRun  order job begin");
         List<NideshopOrderInfoEntity> list1 = findNotPayment();
         for(NideshopOrderInfoEntity m1 : list1){
-            m1.setOrderStatus(5);
+            m1.setOrderStatus(4);
             nideshopOrderInfoDao.updateById(m1);
         }
         List<NideshopOrderInfoEntity> list2 = findNotDesignate();
         for(NideshopOrderInfoEntity m2 : list2){
-            m2.setOrderStatus(5);
+            m2.setOrderStatus(4);
             nideshopOrderInfoDao.updateById(m2);
         }
         logger.info("@@ApiOrderInfoService.doRun  order job end");

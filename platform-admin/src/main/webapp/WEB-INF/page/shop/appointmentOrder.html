@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="!detail&&showList">
+        <Row :gutter="16">
+            <div class="search-group">
+                <i-col span="4">
+                    <i-input v-model="q.orderNo" @on-enter="query" placeholder="订单号"/>
+                </i-col>
+                <i-col span="4">
+                    <i-select v-model="q.channelId" placeholder="渠道名称">
+                        <i-option value="1">维修</i-option>
+                        <i-option value="2">改造</i-option>
+                        <i-option value="3">设计</i-option>
+                        <i-option value="4">定制化加配</i-option>
+                        <i-option value="5">装修</i-option>
+                        <i-option value="6">空调维保</i-option>
+                        <i-option value="7">家具保养</i-option>
+                        <i-option value="8">专业验房</i-option>
+                    </i-select>
+                </i-col>
+                <i-col span="4">
+                    <i-select v-model="q.orderStatus" placeholder="订单状态">
+                        <i-option value="1">未指派</i-option>
+                        <i-option value="2">已指派</i-option>
+                        <i-option value="4">作废</i-option>
+                    </i-select>
+                </i-col>
+                <i-button @click="query">查询</i-button>
+            </div>
+        </Row>
+        <Row :gutter="16">
+            <div class="buttons-group">
+                #if($shiro.hasPermission("appointmentOrder:cancelOrder"))
+                <i-button type="warning" @click="cancelOrder">订单作废</i-button>
+                #end
+                #if($shiro.hasPermission("appointmentOrder:dispatchOrder"))
+                <i-button type="error" @click="dispatchOrder">订单指派</i-button>
+                #end
+            </div>
+        </Row>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <Card v-show="detail">
+        <p slot="title" style="height: auto">
+            {{title}}
+        </p>
+        <i-form ref="formValidate" :model="order" :label-width="130">
+            <row style="font-size: 20px;margin-left: 40px;margin-bottom: 30px;">订单信息</row>
+            <Form-item label="预约订单号" prop="orderNo">
+                <i-input v-model="order.orderNo" placeholder="预约订单号"readonly/>
+            </Form-item>
+            <Form-item label="是否外部订单" prop="isOuterOrder">
+                <Radio-group v-model="order.isOuterOrder" placeholder="是否外部订单">
+                    <Radio label="0" disabled>
+                        <span>否</span>
+                    </Radio>
+                    <Radio label="1" disabled>
+                        <span>是</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
+            <Form-item label="订单状态" prop="orderStatus" readonly>
+                <Radio-group v-model="order.orderStatus" placeholder="订单状态">
+                    <Radio label="1" disabled>
+                        <span>待指派</span>
+                    </Radio>
+                    <Radio label="2" disabled>
+                        <span>已指派</span>
+                    </Radio>
+                    <Radio label="4" disabled>
+                        <span>已作废</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
+            <Form-item label="门店名称" prop="storeName">
+                <i-input v-model="order.storeName" placeholder="门店名称" readonly/>
+            </Form-item>
+
+            <Form-item label="维修前图片" prop="order.imgVoList">
+                <div v-for="img in order.imgVoList" :key="img.serviceFrontImgUrl">
+                    <div class="contract-item">
+                        <img :src="img.serviceFrontImgUrl" style="width: 110px;height: 110px;margin-right:10px;float:left;"/>
+                    </div>
+                </div>
+            </Form-item>
+            <Form-item label="维修后图片" prop="order.imgVoList">
+                <div v-for="img in order.imgVoList" :key="img.serviceLaterImgUrl">
+                    <div class="contract-item">
+                        <img :src="img.serviceLaterImgUrl" style="width: 110px;height: 110px;margin-right:10px;float:left;"/>
+                    </div>
+                </div>
+            </Form-item>
+            <Form-item label="服务时间" prop="serviceTime">
+                <i-input v-model="order.serviceTime" placeholder="服务时间" readonly/>
+            </Form-item>
+            <Form-item label="问题描述" prop="problemDescription">
+                <i-input v-model="order.problemDescription" placeholder="问题描述" readonly/>
+            </Form-item>
+            <Form-item label="创建时间" prop="createTime">
+                <Date-picker v-model="order.createTime" placeholder="创建时间" readonly/>
+            </Form-item>
+<!--            <Form-item label="备注" prop="remark">-->
+<!--                <i-input v-model="order.remark" readonly/>-->
+<!--            </Form-item>-->
+            <row>
+                <i-col span="8">
+                    <p style="font-size: 20px;margin-left: 40px;margin-bottom: 30px;">地址信息</p>
+                    <Form-item label="收货人姓名" prop="contactName">
+                        <i-input v-model="order.contactName" placeholder="收货人姓名" readonly/>
+                    </Form-item>
+                    <Form-item label="收货人手机号码" prop="contactMobile">
+                        <i-input v-model="order.contactMobile" placeholder="收货人手机号码" readonly/>
+                    </Form-item>
+                    <Form-item label="详细地址" prop="address">
+                        <i-input v-model="order.address" placeholder="详细地址" readonly/>
+                    </Form-item>
+<!--                    <Form-item label="邮编" prop="serviceTime">-->
+<!--                        <i-input v-model="order.serviceTime" readonly/>-->
+<!--                    </Form-item>-->
+                </i-col>
+                <i-col span="16">
+                    <p style="font-size: 20px;margin-left: 40px;margin-bottom: 30px;">师傅信息</p>
+                    <Form-item label="师傅编号" prop="masterWorkerId">
+                        <i-input v-model="order.masterWorkerId" placeholder="" readonly/>
+                    </Form-item>
+                    <Form-item label="师傅姓名" prop="masterWorker">
+                        <i-input v-model="order.masterWorker" placeholder="" readonly/>
+                    </Form-item>
+<!--                    <Form-item label="师傅工种" prop="serviceTime">-->
+<!--                        <i-input v-model="order.serviceTime" readonly/>-->
+<!--                    </Form-item>-->
+                    <Form-item label="联系方式" prop="workerMobile">
+                        <i-input v-model="order.workerMobile" placeholder="" readonly/>
+                    </Form-item>
+                    <Form-item label="评论星级" prop="workerStar">
+                        <Rate  v-model="order.workerStar" readonly/>
+                    </Form-item>
+                </i-col>
+            </row>
+            <Form-item>
+                <i-button type="primary" @click="handleSubmit('formValidate')">提交</i-button>
+                <i-button type="warning" @click="reload" style="margin-left: 8px">返回</i-button>
+            </Form-item>
+        </i-form>
+    </Card>
+
+</div>
+<script src="${rc.contextPath}/js/shop/appointmentOrder.js?_${date.systemTime}"></script>
+</body>
+</html>

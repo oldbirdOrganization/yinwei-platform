@@ -163,6 +163,7 @@ public class ApiOrderPayController extends ApiBaseAction {
     @ApiIgnore
     @RequestMapping(value = "/notify", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public void notify(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("微信订单回调接口通知begin");
         try {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
@@ -182,6 +183,7 @@ public class ApiOrderPayController extends ApiBaseAction {
 
             WechatRefundApiResult result = (WechatRefundApiResult) XmlUtil.xmlStrToBean(reponseXml, WechatRefundApiResult.class);
             String result_code = result.getResult_code();
+            logger.info("微信订单回调接口通知 请求参数解析resultCode="+result_code+",requestResult="+ reponseXml );
             if (result_code.equalsIgnoreCase("FAIL")) {
                 //订单编号
                 String out_trade_no = result.getOut_trade_no();
@@ -194,14 +196,17 @@ public class ApiOrderPayController extends ApiBaseAction {
                 // 业务处理
                 NideshopOrderInfoEntity orderInfo = orderInfoService.findByOrderNo(out_trade_no);
                 orderInfo.setPaymentStatus(2);
+                orderInfo.setOrderStatus(3);
                 orderInfo.setPaymentTime(new Date());
                 orderInfoService.update(orderInfo);
                 response.getWriter().write(setXml("SUCCESS", "OK"));
             }
+            logger.info("微信订单回调接口通知end");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("微信订单回调接口通知 error="+e);
             return;
         }
+
     }
 
     //返回微信服务

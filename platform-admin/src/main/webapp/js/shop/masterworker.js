@@ -27,6 +27,10 @@ var vm = new Vue({
     el: '#rrapp',
     data: {
         showList: true,
+        info: {
+            id: '',
+            payType: ''
+        },
         q: {
             username: '',
             mobile: '',
@@ -54,10 +58,24 @@ var vm = new Vue({
             if (masterWorkerId == null) {
                 return;
             }
-            let orderId = getQueryString("orderId");
+            //let orderId = getQueryString("orderId");
+            // Ajax.request({
+            //     url: "../order/info/" + orderId,
+            //     async: true,
+            //     successCallback: function (r) {
+            //         vm.order = r.order;
+            //         vm.order.masterWorkerId=masterWorkerId;
+            //     }
+            // });
+
+            vm.info.id = getQueryString("orderId");
+            vm.info.payType = 1;
+            debugger;
             Ajax.request({
-                url: "../order/info/" + orderId,
-                async: true,
+                type: "POST",
+                url: "../order/info",
+                contentType: "application/json",
+                params: JSON.stringify(vm.info),
                 successCallback: function (r) {
                     vm.order = r.order;
                     vm.order.masterWorkerId=masterWorkerId;

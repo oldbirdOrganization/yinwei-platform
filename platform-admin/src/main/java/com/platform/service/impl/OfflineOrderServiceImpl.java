@@ -6,7 +6,6 @@ import com.platform.entity.OfflineOrderInfoPoExample;
 import com.platform.service.OfflineOrderService;
 import com.platform.utils.Query;
 import com.platform.utils.ShiroUtils;
-import com.platform.utils.StringUtils;
 import com.platform.vo.OfflineOrderInfoVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -77,6 +76,9 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
         if (notNull(query.get("isOuterOrder"))) {
             criteria.andOrderNoEqualTo(query.get("isOuterOrder").toString());
         }
+        if (notNull(query.get("parentOrderId"))) {
+            criteria.andParentOrderIdEqualTo(Integer.parseInt(query.get("parentOrderId").toString()));
+        }
         if (notNull(query.get("offset"))) {
             example.setOffset(Integer.valueOf(query.get("offset").toString()));
             example.setPageSize(Integer.valueOf(query.get("limit").toString()));
@@ -84,6 +86,10 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
         return offlineOrderInfoPoMapper.selectByExample(example);
     }
 
+    @Override
+    public List<OfflineOrderInfoPo> queryListByMap(Query query) {
+        return offlineOrderInfoPoMapper.queryListByMap(query);
+    }
 
     private boolean notNull(Object o) {
         if (o != null && !o.toString().equals("")) {
@@ -117,5 +123,50 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
     @Override
     public OfflineOrderInfoPo queryDetailById(Integer id) {
         return offlineOrderInfoPoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public OfflineOrderInfoPo selectBySelective(OfflineOrderInfoPo order) {
+        return offlineOrderInfoPoMapper.selectBySelective(order);
+    }
+
+    @Override
+    public int save(OfflineOrderInfoPo order) {
+        return offlineOrderInfoPoMapper.insertSelective(order);
+    }
+
+    @Override
+    public int update(OfflineOrderInfoPo order) {
+        return offlineOrderInfoPoMapper.updateByPrimaryKeySelective(order);
+    }
+
+    @Override
+    public List<OfflineOrderInfoPo> queryListCondtion(Map<String, Object> map) {
+        OfflineOrderInfoPoExample example = new OfflineOrderInfoPoExample();
+        OfflineOrderInfoPoExample.Criteria criteria = example.createCriteria();
+        if (notNull(map.get("orderNo"))) {
+            criteria.andOrderNoEqualTo(map.get("orderNo").toString());
+        }
+        if (notNull(map.get("orderStatus"))) {
+            criteria.andOrderStatusEqualTo(Integer.valueOf(map.get("orderStatus").toString()));
+        }
+        if (notNull(map.get("orderType"))) {
+            criteria.andOrderNoEqualTo(map.get("orderType").toString());
+        }
+        if (notNull(map.get("channelId"))) {
+            criteria.andOrderNoEqualTo(map.get("channelId").toString());
+        }
+        if (notNull(map.get("isOuterOrder"))) {
+            criteria.andOrderNoEqualTo(map.get("isOuterOrder").toString());
+        }
+        if (notNull(map.get("parentOrderId"))) {
+            criteria.andParentOrderIdEqualTo(Integer.parseInt(map.get("parentOrderId").toString()));
+        }
+        return offlineOrderInfoPoMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<OfflineOrderInfoPo> queryListPage(Query query) {
+        return offlineOrderInfoPoMapper.queryListPage(query);
     }
 }

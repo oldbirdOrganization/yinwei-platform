@@ -2,10 +2,13 @@ package com.platform.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.platform.vo.ImgVo;
+import com.platform.vo.OrderStatusCountVo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -50,10 +53,25 @@ public class OrderInfoEntity implements Serializable {
 	
 	private Date paymentTime;
 	/**
+	 * 实际支付金额
+	 */
+	private BigDecimal paymentPrice;
+
+	/**
+	 * 订单总金额
+	 */
+	private BigDecimal totalAmount;
+
+	/**
 	 * 订单金额
 	 */
 	private BigDecimal orderPrice;
-	
+
+	//已付金额
+	private BigDecimal alreadyPayAmount;
+
+	//剩余尾款金额
+	private BigDecimal residuesPayAmount;
 	//使用的优惠券id
     private Integer couponId;
    
@@ -75,7 +93,13 @@ public class OrderInfoEntity implements Serializable {
 	/**
 	 * 问题描述
 	 */
-	private String descriptionDescription;
+	private String problemDescription;
+
+	/**
+	 * 描述图片集合
+	 */
+	private List<ImgVo> imgVoList;
+
 	/**
 	 * 服务类型
 	 */
@@ -138,6 +162,7 @@ public class OrderInfoEntity implements Serializable {
 	private Long createUserId;
 	
 	private String userName;
+	private String userMobile;
 	/**
 	 * 修改人id
 	 */
@@ -167,6 +192,17 @@ public class OrderInfoEntity implements Serializable {
 	 */
 	private Long masterWorkerId;
 
+	private String workerMobile;
+	//支付渠道
+	private String payChannel;
+
+	//收款账号
+	private String shroffAccountNumber;
+	//门店id
+	private Long storeId;
+	//门店名称
+	private String storeName;
+
 	//是否为第三方订单 1-是 0-否
 	private Integer isOuterOrder;
 	//第三方服务商名称
@@ -179,6 +215,16 @@ public class OrderInfoEntity implements Serializable {
 	private String outerServiceBrand;
 	//第三方服务套餐名称
 	private String outerServiceCombo;
+
+	//支付方式 1线上支付 2线下支付
+	private String payType;
+	private String storeAddress;
+	private String storeContact;
+	private String parentOrderId;
+	private String item;//进账科目 1定金 2进度款 3尾款
+	private String parentOrderNo;//预约单号
+	private OrderStatusCountVo orderStatusCountVo;
+
 
 	public Integer getId() {
 		return id;
@@ -292,12 +338,12 @@ public class OrderInfoEntity implements Serializable {
 		this.serviceRequired = serviceRequired;
 	}
 
-	public String getDescriptionDescription() {
-		return descriptionDescription;
+	public String getProblemDescription() {
+		return problemDescription;
 	}
 
-	public void setDescriptionDescription(String descriptionDescription) {
-		this.descriptionDescription = descriptionDescription;
+	public void setProblemDescription(String problemDescription) {
+		this.problemDescription = problemDescription;
 	}
 
 	public String getServiceType() {
@@ -530,5 +576,149 @@ public class OrderInfoEntity implements Serializable {
 
 	public void setOuterServiceCombo(String outerServiceCombo) {
 		this.outerServiceCombo = outerServiceCombo;
+	}
+
+	public BigDecimal getPaymentPrice() {
+		return paymentPrice;
+	}
+
+	public void setPaymentPrice(BigDecimal paymentPrice) {
+		this.paymentPrice = paymentPrice;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public String getPayChannel() {
+		return payChannel;
+	}
+
+	public void setPayChannel(String payChannel) {
+		this.payChannel = payChannel;
+	}
+
+	public String getShroffAccountNumber() {
+		return shroffAccountNumber;
+	}
+
+	public void setShroffAccountNumber(String shroffAccountNumber) {
+		this.shroffAccountNumber = shroffAccountNumber;
+	}
+
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+
+	public String getPayType() {
+		return payType;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType;
+	}
+
+	public String getStoreAddress() {
+		return storeAddress;
+	}
+
+	public void setStoreAddress(String storeAddress) {
+		this.storeAddress = storeAddress;
+	}
+
+	public String getStoreContact() {
+		return storeContact;
+	}
+
+	public void setStoreContact(String storeContact) {
+		this.storeContact = storeContact;
+	}
+
+	public String getUserMobile() {
+		return userMobile;
+	}
+
+	public void setUserMobile(String userMobile) {
+		this.userMobile = userMobile;
+	}
+
+	public String getParentOrderId() {
+		return parentOrderId;
+	}
+
+	public void setParentOrderId(String parentOrderId) {
+		this.parentOrderId = parentOrderId;
+	}
+
+	public String getItem() {
+		return item;
+	}
+
+	public void setItem(String item) {
+		this.item = item;
+	}
+
+	public String getParentOrderNo() {
+		return parentOrderNo;
+	}
+
+	public void setParentOrderNo(String parentOrderNo) {
+		this.parentOrderNo = parentOrderNo;
+	}
+
+	public BigDecimal getAlreadyPayAmount() {
+		return alreadyPayAmount;
+	}
+
+	public void setAlreadyPayAmount(BigDecimal alreadyPayAmount) {
+		this.alreadyPayAmount = alreadyPayAmount;
+	}
+
+	public BigDecimal getResiduesPayAmount() {
+		return residuesPayAmount;
+	}
+
+	public void setResiduesPayAmount(BigDecimal residuesPayAmount) {
+		this.residuesPayAmount = residuesPayAmount;
+	}
+
+	public String getWorkerMobile() {
+		return workerMobile;
+	}
+
+	public void setWorkerMobile(String workerMobile) {
+		this.workerMobile = workerMobile;
+	}
+
+	public List<ImgVo> getImgVoList() {
+		return imgVoList;
+	}
+
+	public void setImgVoList(List<ImgVo> imgVoList) {
+		this.imgVoList = imgVoList;
+	}
+
+	public OrderStatusCountVo getOrderStatusCountVo() {
+		return orderStatusCountVo;
+	}
+
+	public void setOrderStatusCountVo(OrderStatusCountVo orderStatusCountVo) {
+		this.orderStatusCountVo = orderStatusCountVo;
 	}
 }

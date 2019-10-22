@@ -6,6 +6,7 @@ import com.platform.entity.SysUserEntity;
 import com.platform.service.OrderInfoService;
 import com.platform.utils.Constant;
 import com.platform.utils.RRException;
+import com.platform.vo.OrderStatusCountVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,23 +61,20 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Override
     public int cancelOrder(Integer id) {
         OrderInfoEntity orderEntity = queryObject(id);
-        Integer orderStatus = orderEntity.getOrderStatus();//订单状态
-        Integer payStatus = orderEntity.getPaymentStatus();//付款状态
+        Integer orderStatus = orderEntity.getOrderStatus();//订单状态  1 下单成功（待指派） 2已指派 3已完成 4作废
+        Integer payStatus = orderEntity.getPaymentStatus();//支付状态 1待付款 2 已付款
 
-        if (2 == payStatus) {
+        if (null !=payStatus && 2 == payStatus) {
             throw new RRException("此订单已付款，不能作废！");
         }
-        if (3 == orderStatus) {
-            throw new RRException("此订单处于施工中，不能作废！");
-        }
-        if (4 == orderStatus || 6 == orderStatus) {
+        if (null !=orderStatus && 3 == orderStatus) {
             throw new RRException("此订单已完成服务，不能作废！");
         }
-        if (5 == payStatus) {
+        if (null !=orderStatus && 4 == orderStatus) {
             throw new RRException("此订单已作废，勿重复操作！");
         }
 
-        orderEntity.setOrderStatus(5);
+        orderEntity.setOrderStatus(4);
         orderEntity.setUpdateTime(new Date());
         SysUserEntity sysUser = (SysUserEntity) SecurityUtils.getSubject().getSession().getAttribute(Constant.CURRENT_USER);
         if (sysUser != null) {
@@ -87,7 +85,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     @Override
     public int dispatchOrder(OrderInfoEntity order) {
-        Integer orderStatus = order.getOrderStatus();//订单状态
+        Integer orderStatus = order.getOrderStatus();////订单状态  1 下单成功（待指派） 2已指派 3已完成 4作废
         Integer payStatus = order.getPaymentStatus();//付款状态
         if(1 != orderStatus){
             throw new RRException("此订单状态无法指派装修师傅");
@@ -97,12 +95,22 @@ public class OrderInfoServiceImpl implements OrderInfoService {
                 throw new RRException("此订单未付款，无法指派装修师傅");
             }
         }
-        order.setOrderStatus(2);//订单待确认
+        order.setOrderStatus(2);//已指派
         order.setUpdateTime(new Date());
         SysUserEntity sysUser = (SysUserEntity) SecurityUtils.getSubject().getSession().getAttribute(Constant.CURRENT_USER);
         if (sysUser != null) {
             order.setUpdateUserId(sysUser.getUserId());
         }
         return orderInfoDao.update(order);
+    }
+
+    @Override
+    public OrderInfoEntity selectBySelective(OrderInfoEntity order) {
+        return orderInfoDao.selectBySelective(order);
+    }
+
+    @Override
+    public OrderStatusCountVo countByStatus(String orderType) {
+        return orderInfoDao.countByStatus(orderType);
     }
 }
