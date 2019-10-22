@@ -51,6 +51,7 @@ public class OrderInfoController {
     public R list(@RequestParam Map<String, Object> params) {
         List<OrderInfoEntity> orderList = queryListByMap(params);
         int total = queryTotalByMap(params);
+
         // 查询列表数据
         Query query = new Query(params);
         PageUtils pageUtil = new PageUtils(orderList, total, query.getLimit(), query.getPage());
@@ -360,11 +361,14 @@ public class OrderInfoController {
         List<OrderInfoEntity> dataList;
         String payType = (String) map.get("payType");
         List<OrderInfoEntity> orderInfoList = orderInfoService.queryList(query);
+        //统计订单状态数量
+        OrderStatusCountVo orderStatusCount = orderInfoService.countByStatus(String.valueOf(2));
         if ("1".equals(payType)) {
             dataList = orderInfoList.stream().map(orderInfoEntity -> {
                         OrderInfoEntity orderInfoVo = new OrderInfoEntity();
                         BeanUtils.copyProperties(orderInfoEntity, orderInfoVo);
                         orderInfoVo.setPayType("1");
+                        orderInfoVo.setOrderStatusCountVo(orderStatusCount);
                         return orderInfoVo;
                     }
 
@@ -375,6 +379,7 @@ public class OrderInfoController {
                         OrderInfoEntity orderInfoVo = new OrderInfoEntity();
                         BeanUtils.copyProperties(offlineOrderInfoPo, orderInfoVo);
                         orderInfoVo.setPayType("2");
+                        orderInfoVo.setOrderStatusCountVo(orderStatusCount);
                         return orderInfoVo;
                     }
 
@@ -385,6 +390,7 @@ public class OrderInfoController {
                             OrderInfoEntity orderInfoVo = new OrderInfoEntity();
                             BeanUtils.copyProperties(orderInfoEntity, orderInfoVo);
                             orderInfoVo.setPayType("1");
+                            orderInfoVo.setOrderStatusCountVo(orderStatusCount);
                             return orderInfoVo;
                         }
 
@@ -397,6 +403,7 @@ public class OrderInfoController {
                             OrderInfoEntity orderInfoVo = new OrderInfoEntity();
                             BeanUtils.copyProperties(orderInfoEntity, orderInfoVo);
                             orderInfoVo.setPayType("1");
+                            orderInfoVo.setOrderStatusCountVo(orderStatusCount);
                             return orderInfoVo;
                         }
 

@@ -25,4 +25,6 @@ public interface OfflineOrderService {
     OfflineOrderInfoPo selectBySelective(OfflineOrderInfoPo order);
 
     List<OfflineOrderInfoPo> queryListCondtion(Map<String, Object> map);
+
+    List<OfflineOrderInfoPo> queryListPage(Query query);
 }

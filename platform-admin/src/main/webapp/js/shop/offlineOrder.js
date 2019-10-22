@@ -22,7 +22,7 @@ $(function () {
         colModel: [
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
             {label: '支付订单号', name: 'orderNo', index: 'order_no', width: 150},
-            {label: '预约订单号', name: 'orderNo', index: 'order_no', width: 150},
+            {label: '预约订单号', name: 'parentOrderNo', index: 'parent_order_no', width: 150},
             {label: '下单用户', name: 'userName', index: 'user_name', width: 80},
             {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 60},
             {
@@ -64,7 +64,6 @@ $(function () {
             {label: '收款账号', name: 'shroffAccountNumber', index: 'shroff_account_number', width: 110},
             {label: '进账流水号', name: 'paymentNo', index: 'paymentNo', width: 110},
             {label: '实际支付金额(元)', name: 'orderPrice', index: 'order_price', width: 80},
-            {label: '优惠金额(元)', name: 'couponPrice', index: 'coupon_price', width: 80},
             {
                 label: '下单时间', name: 'createTime', index: 'create_time', width: 130,
                 formatter: function (value) {

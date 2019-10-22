@@ -74,9 +74,9 @@ public class OfflineOrderController {
         Query query = new Query(params);
 
         int total = offlineOrderService.queryTotal(query);
-        List<OfflineOrderInfoPo> orderGoodsList = offlineOrderService.queryList(query);
+        List<OfflineOrderInfoPo> offorderList = offlineOrderService.queryListPage(query);
 
-        PageUtils pageUtil = new PageUtils(orderGoodsList, total, query.getLimit(), query.getPage());
+        PageUtils pageUtil = new PageUtils(offorderList, total, query.getLimit(), query.getPage());
 
         return R.ok().put("page", pageUtil);
     }
@@ -113,6 +113,8 @@ public class OfflineOrderController {
 
     /**
      * 详情
+     * @param id
+     * @return
      */
     @RequestMapping("/info/{id}")
     @RequiresPermissions("order:info")
@@ -160,8 +162,14 @@ public class OfflineOrderController {
             imgVoList.add(imgVo);
         }
         orderInfoEntity.setImgVoList(imgVoList);
+        orderInfoEntity.setParentOrderNo(orderInfoEntity.getOrderNo());
+        orderInfoEntity.setOrderNo(offlineOrder.getOrderNo());
+        orderInfoEntity.setPaymentStatus(offlineOrder.getPaymentStatus());
+        orderInfoEntity.setPaymentNo(offlineOrder.getPaymentNo());
+        orderInfoEntity.setPaymentTime(offlineOrder.getPaymentTime());
         orderInfoEntity.setTotalAmount(offlineOrder.getTotalAmount().compareTo(BigDecimal.ZERO)==0? BigDecimal.ZERO:offlineOrder.getTotalAmount());
         orderInfoEntity.setOrderPrice(offlineOrder.getOrderPrice().compareTo(BigDecimal.ZERO)==0? BigDecimal.ZERO:offlineOrder.getOrderPrice());
+        orderInfoEntity.setShroffAccountNumber(offlineOrder.getShroffAccountNumber());
         orderInfoEntity.setItem(offlineOrder.getItem());
         orderInfoEntity.setShroffAccountNumber(offlineOrder.getShroffAccountNumber());
         orderInfoEntity.setPayChannel(offlineOrder.getPayChannel());

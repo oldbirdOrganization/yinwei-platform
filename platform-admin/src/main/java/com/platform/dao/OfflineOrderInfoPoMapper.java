@@ -2,10 +2,10 @@ package com.platform.dao;
 
 import com.platform.entity.OfflineOrderInfoPo;
 import com.platform.entity.OfflineOrderInfoPoExample;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface OfflineOrderInfoPoMapper {
     /**
@@ -99,4 +99,6 @@ public interface OfflineOrderInfoPoMapper {
     int updateByPrimaryKey(OfflineOrderInfoPo record);
 
     OfflineOrderInfoPo selectBySelective(OfflineOrderInfoPo record);
+
+    List<OfflineOrderInfoPo> queryListPage(Map<String, Object> map);
 }

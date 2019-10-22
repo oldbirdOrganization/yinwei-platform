@@ -364,6 +364,7 @@ public class OfflineOrderInfoPo {
     private Integer parentOrderId;
     private String item;
     private String parentOrderNo;
+    private String channelName;
     private BigDecimal totalAmount;	//订单总金额(单位：元)
 
     //已付金额
@@ -1505,5 +1506,13 @@ public class OfflineOrderInfoPo {
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 }

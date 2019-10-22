@@ -164,4 +164,9 @@ public class OfflineOrderServiceImpl implements OfflineOrderService {
         }
         return offlineOrderInfoPoMapper.selectByExample(example);
     }
+
+    @Override
+    public List<OfflineOrderInfoPo> queryListPage(Query query) {
+        return offlineOrderInfoPoMapper.queryListPage(query);
+    }
 }

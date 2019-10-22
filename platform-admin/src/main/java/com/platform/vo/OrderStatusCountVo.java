@@ -7,13 +7,13 @@ import java.io.Serializable;
  * Description:
  */
 public class OrderStatusCountVo implements Serializable {
-    private int all;
-    private int toBeAssigned;
-    private int assigned;
-    private int completed;
-    private int invalid;
-    private int toBePaid;
-    private int paid;
+    private int all;//全部数量
+    private int toBeAssigned;//待指派
+    private int assigned;//已指派（服务中）
+    private int completed;//已完成
+    private int invalid;//作废
+    private int toBePaid;//待付款
+    private int paid;//已付款
 
     public int getAll() {
         return all;

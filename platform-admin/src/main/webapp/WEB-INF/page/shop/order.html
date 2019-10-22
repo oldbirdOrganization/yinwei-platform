@@ -8,12 +8,27 @@
 <div id="rrapp" v-cloak>
     <div v-show="!detail&&!addList&&showList">
         <Row :gutter="16" style="margin-top: 30px;margin-bottom: 30px">
-            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">全部</span></i-col>
-            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">服务中</span></i-col>
-            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">待付款</span></i-col>
-            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">已付款</span></i-col>
-            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">已完成</span></i-col>
-            <i-col span="3"><span style="background-color: #F5F5F6;padding: 8px;">已作废</span></i-col>
+            <div v-for="counts in order.OrderStatusCountVo" :key="counts.all">
+                <i-input v-model="counts.all" placeholder="全部" readonly/>
+            </div>
+            <i-col span="2">
+                <span style="background-color: #F5F5F6;padding: 8px;">全部</span><span></span>
+            </i-col>
+            <i-col span="2">
+                <span style="background-color: #F5F5F6;padding: 8px;">服务中</span><span></span>
+            </i-col>
+            <i-col span="2">
+                <span style="background-color: #F5F5F6;padding: 8px;">待付款</span><span></span>
+            </i-col>
+            <i-col span="2">
+                <span style="background-color: #F5F5F6;padding: 8px;">已付款</span><span></span>
+            </i-col>
+            <i-col span="2">
+                <span style="background-color: #F5F5F6;padding: 8px;">已完成</span><span></span>
+            </i-col>
+            <i-col span="2">
+                <span style="background-color: #F5F5F6;padding: 8px;">已作废</span><span></span>
+            </i-col>
         </Row>
         <Row :gutter="16">
             <div class="search-group">
@@ -151,10 +166,11 @@
                     </div>
                 </div>
             </Form-item>
-            <Form-item label="维修后图片" prop="order.imgVoList">
-                <div v-for="img in order.imgVoList" :key="img.serviceLaterImgUrl">
+
+            <Form-item label="维修前图片" prop="order.imgVoList">
+                <div v-for="img in order.imgVoList" :key="img.serviceFrontImgUrl">
                     <div class="contract-item">
-                        <img :src="img.serviceLaterImgUrl" style="width: 110px;height: 110px;margin-right:10px;float:left;"/>
+                        <img :src="img.serviceFrontImgUrl" style="width: 110px;height: 110px;margin-right:10px;float:left;"/>
                     </div>
                 </div>
             </Form-item>
