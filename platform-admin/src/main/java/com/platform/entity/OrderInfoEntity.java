@@ -3,7 +3,6 @@ package com.platform.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.platform.vo.ImgVo;
-import com.platform.vo.OrderStatusCountVo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -223,7 +222,6 @@ public class OrderInfoEntity implements Serializable {
 	private String parentOrderId;
 	private String item;//进账科目 1定金 2进度款 3尾款
 	private String parentOrderNo;//预约单号
-	private OrderStatusCountVo orderStatusCountVo;
 
 
 	public Integer getId() {
@@ -714,11 +712,4 @@ public class OrderInfoEntity implements Serializable {
 		this.imgVoList = imgVoList;
 	}
 
-	public OrderStatusCountVo getOrderStatusCountVo() {
-		return orderStatusCountVo;
-	}
-
-	public void setOrderStatusCountVo(OrderStatusCountVo orderStatusCountVo) {
-		this.orderStatusCountVo = orderStatusCountVo;
-	}
 }

@@ -82,7 +82,8 @@ let vm = new Vue({
             orderNo: '',
             channelId: '',
             orderStatus: ''
-        }
+        },
+        orderStatusCount: {}
     },
     methods: {
         query: function () {
@@ -230,6 +231,16 @@ let vm = new Vue({
             async: true,
             successCallback: function (r) {
                 vue.shippings = r.list;
+            }
+        });
+    },
+    mounted:function(){
+        Ajax.request({
+            url: "../order/count?orderType=1",
+            async: true,
+            successCallback: function (r) {
+                vm.orderStatusCount = r.count;
+
             }
         });
     }

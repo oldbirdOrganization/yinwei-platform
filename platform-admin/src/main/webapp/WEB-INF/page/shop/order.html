@@ -8,26 +8,29 @@
 <div id="rrapp" v-cloak>
     <div v-show="!detail&&!addList&&showList">
         <Row :gutter="16" style="margin-top: 30px;margin-bottom: 30px">
-            <div v-for="counts in order.OrderStatusCountVo" :key="counts.all">
-                <i-input v-model="counts.all" placeholder="全部" readonly/>
-            </div>
             <i-col span="2">
-                <span style="background-color: #F5F5F6;padding: 8px;">全部</span><span></span>
+                <span style="background-color: #F5F5F6;padding: 8px;font-size: 15px;">全部</span>
+                <span style="color: #F66D60;font-size: 12px;">({{orderStatusCount.all}})</span>
             </i-col>
             <i-col span="2">
-                <span style="background-color: #F5F5F6;padding: 8px;">服务中</span><span></span>
+                <span style="background-color: #F5F5F6;padding: 8px;font-size: 15px;">服务中</span>
+                <span style="color: #F66D60;font-size: 12px;">({{orderStatusCount.assigned}})</span>
             </i-col>
             <i-col span="2">
-                <span style="background-color: #F5F5F6;padding: 8px;">待付款</span><span></span>
+                <span style="background-color: #F5F5F6;padding: 8px;font-size: 15px;">待付款</span>
+                <span style="color: #F66D60;font-size: 12px;">({{orderStatusCount.toBePaid}})</span>
             </i-col>
             <i-col span="2">
-                <span style="background-color: #F5F5F6;padding: 8px;">已付款</span><span></span>
+                <span style="background-color: #F5F5F6;padding: 8px;font-size: 15px;">已付款</span>
+                <span style="color: #F66D60;font-size: 12px;">({{orderStatusCount.paid}})</span>
             </i-col>
             <i-col span="2">
-                <span style="background-color: #F5F5F6;padding: 8px;">已完成</span><span></span>
+                <span style="background-color: #F5F5F6;padding: 8px;font-size: 15px;">已完成</span>
+                <span style="color: #F66D60;font-size: 12px;">({{orderStatusCount.completed}})</span>
             </i-col>
             <i-col span="2">
-                <span style="background-color: #F5F5F6;padding: 8px;">已作废</span><span></span>
+                <span style="background-color: #F5F5F6;padding: 8px;font-size: 15px;">已作废</span>
+                <span style="color: #F66D60;font-size: 12px;">({{orderStatusCount.invalid}})</span>
             </i-col>
         </Row>
         <Row :gutter="16">

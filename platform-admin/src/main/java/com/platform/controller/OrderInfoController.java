@@ -368,7 +368,6 @@ public class OrderInfoController {
                         OrderInfoEntity orderInfoVo = new OrderInfoEntity();
                         BeanUtils.copyProperties(orderInfoEntity, orderInfoVo);
                         orderInfoVo.setPayType("1");
-                        orderInfoVo.setOrderStatusCountVo(orderStatusCount);
                         return orderInfoVo;
                     }
 
@@ -379,7 +378,6 @@ public class OrderInfoController {
                         OrderInfoEntity orderInfoVo = new OrderInfoEntity();
                         BeanUtils.copyProperties(offlineOrderInfoPo, orderInfoVo);
                         orderInfoVo.setPayType("2");
-                        orderInfoVo.setOrderStatusCountVo(orderStatusCount);
                         return orderInfoVo;
                     }
 
@@ -390,7 +388,6 @@ public class OrderInfoController {
                             OrderInfoEntity orderInfoVo = new OrderInfoEntity();
                             BeanUtils.copyProperties(orderInfoEntity, orderInfoVo);
                             orderInfoVo.setPayType("1");
-                            orderInfoVo.setOrderStatusCountVo(orderStatusCount);
                             return orderInfoVo;
                         }
 
@@ -403,7 +400,6 @@ public class OrderInfoController {
                             OrderInfoEntity orderInfoVo = new OrderInfoEntity();
                             BeanUtils.copyProperties(orderInfoEntity, orderInfoVo);
                             orderInfoVo.setPayType("1");
-                            orderInfoVo.setOrderStatusCountVo(orderStatusCount);
                             return orderInfoVo;
                         }
 
