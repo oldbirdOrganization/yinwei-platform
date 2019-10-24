@@ -18,7 +18,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -160,7 +159,8 @@ public class ApiOrderPayController extends ApiBaseAction {
      *
      * @return
      */
-    @ApiIgnore
+    @ApiOperation(value = "微信支付的回调")
+//    @ApiIgnore
     @RequestMapping(value = "/notify", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public void notify(HttpServletRequest request, HttpServletResponse response) {
         logger.info("微信订单回调接口通知begin");
