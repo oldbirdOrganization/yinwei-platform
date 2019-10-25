@@ -7,6 +7,24 @@
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="!detail&&showList">
+        <Row :gutter="16" style="margin-top: 30px;margin-bottom: 30px">
+            <i-col span="2">
+                <span style="background-color: #F5F5F6;padding: 8px;font-size: 15px;">全部</span>
+                <span style="color: #F66D60;font-size: 12px;">({{orderStatusCount.all}})</span>
+            </i-col>
+            <i-col span="2">
+                <span style="background-color: #F5F5F6;padding: 8px;font-size: 15px;">待指派</span>
+                <span style="color: #F66D60;font-size: 12px;">({{orderStatusCount.toBeAssigned}})</span>
+            </i-col>
+            <i-col span="2">
+                <span style="background-color: #F5F5F6;padding: 8px;font-size: 15px;">已指派</span>
+                <span style="color: #F66D60;font-size: 12px;">({{orderStatusCount.assigned}})</span>
+            </i-col>
+            <i-col span="2">
+                <span style="background-color: #F5F5F6;padding: 8px;font-size: 15px;">已作废</span>
+                <span style="color: #F66D60;font-size: 12px;">({{orderStatusCount.invalid}})</span>
+            </i-col>
+        </Row>
         <Row :gutter="16">
             <div class="search-group">
                 <i-col span="4">
@@ -33,8 +51,7 @@
                 </i-col>
                 <i-button @click="query">查询</i-button>
             </div>
-        </Row>
-        <Row :gutter="16">
+
             <div class="buttons-group">
                 #if($shiro.hasPermission("appointmentOrder:cancelOrder"))
                 <i-button type="warning" @click="cancelOrder">订单作废</i-button>

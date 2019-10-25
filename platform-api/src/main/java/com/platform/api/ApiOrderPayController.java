@@ -1,5 +1,6 @@
 package com.platform.api;
 
+import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.NideshopOrderInfoEntity;
 import com.platform.entity.OrderGoodsVo;
@@ -17,8 +18,10 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -160,8 +163,9 @@ public class ApiOrderPayController extends ApiBaseAction {
      *
      * @return
      */
-    @ApiIgnore
-    @RequestMapping(value = "/notify", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ApiOperation(value = "微信支付的回调")
+    @IgnoreAuth
+    @RequestMapping(value = "/notify", produces = "text/html;charset=UTF-8")
     public void notify(HttpServletRequest request, HttpServletResponse response) {
         logger.info("微信订单回调接口通知begin");
         try {
@@ -187,12 +191,12 @@ public class ApiOrderPayController extends ApiBaseAction {
             if (result_code.equalsIgnoreCase("FAIL")) {
                 //订单编号
                 String out_trade_no = result.getOut_trade_no();
-                logger.error("订单" + out_trade_no + "支付失败");
+                logger.info("订单" + out_trade_no + "支付失败");
                 response.getWriter().write(setXml("SUCCESS", "OK"));
             } else if (result_code.equalsIgnoreCase("SUCCESS")) {
                 //订单编号
                 String out_trade_no = result.getOut_trade_no();
-                logger.error("订单" + out_trade_no + "支付成功");
+                logger.info("订单" + out_trade_no + "支付成功");
                 // 业务处理
                 NideshopOrderInfoEntity orderInfo = orderInfoService.findByOrderNo(out_trade_no);
                 orderInfo.setPaymentStatus(2);

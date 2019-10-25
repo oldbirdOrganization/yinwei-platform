@@ -23,7 +23,7 @@ $(function () {
             {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
             {label: '支付订单号', name: 'orderNo', index: 'order_no', width: 150},
             {label: '预约订单号', name: 'parentOrderNo', index: 'parent_order_no', width: 150},
-            {label: '下单用户', name: 'userName', index: 'user_name', width: 80},
+            {label: '下单用户', name: 'contactName', index: 'contact_name', width: 80},
             {label: '渠道名称',name: 'channelName',index: 'channel_name',width: 60},
             {
                 label: '付款状态', name: 'paymentStatus', index: 'payment_status', width: 60,

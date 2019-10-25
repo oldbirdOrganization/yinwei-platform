@@ -82,30 +82,25 @@
                         <span>待指派</span>
                     </Radio>
                     <Radio label="2" disabled>
-                        <span>待服务</span>
+                        <span>已指派</span>
                     </Radio>
                     <Radio label="3" disabled>
-                        <span>服务中</span>
+                        <span>已完成</span>
                     </Radio>
                     <Radio label="4" disabled>
-                        <span>订单完成</span>
-                    </Radio>
-                    <Radio label="5" disabled>
                         <span>已作废</span>
                     </Radio>
-                    <Radio label="6" disabled>
-                        <span>待评价</span>
-                    </Radio>
+
                 </Radio-group>
             </Form-item>
             
             <Form-item label="付款状态" prop="paymentStatus">
                 <Radio-group v-model="order.paymentStatus">
                     <Radio label="1" disabled>
-                        <span>待付定金</span>
+                        <span>待付款</span>
                     </Radio>
                     <Radio label="2" disabled>
-                        <span>已付定金</span>
+                        <span>已付款</span>
                     </Radio>
                 </Radio-group>
             </Form-item>

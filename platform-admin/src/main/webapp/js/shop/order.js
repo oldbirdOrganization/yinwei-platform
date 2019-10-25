@@ -1,4 +1,5 @@
 $(function () {
+
     let orderNo = getQueryString("orderNo");
     let channelId = getQueryString("channelId");
     let orderStatus = getQueryString("orderStatus");
@@ -105,7 +106,7 @@ $(function () {
             }
         ]
     });
-    vm.countOrderStatus();
+    // vm.countOrderStatus();
 });
 
 let vm = new Vue({
@@ -133,6 +134,7 @@ let vm = new Vue({
         },
         isFirstPayOrder:'',
         totalAmount:'',
+        orderStatusCount: {},
 
 },
     methods: {
@@ -314,16 +316,6 @@ let vm = new Vue({
                     console.log(vm.orderInfos);
                 }
             });
-        },
-        countOrderStatus: function () {
-            Ajax.request({
-                url: "../order/count?orderType=2",
-                async: true,
-                successCallback: function (r) {
-                    vm.count = r.count;
-                    console.log(vm.count);
-                }
-            });
         }
     },
     created: function () {
@@ -335,5 +327,15 @@ let vm = new Vue({
                 vue.shippings = r.list;
             }
         });
+    },
+    mounted:function(){
+        Ajax.request({
+            url: "../order/count?orderType=2",
+            async: true,
+            successCallback: function (r) {
+                vm.orderStatusCount = r.count;
+            }
+        });
     }
+
 });
