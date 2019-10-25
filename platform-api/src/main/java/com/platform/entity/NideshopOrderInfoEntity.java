@@ -180,10 +180,6 @@ public class NideshopOrderInfoEntity implements Serializable {
 	private String outerServiceCombo;
 
 
-	private Integer parentOrderId;
-	private String item;//进账科目 1定金 2进度款 3尾款
-
-
 	public Integer getId() {
 		return id;
 	}
@@ -511,22 +507,4 @@ public class NideshopOrderInfoEntity implements Serializable {
 	public void setMasterWorkerId(Long masterWorkerId) {
 		this.masterWorkerId = masterWorkerId;
 	}
-
-
-	public Integer getParentOrderId() {
-		return parentOrderId;
-	}
-
-	public void setParentOrderId(Integer parentOrderId) {
-		this.parentOrderId = parentOrderId;
-	}
-
-	public String getItem() {
-		return item;
-	}
-
-	public void setItem(String item) {
-		this.item = item;
-	}
-
 }
