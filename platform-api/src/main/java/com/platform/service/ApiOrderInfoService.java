@@ -200,6 +200,17 @@ public class ApiOrderInfoService {
         }
         logger.info("@@ApiOrderInfoService.doRun  order job end");
     }
+
+    /**
+     * 根据编号id查询订单详情
+     * @param id
+     * @return
+     */
+    public NideshopOrderInfoEntity selectById(Integer id){
+        QueryWrapper<NideshopOrderInfoEntity> wrapper = new QueryWrapper();
+        wrapper.eq("id",id);
+        return nideshopOrderInfoDao.selectById(wrapper);
+    }
 }
 
 
