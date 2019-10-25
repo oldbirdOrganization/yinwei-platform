@@ -118,7 +118,6 @@ public class DiffOrderServiceImpl implements DiffOrderService {
 
                 ).collect(Collectors.toList());
             }else{
-                map.put("limit","0");
                 Query query2 = new Query(map);
                 orderInfoList = orderInfoService.queryList(query2);
                 dataList = orderInfoList.stream().map(orderInfoEntity -> {
