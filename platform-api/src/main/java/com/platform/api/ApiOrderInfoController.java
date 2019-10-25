@@ -105,12 +105,10 @@ public class ApiOrderInfoController extends ApiBaseAction {
 //    @IgnoreAuth
     @GetMapping("finishOrderList")
     public Object finishOrderList(@LoginUser UserVo loginUser) {
-        return toResponsSuccess(orderInfoService.findOrderList(loginUser,null,3,null));
+        List<NideshopOrderInfoEntity> finised=orderInfoService.findOrderList(loginUser,null,3,null);
+        List<NideshopOrderInfoEntity> commnet=orderInfoService.findOrderList(loginUser,null,5,null);
+        finised.addAll(commnet);
+        return toResponsSuccess(finised);
     }
-
-
-
-
-
 
 }
