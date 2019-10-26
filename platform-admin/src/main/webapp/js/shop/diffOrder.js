@@ -23,7 +23,7 @@ $(function () {
                     if (value == '1') {
                         return '预约订单';
                     } else if (value == '2') {
-                        return '定金订单';
+                        return '支付订单';
                     }
                     return '-';
                 }

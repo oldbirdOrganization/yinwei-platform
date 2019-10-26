@@ -1,6 +1,5 @@
 package com.platform.api;
 
-import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.*;
 import com.platform.service.*;
@@ -16,6 +15,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -39,6 +39,8 @@ public class ApiCommentController extends ApiBaseAction {
     private ApiCouponService apiCouponService;
     @Autowired
     private ApiUserCouponService apiUserCouponService;
+    @Autowired
+    private ApiOrderInfoService orderInfoService;
 
     /**
      * 发表评论
@@ -100,6 +102,33 @@ public class ApiCommentController extends ApiBaseAction {
             }
         }
         if (insertId > 0) {
+            //判断此订单是否尾款支付订单，是则更新预约单订单状态为已评价，否则只更新此订单状态为已评价
+            NideshopOrderInfoEntity order = orderInfoService.findDetail(commentContentVo.getValueId());
+            if(order.getOrderType()==1){//预约订单
+                if(!ObjectUtils.isEmpty(order) && order.getOrderStatus().intValue() ==3) { //已完成服务并已完成订单支付
+                    order.setOrderStatus(5);//状态为已评价
+                    order.setUpdateTime(new Date());
+                    orderInfoService.update(order);
+                }
+            }
+            if(order.getOrderType()==2){//支付订单
+                if(!ObjectUtils.isEmpty(order) && "3".equals(order.getItem())){//是尾款支付订单
+                    order.setOrderStatus(5);//状态为已评价
+                    order.setUpdateTime(new Date());
+                    orderInfoService.update(order);
+                    if(null !=order.getParentOrderId()){
+                        //更新预约单订单状态为已完成
+                        NideshopOrderInfoEntity preorder = orderInfoService.selectById(order.getParentOrderId());
+                        preorder.setOrderStatus(3);
+                        preorder.setUpdateTime(new Date());
+                        orderInfoService.update(preorder);
+                    }
+                }else{//否尾款支付订单
+                    order.setOrderStatus(5);//状态为已评价
+                    order.setUpdateTime(new Date());
+                    orderInfoService.update(order);
+                }
+            }
             return toResponsObject(0, "评论添加成功", resultObj);
         } else {
             return toResponsFail("评论保存失败");
