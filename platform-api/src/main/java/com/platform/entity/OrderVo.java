@@ -1,139 +1,224 @@
 package com.platform.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang.StringUtils;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.platform.vo.ImgVo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.List;
 
 /**
- * @author oldbird
- * @email oldbirdteam@163.com
- * @date 2019-08-15 08:03:40
+ *
+ *
+ * @author oldbirdteam
+ * @email oldbirdteam@gmail.com
+ * @date 2019-08-17 17:30:51
  */
 public class OrderVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    //主键
+    /**
+     *
+     */
+    @TableId
     private Integer id;
-    //订单序列号
-    private String order_sn;
-    //会员Id
-    private Long user_id;
-    /*
-    订单状态
-    1xx 表示订单取消和删除等状态 0订单创建成功等待付款，　101订单已取消，　102订单已删除
-    2xx 表示订单支付状态　201订单已付款，等待发货
-    3xx 表示订单物流相关状态　300订单已发货， 301用户确认收货
-    4xx 表示订单退换货相关的状态　401 没有发货，退款　402 已收货，退款退货
-    */
-    private Integer order_status;
-    //发货状态 商品配送情况;0未发货,1已发货,2已收货,4退货
-    private Integer shipping_status;
-    //付款状态 支付状态;0未付款;1付款中;2已付款;4退款
-    private Integer pay_status;
-    //收货人
-    private String consignee;
-    //国家
-    private String country;
-    //省
-    private String province;
-    //地市
-    private String city;
-    //区县
-    private String district;
-    //收货地址
-    private String address;
-    //联系电话
-    private String mobile;
-    //补充说明
-    private String postscript;
-    //快递公司Id
-    private Integer shipping_id;
-    //快递公司code
-    private String shipping_code;
-    //快递公司名称
-    private String shipping_name;
-    //快递号
-    private String shipping_no;
-    //付款
-    private String pay_id;
-    //
-    private String pay_name;
-    //快递费用
-    private BigDecimal shipping_fee;
-    //实际需要支付的金额
-    private BigDecimal actual_price;
-    // 积分
-    private Integer integral;
-    // 积分抵扣金额
-    private BigDecimal integral_money;
-    //订单总价
-    private BigDecimal order_price;
-    //商品总价
-    private BigDecimal goods_price;
-    //新增时间
-    private Date add_time;
-    //确认时间
-    private Date confirm_time;
-    //付款时间
-    private Date pay_time;
-    //配送费用
-    private Integer freight_price;
+    /**
+     * 商品id
+     */
+    private Integer goodsId;
+    /**
+     *
+     */
+    private String orderNo;
+    /**
+     * 订单类型 1预约订单 2 支付订单
+     */
+    private Integer orderType;
+    /**
+     * 订单状态
+     */
+    private Integer orderStatus;
+    /**
+     * 支付状态 1未支付 2 已支付
+     */
+    private Integer paymentStatus;
+    /**
+     * 上游支付单号
+     */
+    private String paymentNo;
+
+    private Date paymentTime;
+    /**
+     * 实际支付金额
+     */
+    private BigDecimal paymentPrice;
+
+    /**
+     * 订单总金额
+     */
+    private BigDecimal totalAmount;
+
+    /**
+     * 订单金额
+     */
+    private BigDecimal orderPrice;
+
+    //已付金额
+    private BigDecimal alreadyPayAmount;
+
+    //剩余尾款金额
+    private BigDecimal residuesPayAmount;
     //使用的优惠券id
-    private Integer coupon_id;
-    //
-    private Integer parent_id;
+    private Integer couponId;
+
     //优惠价格
-    private BigDecimal coupon_price;
-    //
-    private Integer callback_status;
-    //
-    private Integer goodsCount; //订单的商品
-    private String order_status_text;//订单状态的处理
-    private Map handleOption; //可操作的选项
-    private BigDecimal full_cut_price; //订单满减
-    private String full_region;//区县
-    private String order_type; // 订单状态
+    private BigDecimal couponPrice;
 
-    public String getFull_region() {
-    //    return full_region;
-        if (StringUtils.isNotEmpty(this.full_region)){
-            return full_region;
-        } else{
-            StringBuffer strBuff = new StringBuffer();
-            if (StringUtils.isNotEmpty(this.country)){
-                strBuff.append(this.country).append(" ");
-            }
-            if(StringUtils.isNotEmpty(this.province)){
-                strBuff.append(this.province).append(" ");
-            }
-            if (StringUtils.isNotEmpty(this.city)){
-                strBuff.append(this.city).append(" ");
-            }
-            if (StringUtils.isNotEmpty(this.district)){
-                strBuff.append(this.district).append(" ");
-            }
-            this.full_region = strBuff.toString();
-            return this.full_region;
-        }
-    }
+    /**
+     * 服务小区名称
+     */
+    private String serviceHouseName;
+    /**
+     * 服务时间
+     */
+    private String serviceTime;
+    /**
+     * 服务要求 多个以逗号隔开
+     */
+    private String serviceRequired;
+    /**
+     * 问题描述
+     */
+    private String problemDescription;
 
-    public String getOrder_type() {
-        return order_type;
-    }
+    /**
+     * 描述图片集合
+     */
+    private List<ImgVo> imgVoList;
 
-    public void setOrder_type(String order_type) {
-        this.order_type = order_type;
-    }
+    /**
+     * 服务类型
+     */
+    private String serviceType;
+    /**
+     * 服务空间
+     */
+    private String serviceSpace;
+    /**
+     * 服务面积
+     */
+    private String serviceAcreage;
+    /**
+     * 服务方案
+     */
+    private String serviceIdea;
+    /**
+     * 空调型号
+     */
+    private String serviceAirConditionerModel;
+    /**
+     * 空调类型
+     */
+    private String serviceAirConditionerType;
+    /**
+     * 服务家具
+     */
+    private String serviceFurniture;
+    /**
+     * 房屋类型
+     */
+    private String serviceHouseType;
+    /**
+     * 交付标准
+     */
+    private String serviceHouseDeliveryStandards;
+    /**
+     * 联系人
+     */
+    private String contactName;
+    /**
+     * 联系人手机
+     */
+    private String contactMobile;
+    /**
+     * 地址
+     */
+    private String address;
+    /**
+     *
+     */
+    private Date createTime;
+    /**
+     *
+     */
+    private Date updateTime;
+    /**
+     * 创建人id
+     */
+    private Long createUserId;
 
-    public void setFull_region(String full_region) {
-        this.full_region = full_region;
-    }
+    private String userName;
+    private String userMobile;
+    /**
+     * 修改人id
+     */
+    private Long updateUserId;
+
+    //修改人
+    private String updateName;
+
+    /**
+     * 是否删除 0未删除 1删除
+     */
+    private Integer defunct;
+
+    /**
+     * 渠道id
+     */
+    private Integer channelId;
+
+    //渠道类型名称
+    private String channelName;
+    /**
+     * 工人师傅
+     */
+    private String masterWorker;
+    /**
+     * 工人师傅编号
+     */
+    private Long masterWorkerId;
+
+    private String workerMobile;
+    //支付渠道
+    private String payChannel;
+
+    //收款账号
+    private String shroffAccountNumber;
+    //门店id
+    private Long storeId;
+    //门店名称
+    private String storeName;
+
+    //是否为第三方订单 1-是 0-否
+    private Integer isOuterOrder;
+    //第三方服务商名称
+    private String outerMerchantName;
+    //第三方服务类
+    private String outerServiceCategory;
+    //第三方服务内容
+    private String outerServiceContent;
+    //第三方服务品牌
+    private String outerServiceBrand;
+    //第三方服务套餐名称
+    private String outerServiceCombo;
+
+    private String storeAddress;
+    private String storeContact;
+    private String parentOrderId;
+    private String item;//进账科目 1定金 2进度款 3尾款
+    private String parentOrderNo;//预约单号
+
 
     public Integer getId() {
         return id;
@@ -143,84 +228,204 @@ public class OrderVo implements Serializable {
         this.id = id;
     }
 
-    public String getOrder_sn() {
-        return order_sn;
+    public Integer getGoodsId() {
+        return goodsId;
     }
 
-    public void setOrder_sn(String order_sn) {
-        this.order_sn = order_sn;
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public String getOrderNo() {
+        return orderNo;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
-    public Integer getOrder_status() {
-        return order_status;
+    public Integer getOrderType() {
+        return orderType;
     }
 
-    public void setOrder_status(Integer order_status) {
-        this.order_status = order_status;
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
     }
 
-    public Integer getShipping_status() {
-        return shipping_status;
+    public Integer getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setShipping_status(Integer shipping_status) {
-        this.shipping_status = shipping_status;
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public Integer getPay_status() {
-        return pay_status;
+    public Integer getPaymentStatus() {
+        return paymentStatus;
     }
 
-    public void setPay_status(Integer pay_status) {
-        this.pay_status = pay_status;
+    public void setPaymentStatus(Integer paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
-    public String getConsignee() {
-        return consignee;
+    public String getPaymentNo() {
+        return paymentNo;
     }
 
-    public void setConsignee(String consignee) {
-        this.consignee = consignee;
+    public void setPaymentNo(String paymentNo) {
+        this.paymentNo = paymentNo;
     }
 
-    public String getCountry() {
-        return country;
+    public Date getPaymentTime() {
+        return paymentTime;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setPaymentTime(Date paymentTime) {
+        this.paymentTime = paymentTime;
     }
 
-    public String getProvince() {
-        return province;
+    public BigDecimal getOrderPrice() {
+        return orderPrice;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setOrderPrice(BigDecimal orderPrice) {
+        this.orderPrice = orderPrice;
     }
 
-    public String getCity() {
-        return city;
+    public Integer getCouponId() {
+        return couponId;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCouponId(Integer couponId) {
+        this.couponId = couponId;
     }
 
-    public String getDistrict() {
-        return district;
+    public BigDecimal getCouponPrice() {
+        return couponPrice;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setCouponPrice(BigDecimal couponPrice) {
+        this.couponPrice = couponPrice;
+    }
+
+    public String getServiceHouseName() {
+        return serviceHouseName;
+    }
+
+    public void setServiceHouseName(String serviceHouseName) {
+        this.serviceHouseName = serviceHouseName;
+    }
+
+    public String getServiceTime() {
+        return serviceTime;
+    }
+
+    public void setServiceTime(String serviceTime) {
+        this.serviceTime = serviceTime;
+    }
+
+    public String getServiceRequired() {
+        return serviceRequired;
+    }
+
+    public void setServiceRequired(String serviceRequired) {
+        this.serviceRequired = serviceRequired;
+    }
+
+    public String getProblemDescription() {
+        return problemDescription;
+    }
+
+    public void setProblemDescription(String problemDescription) {
+        this.problemDescription = problemDescription;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public String getServiceSpace() {
+        return serviceSpace;
+    }
+
+    public void setServiceSpace(String serviceSpace) {
+        this.serviceSpace = serviceSpace;
+    }
+
+    public String getServiceAcreage() {
+        return serviceAcreage;
+    }
+
+    public void setServiceAcreage(String serviceAcreage) {
+        this.serviceAcreage = serviceAcreage;
+    }
+
+    public String getServiceIdea() {
+        return serviceIdea;
+    }
+
+    public void setServiceIdea(String serviceIdea) {
+        this.serviceIdea = serviceIdea;
+    }
+
+    public String getServiceAirConditionerModel() {
+        return serviceAirConditionerModel;
+    }
+
+    public void setServiceAirConditionerModel(String serviceAirConditionerModel) {
+        this.serviceAirConditionerModel = serviceAirConditionerModel;
+    }
+
+    public String getServiceAirConditionerType() {
+        return serviceAirConditionerType;
+    }
+
+    public void setServiceAirConditionerType(String serviceAirConditionerType) {
+        this.serviceAirConditionerType = serviceAirConditionerType;
+    }
+
+    public String getServiceFurniture() {
+        return serviceFurniture;
+    }
+
+    public void setServiceFurniture(String serviceFurniture) {
+        this.serviceFurniture = serviceFurniture;
+    }
+
+    public String getServiceHouseType() {
+        return serviceHouseType;
+    }
+
+    public void setServiceHouseType(String serviceHouseType) {
+        this.serviceHouseType = serviceHouseType;
+    }
+
+    public String getServiceHouseDeliveryStandards() {
+        return serviceHouseDeliveryStandards;
+    }
+
+    public void setServiceHouseDeliveryStandards(String serviceHouseDeliveryStandards) {
+        this.serviceHouseDeliveryStandards = serviceHouseDeliveryStandards;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactMobile() {
+        return contactMobile;
+    }
+
+    public void setContactMobile(String contactMobile) {
+        this.contactMobile = contactMobile;
     }
 
     public String getAddress() {
@@ -231,290 +436,268 @@ public class OrderVo implements Serializable {
         this.address = address;
     }
 
-    public String getMobile() {
-        return mobile;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public String getPostscript() {
-        return postscript;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setPostscript(String postscript) {
-        this.postscript = postscript;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
-    public Integer getShipping_id() {
-        return shipping_id;
+    public Long getCreateUserId() {
+        return createUserId;
     }
 
-    public void setShipping_id(Integer shipping_id) {
-        this.shipping_id = shipping_id;
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
     }
 
-    public String getShipping_name() {
-        return shipping_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setShipping_name(String shipping_name) {
-        this.shipping_name = shipping_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getPay_id() {
-        return pay_id;
+    public Long getUpdateUserId() {
+        return updateUserId;
     }
 
-    public void setPay_id(String pay_id) {
-        this.pay_id = pay_id;
+    public void setUpdateUserId(Long updateUserId) {
+        this.updateUserId = updateUserId;
     }
 
-    public String getPay_name() {
-        return pay_name;
+    public String getUpdateName() {
+        return updateName;
     }
 
-    public void setPay_name(String pay_name) {
-        this.pay_name = pay_name;
+    public void setUpdateName(String updateName) {
+        this.updateName = updateName;
     }
 
-    public BigDecimal getShipping_fee() {
-        return shipping_fee;
+    public Integer getDefunct() {
+        return defunct;
     }
 
-    public void setShipping_fee(BigDecimal shipping_fee) {
-        this.shipping_fee = shipping_fee;
+    public void setDefunct(Integer defunct) {
+        this.defunct = defunct;
     }
 
-    public BigDecimal getActual_price() {
-        return actual_price;
+    public Integer getChannelId() {
+        return channelId;
     }
 
-    public void setActual_price(BigDecimal actual_price) {
-        this.actual_price = actual_price;
+    public void setChannelId(Integer channelId) {
+        this.channelId = channelId;
     }
 
-    public Integer getIntegral() {
-        return integral;
+    public String getChannelName() {
+        return channelName;
     }
 
-    public void setIntegral(Integer integral) {
-        this.integral = integral;
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 
-    public BigDecimal getIntegral_money() {
-        return integral_money;
+    public String getMasterWorker() {
+        return masterWorker;
     }
 
-    public void setIntegral_money(BigDecimal integral_money) {
-        this.integral_money = integral_money;
+    public void setMasterWorker(String masterWorker) {
+        this.masterWorker = masterWorker;
     }
 
-    public BigDecimal getOrder_price() {
-        return order_price;
+    public Long getMasterWorkerId() {
+        return masterWorkerId;
     }
 
-    public void setOrder_price(BigDecimal order_price) {
-        this.order_price = order_price;
+    public void setMasterWorkerId(Long masterWorkerId) {
+        this.masterWorkerId = masterWorkerId;
     }
 
-    public BigDecimal getGoods_price() {
-        return goods_price;
+    public Integer getIsOuterOrder() {
+        return isOuterOrder;
     }
 
-    public void setGoods_price(BigDecimal goods_price) {
-        this.goods_price = goods_price;
+    public void setIsOuterOrder(Integer isOuterOrder) {
+        this.isOuterOrder = isOuterOrder;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    public Date getAdd_time() {
-        return add_time;
+    public String getOuterMerchantName() {
+        return outerMerchantName;
     }
 
-    public void setAdd_time(Date add_time) {
-        this.add_time = add_time;
+    public void setOuterMerchantName(String outerMerchantName) {
+        this.outerMerchantName = outerMerchantName;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    public Date getConfirm_time() {
-        return confirm_time;
+    public String getOuterServiceCategory() {
+        return outerServiceCategory;
     }
 
-    public void setConfirm_time(Date confirm_time) {
-        this.confirm_time = confirm_time;
+    public void setOuterServiceCategory(String outerServiceCategory) {
+        this.outerServiceCategory = outerServiceCategory;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    public Date getPay_time() {
-        return pay_time;
+    public String getOuterServiceContent() {
+        return outerServiceContent;
     }
 
-    public void setPay_time(Date pay_time) {
-        this.pay_time = pay_time;
+    public void setOuterServiceContent(String outerServiceContent) {
+        this.outerServiceContent = outerServiceContent;
     }
 
-    public Integer getFreight_price() {
-        return freight_price;
+    public String getOuterServiceBrand() {
+        return outerServiceBrand;
     }
 
-    public void setFreight_price(Integer freight_price) {
-        this.freight_price = freight_price;
+    public void setOuterServiceBrand(String outerServiceBrand) {
+        this.outerServiceBrand = outerServiceBrand;
     }
 
-    public Integer getCoupon_id() {
-        return coupon_id;
+    public String getOuterServiceCombo() {
+        return outerServiceCombo;
     }
 
-    public void setCoupon_id(Integer coupon_id) {
-        this.coupon_id = coupon_id;
+    public void setOuterServiceCombo(String outerServiceCombo) {
+        this.outerServiceCombo = outerServiceCombo;
     }
 
-    public Integer getParent_id() {
-        return parent_id;
+    public BigDecimal getPaymentPrice() {
+        return paymentPrice;
     }
 
-    public void setParent_id(Integer parent_id) {
-        this.parent_id = parent_id;
+    public void setPaymentPrice(BigDecimal paymentPrice) {
+        this.paymentPrice = paymentPrice;
     }
 
-    public BigDecimal getCoupon_price() {
-        return coupon_price;
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setCoupon_price(BigDecimal coupon_price) {
-        this.coupon_price = coupon_price;
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public Integer getCallback_status() {
-        return callback_status;
+    public String getPayChannel() {
+        return payChannel;
     }
 
-    public void setCallback_status(Integer callback_status) {
-        this.callback_status = callback_status;
+    public void setPayChannel(String payChannel) {
+        this.payChannel = payChannel;
     }
 
-    public Integer getGoodsCount() {
-        return goodsCount;
+    public String getShroffAccountNumber() {
+        return shroffAccountNumber;
     }
 
-    public void setGoodsCount(Integer goodsCount) {
-        this.goodsCount = goodsCount;
+    public void setShroffAccountNumber(String shroffAccountNumber) {
+        this.shroffAccountNumber = shroffAccountNumber;
     }
 
-    public String getOrder_status_text() {
-        if (null != order_status && StringUtils.isEmpty(order_status_text)) {
-            order_status_text = "未付款";
-            switch (order_status) {
-                case 0:
-                    order_status_text = "未付款";
-                    break;
-                case 201:
-                    order_status_text = "等待发货";
-                    break;
-                case 300:
-                    order_status_text = "待收货";
-                    break;
-                case 301:
-                    order_status_text = "已完成";
-                    break;
-                case 200:
-                    order_status_text = "已付款";
-                    break;
-                case 101:
-                    order_status_text = "已取消";
-                    break;
-                case 401:
-                    order_status_text = "已取消";
-                    break;
-                case 402:
-                    order_status_text = "已退货";
-                    break;
-            }
-        }
-        return order_status_text;
+    public Long getStoreId() {
+        return storeId;
     }
 
-    public void setOrder_status_text(String order_status_text) {
-        this.order_status_text = order_status_text;
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
     }
 
-    //
-    public Map getHandleOption() {
-        handleOption = new HashMap();
-        handleOption.put("cancel", false);//取消操作
-        handleOption.put("delete", false);//删除操作
-        handleOption.put("pay", false);//支付操作
-        handleOption.put("comment", false);//评论操作
-        handleOption.put("delivery", false);//确认收货操作
-        handleOption.put("confirm", false);//完成订单操作
-        handleOption.put("return", false); //退换货操作
-        handleOption.put("buy", false); //再次购买
-
-        //订单流程：　下单成功－》支付订单－》发货－》收货－》评论
-        //订单相关状态字段设计，采用单个字段表示全部的订单状态
-        //1xx 表示订单取消和删除等状态 0订单创建成功等待付款，　101订单已取消，　102订单已删除
-        //2xx 表示订单支付状态　201订单已付款，等待发货
-        //3xx 表示订单物流相关状态　300订单已发货， 301用户确认收货
-        //4xx 表示订单退换货相关的状态　401 没有发货，退款　402 已收货，退款退货
-
-        //如果订单已经取消或是已完成，则可删除和再次购买
-        if (order_status == 101) {
-//            handleOption.put("delete", true);
-            handleOption.put("buy", true);
-        }
-
-        //如果订单没有被取消，且没有支付，则可支付，可取消
-        if (order_status == 0) {
-            handleOption.put("cancel", true);
-            handleOption.put("pay", true);
-        }
-
-        //如果订单已付款，没有发货，则可退款操作
-        if (order_status == 201) {
-            handleOption.put("cancel", true);
-        }
-
-        //如果订单已经发货，没有收货，则可收货操作和退款、退货操作
-        if (order_status == 300) {
-//            handleOption.put("cancel", true);
-            handleOption.put("confirm", true);
-//            handleOption.put("return", true);
-        }
-
-        //如果订单已经支付，且已经收货，则可完成交易、评论和再次购买
-        if (order_status == 301) {
-            handleOption.put("comment", true);
-            handleOption.put("buy", true);
-        }
-        return handleOption;
+    public String getStoreName() {
+        return storeName;
     }
 
-    public void setHandleOption(Map handleOption) {
-        this.handleOption = handleOption;
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
-    public BigDecimal getFull_cut_price() {
-        return full_cut_price;
+    public String getStoreAddress() {
+        return storeAddress;
     }
 
-    public void setFull_cut_price(BigDecimal full_cut_price) {
-        this.full_cut_price = full_cut_price;
+    public void setStoreAddress(String storeAddress) {
+        this.storeAddress = storeAddress;
     }
 
-    public String getShipping_code() {
-        return shipping_code;
+    public String getStoreContact() {
+        return storeContact;
     }
 
-    public void setShipping_code(String shipping_code) {
-        this.shipping_code = shipping_code;
+    public void setStoreContact(String storeContact) {
+        this.storeContact = storeContact;
     }
 
-    public String getShipping_no() {
-        return shipping_no;
+    public String getUserMobile() {
+        return userMobile;
     }
 
-    public void setShipping_no(String shipping_no) {
-        this.shipping_no = shipping_no;
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
     }
+
+    public String getParentOrderId() {
+        return parentOrderId;
+    }
+
+    public void setParentOrderId(String parentOrderId) {
+        this.parentOrderId = parentOrderId;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public String getParentOrderNo() {
+        return parentOrderNo;
+    }
+
+    public void setParentOrderNo(String parentOrderNo) {
+        this.parentOrderNo = parentOrderNo;
+    }
+
+    public BigDecimal getAlreadyPayAmount() {
+        return alreadyPayAmount;
+    }
+
+    public void setAlreadyPayAmount(BigDecimal alreadyPayAmount) {
+        this.alreadyPayAmount = alreadyPayAmount;
+    }
+
+    public BigDecimal getResiduesPayAmount() {
+        return residuesPayAmount;
+    }
+
+    public void setResiduesPayAmount(BigDecimal residuesPayAmount) {
+        this.residuesPayAmount = residuesPayAmount;
+    }
+
+    public String getWorkerMobile() {
+        return workerMobile;
+    }
+
+    public void setWorkerMobile(String workerMobile) {
+        this.workerMobile = workerMobile;
+    }
+
+    public List<ImgVo> getImgVoList() {
+        return imgVoList;
+    }
+
+    public void setImgVoList(List<ImgVo> imgVoList) {
+        this.imgVoList = imgVoList;
+    }
+
 }

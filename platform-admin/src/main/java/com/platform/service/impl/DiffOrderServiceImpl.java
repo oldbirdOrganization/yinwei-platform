@@ -1,6 +1,5 @@
 package com.platform.service.impl;
 
-import com.alibaba.excel.metadata.Sheet;
 import com.platform.dao.OrderInfoDao;
 import com.platform.entity.DiffOrderEntity;
 import com.platform.entity.OfflineOrderInfoPo;
@@ -12,8 +11,8 @@ import com.platform.utils.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.ServletOutputStream;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service("diffOrderServer")
